@@ -1,0 +1,33 @@
+# release.yml.template — placeholder, NOT YET ACTIVE
+#
+# Rename to release.yml and configure secrets when you want to enable
+# automated installer publishing for the public repo. v1 ships installers
+# manually; this is here as scaffolding for v1.x.
+#
+# What this would do (when activated):
+#   - Trigger on tag push matching v*
+#   - Build dmg/exe/AppImage from the PRIVATE source repo (via deploy key)
+#   - Attach artifacts to the GitHub Release for this tag
+#   - Mirror artifacts to Cloudflare R2 (China CDN)
+#
+# Requires the following secrets:
+#   PRIVATE_REPO_DEPLOY_KEY  — SSH deploy key with read access to Timeflys2018/zhiwo
+#   R2_ACCESS_KEY_ID          — Cloudflare R2 access key
+#   R2_SECRET_ACCESS_KEY      — Cloudflare R2 secret
+#   R2_BUCKET                 — R2 bucket name (e.g. knowme-releases)
+#   R2_ACCOUNT_ID             — Cloudflare account id
+#   APPLE_ID / APPLE_PASSWORD / APPLE_TEAM_ID  — only if signing+notarization is enabled
+#
+# Until activated, this file is a template only and has no effect.
+
+name: release (template — inactive)
+
+on:
+  push:
+    tags: ['v*.*.*']
+
+jobs:
+  noop:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "release.yml is a template; rename to enable"

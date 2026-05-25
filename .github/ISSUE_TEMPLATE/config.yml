@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 💬 微信公众号 / WeChat Official Account
+    url: https://github.com/Timeflys2018/knowme#-社区
+    about: 关注 PyClaw 公众号获取更新 / Follow the PyClaw WeChat account for updates
+  - name: 📖 使用文档 / User Guide
+    url: https://github.com/Timeflys2018/knowme/tree/main/docs
+    about: 提问前先查文档 / Check the docs before asking
+  - name: 🔍 搜已有 issues / Search existing issues
+    url: https://github.com/Timeflys2018/knowme/issues?q=is%3Aissue
+    about: 你的问题可能已经被讨论过 / Your question may already be answered
