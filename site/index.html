@@ -261,18 +261,22 @@
     /* ========================================
        Download Section
     ======================================== */
-    .download-section { padding: 2.5rem 0; }
-    .download-section .section-eyebrow,
-    .download-section .section-title { display: none; }
+    .download-section { text-align: center; }
+    .download-intro {
+      max-width: 580px;
+      margin: 1rem auto 2rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
 
     .download-pre {
-      max-width: 760px;
-      margin: 0 auto;
+      max-width: 720px;
+      margin: 0 auto 2.5rem;
       padding: 0.85rem 1.25rem;
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: 999px;
-      display: flex;
+      display: inline-flex;
       align-items: center;
       gap: 0.75rem;
       font-size: 0.9rem;
@@ -285,7 +289,73 @@
         border-radius: var(--radius-md);
         padding: 0.85rem 1rem;
         font-size: 0.85rem;
+        display: flex;
       }
+    }
+
+    .download-prep-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.25rem;
+      max-width: 960px;
+      margin: 0 auto;
+      text-align: left;
+    }
+    @media (max-width: 768px) {
+      .download-prep-grid { grid-template-columns: 1fr; }
+    }
+    .download-prep-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      padding: 1.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.2s;
+    }
+    .download-prep-card:hover {
+      border-color: var(--primary-light);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+    .prep-icon { font-size: 2rem; line-height: 1; }
+    .download-prep-card h4 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin: 0;
+    }
+    .download-prep-card p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin: 0;
+      flex: 1;
+    }
+    .prep-cta {
+      margin-top: 0.5rem;
+      font-size: 0.875rem;
+      color: var(--primary);
+      font-weight: 600;
+    }
+    .download-prep-card:hover .prep-cta {
+      color: var(--primary-dark);
+    }
+    .download-prep-meta {
+      max-width: 720px;
+      margin: 2.5rem auto 0;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      text-align: center;
+    }
+    .download-prep-meta a {
+      color: var(--primary);
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
     }
     .download-pre-dot {
       flex-shrink: 0;
@@ -411,7 +481,10 @@
     section {
       padding: 5rem 0;
       border-top: 1px solid var(--border);
+      scroll-margin-top: 80px;
     }
+    [id] { scroll-margin-top: 80px; }
+    html { scroll-behavior: smooth; }
     .section-eyebrow {
       display: inline-block;
       font-size: 0.85rem;
@@ -989,19 +1062,48 @@
   <section id="download" class="download-section">
     <div class="container">
       <span class="section-eyebrow">下载</span>
-      <h2 class="section-title">立即获取 知我 KnowMe v1.0</h2>
+      <h2 class="section-title" id="download-title">v1.0 即将公开发布</h2>
+      <p class="download-intro" id="download-intro">
+        macOS / Windows / Linux 三平台安装包正在最后打磨。<br>
+        想要第一时间拿到？选下面任意一个通道，发版当天通知你。
+      </p>
 
       <!-- Pre-release 占位状态（安装包未上线时显示） -->
       <div id="download-pre" class="download-pre">
         <span class="download-pre-dot" aria-hidden="true"></span>
         <span class="download-pre-text">
-          <strong>v1.0 安装包打包中</strong> · macOS / Windows / Linux 即将上线 ·
-          想要通知？邮件
-          <a href="mailto:timeflying2026@163.com?subject=KnowMe%20v1.0%20%E4%B8%8A%E7%BA%BF%E9%80%9A%E7%9F%A5">timeflying2026@163.com</a>
-          或
-          <a href="https://github.com/Timeflys2018/KnowMe/releases" target="_blank" rel="noopener">Watch Releases</a>
+          <strong>v1.0 安装包打包中</strong> ·
+          <a href="https://github.com/Timeflys2018/KnowMe/releases" target="_blank" rel="noopener">前往 GitHub Releases 看进度 →</a>
         </span>
       </div>
+
+      <div class="download-prep-grid" id="download-prep-grid">
+        <a class="download-prep-card" href="mailto:timeflying2026@163.com?subject=KnowMe%20v1.0%20%E4%B8%8A%E7%BA%BF%E9%80%9A%E7%9F%A5&body=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E6%83%B3%E6%88%90%E4%B8%BA%E7%9F%A5%E6%88%91%20KnowMe%20v1.0%20%E5%85%AC%E6%B5%8B%E7%89%88%E7%9A%84%E7%AC%AC%E4%B8%80%E6%89%B9%E7%94%A8%E6%88%B7%EF%BC%8C%E8%AF%B7%E5%9C%A8%E4%B8%8A%E7%BA%BF%E5%90%8E%E9%80%9A%E7%9F%A5%E6%88%91%E3%80%82">
+          <div class="prep-icon">📧</div>
+          <h4>邮件通知</h4>
+          <p>给开发者发一封"我想要 v1.0"，上线当天回信。<strong>最直接</strong>，也是早鸟通道入口。</p>
+          <span class="prep-cta">写邮件 →</span>
+        </a>
+
+        <a class="download-prep-card" href="https://github.com/Timeflys2018/KnowMe" target="_blank" rel="noopener">
+          <div class="prep-icon">⭐</div>
+          <h4>关注 GitHub</h4>
+          <p>Watch Releases → GitHub 自动给你发邮件。同时 Star 一下让开发者知道。</p>
+          <span class="prep-cta">前往仓库 →</span>
+        </a>
+
+        <a class="download-prep-card" href="https://useknowme.com/sponsor">
+          <div class="prep-icon">💗</div>
+          <h4>提前赞助</h4>
+          <p>爱发电赞助（含早鸟 ¥199 终身买断）。订单留邮箱，发版优先通知。</p>
+          <span class="prep-cta">了解早鸟 →</span>
+        </a>
+      </div>
+
+      <p class="download-prep-meta">
+        v1.0 公测期 <strong>完全免费</strong> · 数据 100% 本地 SQLite · 无需注册即可使用 ·
+        <a href="https://docs.useknowme.com/01-quickstart">文档已就绪 →</a>
+      </p>
 
       <!-- Released 正式下载状态（安装包上线后显示，目前 hidden） -->
       <div id="download-live" class="download-live" hidden>
@@ -1505,6 +1607,9 @@
 
       var preEl = document.getElementById('download-pre');
       var liveEl = document.getElementById('download-live');
+      var prepGrid = document.getElementById('download-prep-grid');
+      var titleEl = document.getElementById('download-title');
+      var introEl = document.getElementById('download-intro');
       if (!preEl || !liveEl) return;
 
       if (!RELEASED) {
@@ -1513,6 +1618,9 @@
 
       preEl.hidden = true;
       liveEl.hidden = false;
+      if (prepGrid) prepGrid.hidden = true;
+      if (titleEl) titleEl.textContent = '立即下载 知我 KnowMe ' + VERSION;
+      if (introEl) introEl.hidden = true;
 
       var platform = detectPlatform();
       var labels = {
