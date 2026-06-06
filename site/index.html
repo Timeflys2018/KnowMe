@@ -608,12 +608,19 @@
       flex-direction: column;
     }
     .pricing-card.highlighted {
-      border: 2px solid var(--text);
-      box-shadow: var(--shadow-lg);
+      border: 2px solid var(--primary);
+      box-shadow: 0 8px 32px -4px rgba(99, 102, 241, 0.18);
+      transform: translateY(-4px);
+      background: var(--bg-card);
+      opacity: 1;
     }
     .pricing-card.coming-soon {
       background: var(--bg-soft);
       opacity: 0.85;
+    }
+    .pricing-card.highlighted.coming-soon {
+      background: var(--bg-card);
+      opacity: 1;
     }
     .pricing-soon-tag {
       position: absolute;
@@ -677,6 +684,17 @@
       margin-top: 0.05em;
     }
     .pricing-features .dim { color: var(--text-subtle); }
+    .pricing-features li.pricing-divider {
+      padding: 0.85rem 0 0.35rem;
+      justify-content: center;
+      border-top: 1px dashed var(--border);
+      margin-top: 0.5rem;
+    }
+    .pricing-features li.pricing-divider .dim {
+      font-size: 0.8rem;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+    }
     .pricing-cta {
       display: block;
       text-align: center;
@@ -1033,7 +1051,7 @@
     <div class="container">
       <div class="hero-badge">
         <span class="dot"></span>
-        v1.0 公测期 · 即日起 1 年内完全免费
+        v1.0 公测期 · 2026-06-06 起 1 年内完全免费
       </div>
 
       <h1 class="hero-title">你的本地第二大脑，<br>记下你想过的一切。</h1>
@@ -1243,8 +1261,9 @@
       <span class="section-eyebrow">三档版本</span>
       <h2 class="section-title">现在免费 · 未来明示。</h2>
       <p class="section-intro">
-        公测期所有功能完全免费。未来 Pro 订阅启动，
-        但 <strong>现有功能将永久保留在免费档</strong>。Pro 仅装新增的云服务功能。
+        公测期（2026-06-06 → 2027-06）所有功能完全免费。未来 Pro 订阅启动，
+        但 <strong>现有功能将永久保留在免费档</strong>。Pro 仅装新增能力：
+        多 vault / 多挂载、本地 LLM、Agent Fleet、智能索引、高级导出，以及云同步等。
       </p>
 
       <div class="pricing-grid">
@@ -1254,7 +1273,7 @@
           <div class="pricing-name">个人基础版</div>
           <div class="pricing-blurb">完整本地能力，公测期内享受全部 Pro 功能。</div>
           <div class="pricing-price">¥0 <small>/ 永久免费</small></div>
-          <div class="pricing-period">现可用 · v1.0</div>
+          <div class="pricing-period">现可用 · v1.0（2026-06-06）</div>
 
           <ul class="pricing-features">
             <li><span class="check">✓</span> <strong>三模编辑器</strong>：Live / Edit / Reading 自由切</li>
@@ -1262,11 +1281,11 @@
             <li><span class="check">✓</span> 双向链接 · 知识图谱 · LLM 编译 Wiki</li>
             <li><span class="check">✓</span> Review queue 安全审核（人工把关 AI 写入）</li>
             <li><span class="check">✓</span> 多通道导出（微信公众号 / 小红书规划中）</li>
-            <li><span class="check">✓</span> MCP server · 接入 Claude Code / Cursor</li>
+            <li><span class="check">✓</span> <strong>基础 MCP</strong> · 接入 Claude Code / Cursor（单 vault read+write）</li>
             <li><span class="check">✓</span> 自带 API key 调用 AI · 不限次数</li>
             <li><span class="check">✓</span> 本地 SQLite · 数据导出永久可用</li>
-            <li><span class="dim">— 公测期：无任何容量限制</span></li>
-            <li><span class="dim">— 未来：10K 笔记 · 2 vault · 1 挂载目录</span></li>
+            <li><span class="dim">— 公测期内（至 2027-06）：无任何容量限制</span></li>
+            <li><span class="dim">— Pro 启动后：10K 笔记 · 2 vault · 1 挂载目录 · 3 内置主题</span></li>
           </ul>
 
           <a href="#download" class="pricing-cta pricing-cta-primary">下载 v1.0 →</a>
@@ -1276,20 +1295,24 @@
         <div class="pricing-card highlighted coming-soon">
           <span class="pricing-soon-tag">🔜 即将推出</span>
           <div class="pricing-name">Pro 专业版</div>
-          <div class="pricing-blurb">云端能力解锁。给重度知识工作者。</div>
+          <div class="pricing-blurb">本地能力解锁 + 云服务增强。给重度知识工作者。</div>
           <div class="pricing-price">¥? <small>/ 年</small></div>
-          <div class="pricing-period">2027-06 启动 · 早鸟享永久 50% 折扣</div>
+          <div class="pricing-period">M12 启动（2027-06）· 早鸟享永久 50% 折扣</div>
 
           <ul class="pricing-features">
-            <li><span class="check">✓</span> 个人版全部功能</li>
-            <li><span class="check">✓</span> <strong>端到端加密云同步</strong></li>
-            <li><span class="check">✓</span> <strong>跨设备实时协作</strong>（3 设备）</li>
-            <li><span class="check">✓</span> <strong>Dream-cycle 云端版</strong>（强模型）</li>
-            <li><span class="check">✓</span> <strong>Agent Fleet 多代理协作</strong></li>
-            <li><span class="check">✓</span> 自定义 Wiki Schema（无限）</li>
-            <li><span class="check">✓</span> 大型知识图谱（5K 节点 · WebGL）</li>
-            <li><span class="check">✓</span> 完整时间线（无限跨度）</li>
-            <li><span class="check">✓</span> AI 配额 2000 次/月</li>
+            <li><span class="check">✓</span> 个人版全部功能 · <strong>无容量限制</strong></li>
+            <li><span class="check">✓</span> <strong>多 vault 同时打开</strong>（无限个）</li>
+            <li><span class="check">✓</span> <strong>多挂载目录</strong>（无限 · Obsidian / iCloud / 任意路径）</li>
+            <li><span class="check">✓</span> <strong>本地 LLM 集成</strong>（Ollama / LM Studio · 离线可用）</li>
+            <li><span class="check">✓</span> <strong>智能索引 · 全文检索加速</strong>（10 万+ 笔记不卡）</li>
+            <li><span class="check">✓</span> <strong>跨 vault MCP</strong> + <strong>Agent Fleet 多代理协作</strong></li>
+            <li><span class="check">✓</span> <strong>高级导出</strong>（PDF / EPUB / Notion / Obsidian 双向）</li>
+            <li><span class="check">✓</span> <strong>主题市场</strong> + 自定义 CSS 注入</li>
+            <li><span class="check">✓</span> <strong>Plugin / 本地脚本</strong>拓展（社区生态）</li>
+            <li><span class="check">✓</span> 自定义 Wiki Schema（无限） · 知识图谱 5K 节点（WebGL）</li>
+            <li class="pricing-divider"><span class="dim">—— 云端增强 ——</span></li>
+            <li><span class="check">✓</span> <strong>端到端加密云同步</strong>（3 设备）</li>
+            <li><span class="check">✓</span> <strong>Dream-cycle 云端版</strong>（强模型 · AI 配额 2000 次/月）</li>
           </ul>
 
           <a href="mailto:contact@useknowme.com?subject=KnowMe%20Pro%20%E7%AD%89%E5%BE%85%E5%90%8D%E5%8D%95&body=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E6%88%91%E5%B8%8C%E6%9C%9B%20Pro%20%E5%8F%91%E7%89%88%E6%97%B6%E5%BE%97%E5%88%B0%E9%80%9A%E7%9F%A5%E3%80%82" class="pricing-cta pricing-cta-secondary">加入等待名单</a>
@@ -1301,7 +1324,7 @@
           <div class="pricing-name">团队版</div>
           <div class="pricing-blurb">为知识团队设计。共享 vault + SSO。</div>
           <div class="pricing-price">¥? <small>/ 席位 / 年</small></div>
-          <div class="pricing-period">5 席起订 · 未来开放</div>
+          <div class="pricing-period">5 席起订 · 2027-12 后开放</div>
 
           <ul class="pricing-features">
             <li><span class="check">✓</span> Pro 专业版全部功能</li>
@@ -1368,8 +1391,8 @@
         <div class="promise">
           <div class="promise-icon">✓</div>
           <div>
-            <h4>Pro 仅装新增云服务</h4>
-            <p>云同步、跨设备、Dream-cycle 云端、Agent Fleet —— 现有本地功能不会变成付费。</p>
+            <h4>Pro 仅装新增能力</h4>
+            <p>多 vault / 多挂载、本地 LLM、智能索引、Agent Fleet、高级导出、云同步等。<strong>v1.0 现有功能永远不变成付费</strong>。</p>
           </div>
         </div>
 
@@ -1475,9 +1498,10 @@
         <details class="faq-item">
           <summary>"1 年公测期"是什么意思？未来会怎样？</summary>
           <p>
-            v1.0 ship 起 1 年内（即日起 → 2027-06 / M12），所有功能完全免费。
+            v1.0 ship 起 1 年内（2026-06-06 → 2027-06 / M12），所有功能完全免费。
             未来启动 Pro 订阅，但 <strong>公测期所有现有功能继续保留在免费档</strong>，
-            仅加合理容量限制（10K 笔记 · 2 vault）。Pro 仅装新增的云服务功能。
+            仅加合理容量限制（10K 笔记 · 2 vault · 1 挂载目录）。
+            Pro 仅装新增能力（多 vault / 多挂载、本地 LLM、Agent Fleet、智能索引、高级导出、云同步等）。
           </p>
         </details>
 
@@ -1573,7 +1597,7 @@
       </div>
 
       <div class="footer-bottom">
-        <span>v1.0 公测期 · 即日起 1 年内完全免费</span>
+        <span>v1.0 公测期 · 2026-06-06 起 1 年内完全免费</span>
         <span>useknowme.com</span>
       </div>
     </div>
