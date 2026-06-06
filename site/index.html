@@ -1220,7 +1220,7 @@
           <span>📊</span> 还剩 <strong>100</strong> 个名额（公测期招募中）
         </div>
         <br>
-        <a href="#download" class="early-bird-cta">了解早鸟权益 →</a>
+        <a href="#faq-early-bird" class="early-bird-cta">了解早鸟权益 →</a>
       </div>
 
     </div>
@@ -1368,7 +1368,7 @@
           </p>
         </details>
 
-        <details class="faq-item">
+        <details class="faq-item" id="faq-early-bird">
           <summary>早鸟 ¥199 终身买断和 Pro 订阅有什么区别？</summary>
           <p>
             早鸟买断 = 一次性付 ¥199，<strong>未来启动后 Pro 终身可用</strong>，
@@ -1552,6 +1552,27 @@
             ? '切回 GitHub 直连'
             : '使用镜像源';
         });
+      }
+    })();
+
+    (function () {
+      'use strict';
+
+      function expandFaqAnchor() {
+        var hash = window.location.hash;
+        if (!hash || hash.indexOf('#faq-') !== 0) return;
+        var target = document.querySelector(hash);
+        if (target && target.tagName === 'DETAILS') {
+          target.open = true;
+          target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+
+      window.addEventListener('hashchange', expandFaqAnchor);
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', expandFaqAnchor);
+      } else {
+        expandFaqAnchor();
       }
     })();
   </script>
