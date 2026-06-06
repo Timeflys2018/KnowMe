@@ -1,6 +1,6 @@
 # KnowMe / 知我
 
-> 💗 **本项目作者已入驻爱发电**：[afdian.com/a/useknowme](https://afdian.com/a/useknowme)
+> 💗 **本项目作者已入驻爱发电**：[afdian.com/a/knowme](https://afdian.com/a/knowme)
 > 公测期支持开发者，享 Pro 永久 50% 折扣 + 早鸟终身买断 ¥199（前 100 名）。
 
 
