@@ -78,4 +78,4 @@ features:
 ---
 
 > 🚧 **v1.0 公测期文档** · 所有 `<!-- SCREENSHOT -->` 标记位的截图正在补充中。
-> 找不到答案？联系 [timeflying2026@163.com](mailto:timeflying2026@163.com) 或 [GitHub Issues](https://github.com/Timeflys2018/KnowMe/issues)。
+> 找不到答案？联系 [contact@useknowme.com](mailto:contact@useknowme.com) 或 [GitHub Issues](https://github.com/Timeflys2018/KnowMe/issues)。
