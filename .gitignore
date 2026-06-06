@@ -3,8 +3,8 @@ node_modules/
 .pnpm-store/
 
 # Build artifacts
-.vitepress/dist/
-.vitepress/cache/
+**/.vitepress/dist/
+**/.vitepress/cache/
 dist/
 
 # Environment / Secrets
