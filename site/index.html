@@ -1195,7 +1195,7 @@
           <h3>双向 MCP · agent 时代记忆层</h3>
           <p>
             既被 Claude Code / Cursor / OpenCode 当知识库消费，
-            又消费它们的 tool 能力。一份 vault 接入所有 AI agent。
+            又消费它们的 tool 能力。一份知识空间接入所有 AI agent。
           </p>
           <span class="diff-tag">MCP-native · 已 ship</span>
         </div>
@@ -1263,7 +1263,7 @@
       <p class="section-intro">
         公测期（2026-06-06 → 2027-06）所有功能完全免费。未来 Pro 订阅启动，
         但 <strong>现有功能将永久保留在免费档</strong>。Pro 仅装新增能力：
-        多 vault / 多挂载、本地 LLM、Agent Fleet、智能索引、高级导出，以及云同步等。
+        无限知识空间 / 无限外部挂载、本地 LLM 集成、Agent Fleet、智能索引、高级导出，以及云同步等。
       </p>
 
       <div class="pricing-grid">
@@ -1281,11 +1281,11 @@
             <li><span class="check">✓</span> 双向链接 · 知识图谱 · LLM 编译 Wiki</li>
             <li><span class="check">✓</span> Review queue 安全审核（人工把关 AI 写入）</li>
             <li><span class="check">✓</span> 多通道导出（微信公众号 / 小红书规划中）</li>
-            <li><span class="check">✓</span> <strong>基础 MCP</strong> · 接入 Claude Code / Cursor（单 vault read+write）</li>
-            <li><span class="check">✓</span> 自带 API key 调用 AI · 不限次数</li>
+            <li><span class="check">✓</span> <strong>基础 MCP</strong> · 接入 Claude Code / Cursor（单知识空间 read+write）</li>
+            <li><span class="check">✓</span> 接入 OpenAI / Anthropic / Gemini · <strong>用户自备 API key</strong></li>
             <li><span class="check">✓</span> 本地 SQLite · 数据导出永久可用</li>
             <li><span class="dim">— 公测期内（至 2027-06）：无任何容量限制</span></li>
-            <li><span class="dim">— Pro 启动后：10K 笔记 · 2 vault · 1 挂载目录 · 3 内置主题</span></li>
+            <li><span class="dim">— Pro 启动后：10K 笔记 · <span title="一整个独立的知识空间，含自己的 wiki 引擎 / 知识图谱 / schema" style="border-bottom: 1px dotted var(--text-muted); cursor: help;">1 个知识空间 (vault)</span> · <span title="把外部目录（如 Obsidian / iCloud / 任意文件夹）借进 vault 视野" style="border-bottom: 1px dotted var(--text-muted); cursor: help;">2 个外部挂载</span> · 3 内置主题</span></li>
           </ul>
 
           <a href="#download" class="pricing-cta pricing-cta-primary">下载 v1.0 →</a>
@@ -1301,11 +1301,13 @@
 
           <ul class="pricing-features">
             <li><span class="check">✓</span> 个人版全部功能 · <strong>无容量限制</strong></li>
-            <li><span class="check">✓</span> <strong>多 vault 同时打开</strong>（无限个）</li>
-            <li><span class="check">✓</span> <strong>多挂载目录</strong>（无限 · Obsidian / iCloud / 任意路径）</li>
+            <li><span class="check">✓</span> <strong>无限知识空间</strong>（多个独立 vault 同时打开）<br>
+                <span style="font-size: 0.78rem; color: var(--text-muted); font-weight: normal;">vault = 一整个独立的知识空间（含 wiki 引擎 + 图谱 + schema）</span></li>
+            <li><span class="check">✓</span> <strong>无限外部挂载</strong>（Obsidian / iCloud / 任意路径）<br>
+                <span style="font-size: 0.78rem; color: var(--text-muted); font-weight: normal;">挂载 = 把外部文件夹"借"进 vault 视野，文件不挪</span></li>
             <li><span class="check">✓</span> <strong>本地 LLM 集成</strong>（Ollama / LM Studio · 离线可用）</li>
             <li><span class="check">✓</span> <strong>智能索引 · 全文检索加速</strong>（10 万+ 笔记不卡）</li>
-            <li><span class="check">✓</span> <strong>跨 vault MCP</strong> + <strong>Agent Fleet 多代理协作</strong></li>
+            <li><span class="check">✓</span> <strong>跨知识空间 MCP</strong> + <strong>Agent Fleet 多代理协作</strong></li>
             <li><span class="check">✓</span> <strong>高级导出</strong>（PDF / EPUB / Notion / Obsidian 双向）</li>
             <li><span class="check">✓</span> <strong>主题市场</strong> + 自定义 CSS 注入</li>
             <li><span class="check">✓</span> <strong>Plugin / 本地脚本</strong>拓展（社区生态）</li>
@@ -1322,13 +1324,13 @@
         <div class="pricing-card coming-soon">
           <span class="pricing-soon-tag">🔜 即将推出</span>
           <div class="pricing-name">团队版</div>
-          <div class="pricing-blurb">为知识团队设计。共享 vault + SSO。</div>
+          <div class="pricing-blurb">为知识团队设计。共享知识空间 + SSO。</div>
           <div class="pricing-price">¥? <small>/ 席位 / 年</small></div>
           <div class="pricing-period">5 席起订 · 2027-12 后开放</div>
 
           <ul class="pricing-features">
             <li><span class="check">✓</span> Pro 专业版全部功能</li>
-            <li><span class="check">✓</span> <strong>共享 Vault · 实时协作</strong></li>
+            <li><span class="check">✓</span> <strong>共享知识空间 · 实时协作</strong>（无限成员）</li>
             <li><span class="check">✓</span> <strong>团队 Schema 共享</strong></li>
             <li><span class="check">✓</span> 超大知识图谱（50K+ 节点）</li>
             <li><span class="check">✓</span> SSO（飞书/钉钉/企业微信/Google）</li>
@@ -1392,7 +1394,7 @@
           <div class="promise-icon">✓</div>
           <div>
             <h4>Pro 仅装新增能力</h4>
-            <p>多 vault / 多挂载、本地 LLM、智能索引、Agent Fleet、高级导出、云同步等。<strong>v1.0 现有功能永远不变成付费</strong>。</p>
+            <p>无限知识空间 / 无限外部挂载、本地 LLM、智能索引、Agent Fleet、高级导出、云同步等。<strong>v1.0 现有功能永远不变成付费</strong>。</p>
           </div>
         </div>
 
@@ -1500,8 +1502,8 @@
           <p>
             v1.0 ship 起 1 年内（2026-06-06 → 2027-06 / M12），所有功能完全免费。
             未来启动 Pro 订阅，但 <strong>公测期所有现有功能继续保留在免费档</strong>，
-            仅加合理容量限制（10K 笔记 · 2 vault · 1 挂载目录）。
-            Pro 仅装新增能力（多 vault / 多挂载、本地 LLM、Agent Fleet、智能索引、高级导出、云同步等）。
+            仅加合理容量限制（10K 笔记 · 1 个知识空间 · 2 个外部挂载）。
+            Pro 仅装新增能力（无限知识空间 / 无限挂载、本地 LLM、Agent Fleet、智能索引、高级导出、云同步等）。
           </p>
         </details>
 
@@ -1528,7 +1530,7 @@
           <summary>我可以从 Obsidian 迁移过来吗？</summary>
           <p>
             可以。知我支持<strong>多挂载目录</strong>，
-            可以直接把 Obsidian vault 挂载进来，零迁移。
+            可以直接把 Obsidian 仓库挂载进来作为外部目录，零迁移。
             自带 wikilink 兼容渲染。详见
             <a href="https://docs.useknowme.com/05-tabs-and-mounts" style="color: var(--primary-dark);">使用文档 § 多挂载</a>。
           </p>
