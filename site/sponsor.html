@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>跳转中… · 知我 KnowMe 爱发电主页</title>
+
+  <meta http-equiv="refresh" content="0; url=https://afdian.com/a/knowme?from=qr">
+  <link rel="canonical" href="https://afdian.com/a/knowme">
+
+  <meta name="description" content="知我 KnowMe 创作者主页 · 在爱发电支持开发者，享公测期 Pro 永久 50% 折扣 + 早鸟终身买断 ¥199">
+  <meta property="og:title" content="支持知我 KnowMe — 在爱发电赞助">
+  <meta property="og:description" content="本地优先 AI 第二大脑 · 开发者赞助通道">
+  <meta property="og:url" content="https://useknowme.com/sponsor">
+  <meta property="og:image" content="https://useknowme.com/assets/og-image.jpg">
+
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC",
+                   "Microsoft YaHei", "Helvetica Neue", sans-serif;
+      background: linear-gradient(135deg, #fff7ed 0%, #fef3c7 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      color: #1a1a1a;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .card {
+      max-width: 420px;
+      width: 100%;
+      background: white;
+      border-radius: 16px;
+      padding: 2.5rem 2rem;
+      box-shadow: 0 10px 40px -10px rgba(0,0,0,0.15);
+      text-align: center;
+    }
+
+    .logo {
+      width: 64px;
+      height: 64px;
+      border-radius: 14px;
+      margin: 0 auto 1.25rem;
+      display: block;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 0.5rem;
+    }
+
+    .sub {
+      color: #64748b;
+      font-size: 0.95rem;
+      margin-bottom: 1.75rem;
+      line-height: 1.6;
+    }
+
+    .spinner {
+      width: 28px;
+      height: 28px;
+      border: 3px solid #fed7aa;
+      border-top-color: #d97706;
+      border-radius: 50%;
+      margin: 0 auto 1.25rem;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .manual {
+      margin-top: 1.5rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #f1f5f9;
+      font-size: 0.875rem;
+      color: #64748b;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-top: 0.75rem;
+      padding: 0.75rem 1.5rem;
+      background: #d97706;
+      color: white;
+      text-decoration: none;
+      border-radius: 10px;
+      font-weight: 600;
+      transition: all 0.15s;
+    }
+
+    .btn:hover {
+      background: #b45309;
+      transform: translateY(-1px);
+    }
+
+    .url {
+      display: block;
+      margin-top: 0.75rem;
+      padding: 0.5rem 0.75rem;
+      background: #fafafa;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      font-size: 0.8rem;
+      color: #475569;
+      word-break: break-all;
+    }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <img class="logo" src="assets/icon-256.png" alt="知我 KnowMe">
+
+    <div class="spinner" aria-hidden="true"></div>
+
+    <h1>正在跳转到爱发电…</h1>
+    <p class="sub">知我 KnowMe 创作者主页 · 用支付宝 / 微信支持开发者</p>
+
+    <div class="manual">
+      <p>如果 3 秒后没有自动跳转，请点击：</p>
+      <a class="btn" href="https://afdian.com/a/knowme?from=qr">
+        💗 前往爱发电
+      </a>
+      <code class="url">afdian.com/a/knowme</code>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      var target = 'https://afdian.com/a/knowme?from=qr';
+      try {
+        window.location.replace(target);
+      } catch (e) {
+        window.location.href = target;
+      }
+    })();
+  </script>
+</body>
+</html>
