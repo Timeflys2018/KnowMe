@@ -24,9 +24,9 @@
 
 | Platform | Primary | Mirror (China) |
 |---|---|---|
-| macOS (Apple Silicon + Intel) | [GitHub Release](https://github.com/Timeflys2018/knowme/releases/latest) | _CDN mirror coming soon_ |
-| Windows | [GitHub Release](https://github.com/Timeflys2018/knowme/releases/latest) | _CDN mirror coming soon_ |
-| Linux (AppImage) | [GitHub Release](https://github.com/Timeflys2018/knowme/releases/latest) | _CDN mirror coming soon_ |
+| macOS (Apple Silicon + Intel) | [GitHub Release](https://github.com/Timeflys2018/KnowMe/releases/latest) | _CDN mirror coming soon_ |
+| Windows | [GitHub Release](https://github.com/Timeflys2018/KnowMe/releases/latest) | _CDN mirror coming soon_ |
+| Linux (AppImage) | [GitHub Release](https://github.com/Timeflys2018/KnowMe/releases/latest) | _CDN mirror coming soon_ |
 
 > **Note**: v1 ships without an Apple Developer signature. On macOS, you'll see "unidentified developer" warning — see [install guide](./docs/01-quickstart.md#macos-安装) to bypass.
 
@@ -46,7 +46,7 @@ See [EULA](./EULA.md) for details. Honor system — we trust you.
 
 ## 🐛 Bug reports / feature requests
 
-→ [Issues](https://github.com/Timeflys2018/knowme/issues/new/choose)
+→ [Issues](https://github.com/Timeflys2018/KnowMe/issues/new/choose)
 
 ## 📜 License
 

@@ -18,7 +18,7 @@ Subject to the terms of this Agreement, we grant you a non-exclusive, non-transf
 
 ## 2. Honor System
 
-We do not employ DRM, license servers, or telemetry to enforce the commercial license. We trust you to operate honestly. If you use the Software commercially, please purchase a Commercial License at https://github.com/Timeflys2018/knowme (purchase channel TBD).
+We do not employ DRM, license servers, or telemetry to enforce the commercial license. We trust you to operate honestly. If you use the Software commercially, please purchase a Commercial License at https://github.com/Timeflys2018/KnowMe (purchase channel TBD).
 
 ## 3. Pricing
 
@@ -79,7 +79,7 @@ This Agreement is governed by the laws of the People's Republic of China. Any di
 
 ## 10. Contact
 
-Questions about this EULA: file a [Question issue](https://github.com/Timeflys2018/knowme/issues/new?template=question.md).
+Questions about this EULA: file a [Question issue](https://github.com/Timeflys2018/KnowMe/issues/new?template=question.md).
 
 ---
 

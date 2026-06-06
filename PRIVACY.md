@@ -107,7 +107,7 @@ For substantive changes, we will also publish a notice in the Software's release
 
 ## 9. Contact
 
-Questions or concerns: file a [Question issue](https://github.com/Timeflys2018/knowme/issues/new?template=question.md).
+Questions or concerns: file a [Question issue](https://github.com/Timeflys2018/KnowMe/issues/new?template=question.md).
 
 ---
 

@@ -14,10 +14,10 @@ assignees: ''
 
 <!--
 请先查 / Please check first:
-- README: https://github.com/Timeflys2018/knowme
-- 使用文档 docs/: https://github.com/Timeflys2018/knowme/tree/main/docs
+- README: https://github.com/Timeflys2018/KnowMe
+- 使用文档 docs/: https://github.com/Timeflys2018/KnowMe/tree/main/docs
 - FAQ: docs/10-faq-and-troubleshooting.md
-- 已有 issues: https://github.com/Timeflys2018/knowme/issues?q=is:issue
+- 已有 issues: https://github.com/Timeflys2018/KnowMe/issues?q=is:issue
 -->
 
 - [ ] 我查了 README / I read the README

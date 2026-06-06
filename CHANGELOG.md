@@ -65,4 +65,4 @@ _To be released. This will be the first public version._
 
 The contents of "Unreleased" will move here when v1 ships, plus any final pre-release fixes.
 
-[Unreleased]: https://github.com/Timeflys2018/knowme/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/Timeflys2018/KnowMe/compare/v1.0.0...HEAD
