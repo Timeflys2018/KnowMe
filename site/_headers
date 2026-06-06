@@ -1,0 +1,20 @@
+# Cloudflare Pages headers
+
+# Security headers for all pages
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=()
+
+# Long cache for hashed assets (immutable images)
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Short cache for HTML pages (so updates ship within 5 min)
+/*.html
+  Cache-Control: public, max-age=300, must-revalidate
+
+# Sponsor page should bypass cache (track every scan)
+/sponsor.html
+  Cache-Control: public, max-age=60

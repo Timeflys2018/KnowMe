@@ -1,0 +1,11 @@
+# Cloudflare Pages redirects
+
+# Legal page short links (let users type /privacy directly)
+/privacy   /legal/privacy   301
+/terms     /legal/terms     301
+/eula      /legal/eula      301
+
+# Sponsor page is at /sponsor (no redirect needed, sponsor.html serves it)
+
+# 404 fallback to home (graceful degradation for typos)
+/*   /index.html   404
