@@ -259,6 +259,153 @@
     }
 
     /* ========================================
+       Download Section
+    ======================================== */
+    .download-section { padding: 2.5rem 0; }
+    .download-section .section-eyebrow,
+    .download-section .section-title { display: none; }
+
+    .download-pre {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0.85rem 1.25rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      color: var(--text-muted);
+      box-shadow: var(--shadow-sm);
+    }
+    @media (max-width: 600px) {
+      .download-pre {
+        border-radius: var(--radius-md);
+        padding: 0.85rem 1rem;
+        font-size: 0.85rem;
+      }
+    }
+    .download-pre-dot {
+      flex-shrink: 0;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.15);
+      animation: download-pre-pulse 2s ease-in-out infinite;
+    }
+    @keyframes download-pre-pulse {
+      0%, 100% { box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.15); }
+      50% { box-shadow: 0 0 0 7px rgba(245, 158, 11, 0.05); }
+    }
+    .download-pre-text strong { color: var(--text); font-weight: 600; }
+    .download-pre-text a {
+      color: var(--primary);
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 2px;
+    }
+
+    .download-live {
+      max-width: 720px;
+      margin: 2rem auto 0;
+      text-align: center;
+    }
+    .btn-download-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 1.25rem 2.5rem;
+      background: var(--text);
+      color: white;
+      text-decoration: none;
+      border-radius: var(--radius-md);
+      font-weight: 700;
+      font-size: 1.15rem;
+      box-shadow: var(--shadow-lg);
+      transition: all 0.2s;
+    }
+    .btn-download-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+    }
+    .download-primary-icon {
+      font-size: 1.4rem;
+    }
+    .download-primary-meta {
+      font-size: 0.85rem;
+      opacity: 0.7;
+      font-weight: 500;
+      padding-left: 0.5rem;
+      border-left: 1px solid rgba(255,255,255,0.25);
+    }
+
+    .download-platforms {
+      margin-top: 2rem;
+      text-align: left;
+    }
+    .download-platforms summary {
+      cursor: pointer;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      padding: 0.5rem 0;
+      list-style: none;
+      text-align: center;
+    }
+    .download-platforms summary::-webkit-details-marker { display: none; }
+    .download-platforms summary::before {
+      content: '▸';
+      display: inline-block;
+      margin-right: 0.5rem;
+      transition: transform 0.2s;
+    }
+    .download-platforms[open] summary::before {
+      transform: rotate(90deg);
+    }
+    .download-platform-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+    @media (max-width: 600px) {
+      .download-platform-grid { grid-template-columns: 1fr; }
+    }
+    .download-platform-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      padding: 1rem 1.25rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      color: var(--text);
+      transition: all 0.15s;
+    }
+    .download-platform-card:hover {
+      border-color: var(--primary-light);
+      transform: translateY(-1px);
+    }
+    .platform-icon { font-size: 1.5rem; }
+    .platform-name { font-weight: 600; font-size: 0.95rem; }
+    .platform-arch { font-size: 0.8rem; color: var(--text-muted); }
+
+    .download-live-meta {
+      margin-top: 2rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .download-live-meta a { color: var(--primary); text-decoration: none; }
+    .download-live-meta a:hover { text-decoration: underline; }
+    .download-live-sep {
+      margin: 0 0.65rem;
+      color: var(--border-strong);
+    }
+
+    /* ========================================
        Section Common
     ======================================== */
     section {
@@ -838,6 +985,69 @@
     </div>
   </header>
 
+  <!-- ========== Download v1.0 ========== -->
+  <section id="download" class="download-section">
+    <div class="container">
+      <span class="section-eyebrow">下载</span>
+      <h2 class="section-title">立即获取 知我 KnowMe v1.0</h2>
+
+      <!-- Pre-release 占位状态（安装包未上线时显示） -->
+      <div id="download-pre" class="download-pre">
+        <span class="download-pre-dot" aria-hidden="true"></span>
+        <span class="download-pre-text">
+          <strong>v1.0 安装包打包中</strong> · macOS / Windows / Linux 即将上线 ·
+          想要通知？邮件
+          <a href="mailto:timeflying2026@163.com?subject=KnowMe%20v1.0%20%E4%B8%8A%E7%BA%BF%E9%80%9A%E7%9F%A5">timeflying2026@163.com</a>
+          或
+          <a href="https://github.com/Timeflys2018/KnowMe/releases" target="_blank" rel="noopener">Watch Releases</a>
+        </span>
+      </div>
+
+      <!-- Released 正式下载状态（安装包上线后显示，目前 hidden） -->
+      <div id="download-live" class="download-live" hidden>
+        <a class="btn-download-primary" id="download-primary" href="#">
+          <span class="download-primary-icon">↓</span>
+          <span class="download-primary-text">检测中…</span>
+          <span class="download-primary-meta" id="download-primary-meta">v1.0.0</span>
+        </a>
+
+        <details class="download-platforms">
+          <summary>其他平台 / 不同架构</summary>
+          <div class="download-platform-grid">
+            <a class="download-platform-card" data-os="mac-arm" href="#">
+              <span class="platform-icon">🍎</span>
+              <span class="platform-name">macOS · Apple Silicon</span>
+              <span class="platform-arch">arm64 · M1 / M2 / M3 / M4</span>
+            </a>
+            <a class="download-platform-card" data-os="mac-intel" href="#">
+              <span class="platform-icon">🍎</span>
+              <span class="platform-name">macOS · Intel</span>
+              <span class="platform-arch">x64</span>
+            </a>
+            <a class="download-platform-card" data-os="win" href="#">
+              <span class="platform-icon">🪟</span>
+              <span class="platform-name">Windows</span>
+              <span class="platform-arch">x64 · Win 10/11</span>
+            </a>
+            <a class="download-platform-card" data-os="linux" href="#">
+              <span class="platform-icon">🐧</span>
+              <span class="platform-name">Linux</span>
+              <span class="platform-arch">AppImage · x64</span>
+            </a>
+          </div>
+        </details>
+
+        <p class="download-live-meta">
+          <a href="https://github.com/Timeflys2018/KnowMe/releases">查看所有版本与发行说明 →</a>
+          <span class="download-live-sep">·</span>
+          <a href="https://github.com/Timeflys2018/KnowMe/releases/latest/download/checksums.txt">SHA256 校验和</a>
+          <span class="download-live-sep">·</span>
+          <span class="download-live-mirror">国内下载慢？<a href="#download" id="download-mirror-toggle">使用镜像源</a></span>
+        </p>
+      </div>
+    </div>
+  </section>
+
   <!-- ========== 5 大独占位 ========== -->
   <section id="features">
     <div class="container">
@@ -1256,5 +1466,94 @@
     </div>
   </footer>
 
+  <script>
+    (function () {
+      'use strict';
+
+      // 发版配置：v1.0.0 安装包就绪后改 RELEASED = true 并填准 FILES 文件名
+      var RELEASED = false;
+      var VERSION = 'v1.0.0';
+      var REPO = 'Timeflys2018/KnowMe';
+      var FILES = {
+        'mac-arm':   'KnowMe-' + VERSION + '-mac-arm64.dmg',
+        'mac-intel': 'KnowMe-' + VERSION + '-mac-x64.dmg',
+        'win':       'KnowMe-' + VERSION + '-win-x64.exe',
+        'linux':     'KnowMe-' + VERSION + '-linux-x64.AppImage'
+      };
+
+      function ghUrl(platform, mirror) {
+        var base = mirror
+          ? 'https://ghproxy.com/https://github.com/' + REPO
+          : 'https://github.com/' + REPO;
+        return base + '/releases/latest/download/' + FILES[platform];
+      }
+
+      function detectPlatform() {
+        var ua = navigator.userAgent;
+        var p = navigator.platform || '';
+        if (/Win/i.test(p) || /Windows/i.test(ua)) return 'win';
+        if (/Linux/i.test(p) && !/Android/i.test(ua)) return 'linux';
+        if (/Mac/i.test(p)) {
+          // Apple Silicon 检测：navigator.userAgentData.architecture（Chrome 90+）
+          if (navigator.userAgentData && navigator.userAgentData.getHighEntropyValues) {
+            return 'mac-arm';
+          }
+          return 'mac-arm';
+        }
+        return 'mac-arm';
+      }
+
+      var preEl = document.getElementById('download-pre');
+      var liveEl = document.getElementById('download-live');
+      if (!preEl || !liveEl) return;
+
+      if (!RELEASED) {
+        return;
+      }
+
+      preEl.hidden = true;
+      liveEl.hidden = false;
+
+      var platform = detectPlatform();
+      var labels = {
+        'mac-arm':   '下载 macOS (Apple Silicon)',
+        'mac-intel': '下载 macOS (Intel)',
+        'win':       '下载 Windows',
+        'linux':     '下载 Linux'
+      };
+
+      var primaryBtn = document.getElementById('download-primary');
+      var primaryText = primaryBtn.querySelector('.download-primary-text');
+      var primaryMeta = document.getElementById('download-primary-meta');
+      primaryBtn.href = ghUrl(platform, false);
+      primaryText.textContent = labels[platform];
+      primaryMeta.textContent = VERSION;
+
+      var cards = document.querySelectorAll('.download-platform-card');
+      cards.forEach(function (card) {
+        var os = card.getAttribute('data-os');
+        if (os && FILES[os]) {
+          card.href = ghUrl(os, false);
+        }
+      });
+
+      var mirrorOn = false;
+      var mirrorToggle = document.getElementById('download-mirror-toggle');
+      if (mirrorToggle) {
+        mirrorToggle.addEventListener('click', function (e) {
+          e.preventDefault();
+          mirrorOn = !mirrorOn;
+          primaryBtn.href = ghUrl(platform, mirrorOn);
+          cards.forEach(function (c) {
+            var os = c.getAttribute('data-os');
+            if (os) c.href = ghUrl(os, mirrorOn);
+          });
+          mirrorToggle.textContent = mirrorOn
+            ? '切回 GitHub 直连'
+            : '使用镜像源';
+        });
+      }
+    })();
+  </script>
 </body>
 </html>
