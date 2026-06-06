@@ -588,8 +588,13 @@
       gap: 1.5rem;
       align-items: stretch;
     }
+    .sponsor-grid-single {
+      grid-template-columns: minmax(0, 480px);
+      justify-content: center;
+    }
     @media (max-width: 768px) {
       .sponsor-grid { grid-template-columns: 1fr; }
+      .sponsor-grid-single { grid-template-columns: 1fr; }
     }
     .sponsor-card {
       padding: 2rem;
@@ -1082,11 +1087,11 @@
         服务器、AI API、代码签名都是真金白银的成本。
       </p>
 
-      <div class="sponsor-grid">
+      <div class="sponsor-grid sponsor-grid-single">
 
         <!-- 中国用户 · 爱发电 -->
         <div class="sponsor-card">
-          <h3>🇨🇳 中国用户</h3>
+          <h3>🇨🇳 在爱发电支持</h3>
           <p>微信扫码 → 自动跳转爱发电创作者主页 → 选档位用支付宝/微信付款。</p>
 
           <div class="qr-real">
@@ -1099,28 +1104,12 @@
               💗 在爱发电支持
             </a>
           </div>
-        </div>
 
-        <!-- 海外用户 · GitHub Sponsors / BMAC -->
-        <div class="sponsor-card">
-          <h3>🌍 Global Users</h3>
-          <p>GitHub Sponsors 0 平台抽成，最优雅的赞助方式。</p>
-
-          <div style="padding: 2rem 0;">
-            <div style="font-size: 4rem;">💎</div>
-            <div style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem;">
-              支持月度订阅 + 一次性赞助
-            </div>
-          </div>
-
-          <div class="sponsor-buttons">
-            <a class="sponsor-btn" href="https://github.com/sponsors/Timeflys2018" target="_blank" rel="noopener">
-              💎 GitHub Sponsors
-            </a>
-            <a class="sponsor-btn" href="https://buymeacoffee.com" target="_blank" rel="noopener">
-              ☕ Buy Me a Coffee
-            </a>
-          </div>
+          <p style="margin-top: 1.25rem; font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+            🌍 <strong>Global users</strong>: GitHub Sponsors 通道开发中。
+            目前海外用户可邮件 <a href="mailto:timeflying2026@163.com" style="color: var(--primary-dark);">timeflying2026@163.com</a> 联系，
+            或通过爱发电（支持 Visa / Mastercard / PayPal）赞助。
+          </p>
         </div>
 
       </div>
