@@ -124,6 +124,12 @@
     }
     .nav-cta:hover { background: var(--primary-dark) !important; color: white !important; }
 
+    /* 移动端简化 nav：隐藏次要链接（特性/定价/文档/GitHub），保留下载 CTA */
+    @media (max-width: 640px) {
+      .nav-links { gap: 0; }
+      .nav-links li:not(:last-child) { display: none; }
+    }
+
     /* ========================================
        Hero
     ======================================== */
@@ -584,8 +590,13 @@
       gap: 1rem;
       margin-top: 2rem;
     }
-    @media (max-width: 768px) {
+    @media (max-width: 900px) {
+      .pricing-grid { grid-template-columns: repeat(2, 1fr); }
+      .pricing-grid > .pricing-card:first-child { grid-column: 1 / -1; }
+    }
+    @media (max-width: 600px) {
       .pricing-grid { grid-template-columns: 1fr; }
+      .pricing-grid > .pricing-card:first-child { grid-column: auto; }
     }
     .pricing-card {
       position: relative;
@@ -1281,7 +1292,7 @@
             <li><span class="check">✓</span> AI 配额 2000 次/月</li>
           </ul>
 
-          <a href="#waitlist" class="pricing-cta pricing-cta-secondary">加入等待名单</a>
+          <a href="mailto:contact@useknowme.com?subject=KnowMe%20Pro%20%E7%AD%89%E5%BE%85%E5%90%8D%E5%8D%95&body=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E6%88%91%E5%B8%8C%E6%9C%9B%20Pro%20%E5%8F%91%E7%89%88%E6%97%B6%E5%BE%97%E5%88%B0%E9%80%9A%E7%9F%A5%E3%80%82" class="pricing-cta pricing-cta-secondary">加入等待名单</a>
         </div>
 
         <!-- Team 即将推出 -->
