@@ -507,6 +507,32 @@
       margin-bottom: 1rem;
       line-height: 1.2;
     }
+    h2.section-title-hero {
+      font-size: clamp(2rem, 4.2vw, 3.25rem);
+      line-height: 1.18;
+      margin-bottom: 1.25rem;
+    }
+    h2.section-title-hero .title-accent {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      font-weight: 900;
+      letter-spacing: -0.025em;
+      display: inline-block;
+      position: relative;
+    }
+    h2.section-title-hero .title-accent::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0;
+      bottom: -6px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+      border-radius: 2px;
+      opacity: 0.18;
+    }
     .section-intro {
       font-size: 1.1rem;
       color: var(--text-muted);
@@ -1261,13 +1287,16 @@
   </section>
 
   <!-- ========== 5 大独占位 ========== -->
-  <section id="features">
+   <section id="features">
     <div class="container">
       <span class="section-eyebrow">为什么是知我</span>
-      <h2 class="section-title">不是又一个 Obsidian。</h2>
+      <h2 class="section-title section-title-hero">
+        不是又一个 Obsidian——<br>
+        <span class="title-accent">AI 时代的知识引擎</span>
+      </h2>
       <p class="section-intro">
-        我们站在 Obsidian / Logseq / Notion 已经把基础笔记做完的肩膀上，<br>
-        把战场推到他们都没占的位置 —— AI 时代的知识引擎。
+        我们站在 Obsidian / Logseq / Notion 把基础笔记做完的肩膀上，
+        把战场推到他们都没占的位置。
       </p>
 
       <div class="differentiators">
