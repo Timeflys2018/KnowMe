@@ -789,6 +789,33 @@
       transform: translateY(-1px);
     }
 
+    .early-bird-status-banner {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255, 251, 235, 0.9);
+      border: 1px solid rgba(120, 53, 15, 0.2);
+      border-radius: var(--radius);
+      padding: 0.65rem 1rem;
+      margin-bottom: 1rem;
+      font-size: 0.85rem;
+      color: #78350f;
+      line-height: 1.5;
+    }
+    .early-bird-status-banner .status-dot {
+      flex-shrink: 0;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #f59e0b;
+      box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.6);
+      animation: status-pulse 2s ease-in-out infinite;
+    }
+    @keyframes status-pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
+      50% { box-shadow: 0 0 0 5px rgba(245, 158, 11, 0.15); }
+    }
+
     .early-bird-actions {
       display: flex;
       gap: 0.75rem;
@@ -1412,9 +1439,14 @@
           <span>📊</span> 还剩 <strong>100</strong> 个名额 · 公测期招募中
         </div>
 
+        <div class="early-bird-status-banner">
+          <span class="status-dot"></span>
+          <span><strong>支付通道认证审核中</strong>（爱发电平台 1-2 个工作日）· 现在可以提前预订</span>
+        </div>
+
         <div class="early-bird-actions">
-          <a href="https://useknowme.com/sponsor" class="early-bird-cta-primary">
-            💗 立即购买 ¥199 →
+          <a href="mailto:contact@useknowme.com?subject=KnowMe%20%E6%97%A9%E9%B8%9F%20%C2%A5199%20%E9%A2%84%E8%AE%A2&body=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E6%88%91%E6%83%B3%E9%A2%84%E8%AE%A2%E7%9F%A5%E6%88%91%20KnowMe%20Pro%20%E7%BB%88%E8%BA%AB%E4%B9%B0%E6%96%AD%EF%BC%88%E6%97%A9%E9%B8%9F%E4%BB%B7%20%C2%A5199%E3%80%81%E5%89%8D%20100%20%E5%90%8D%EF%BC%89%E3%80%82%0A%0A%E7%A7%B0%E5%91%BC%EF%BC%9A%0AGitHub%20%E7%94%A8%E6%88%B7%E5%90%8D%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89%EF%BC%9A%0A%E6%9C%80%E6%9C%9F%E5%BE%85%E7%9A%84%E5%8A%9F%E8%83%BD%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89%EF%BC%9A%0A%0A%E5%9C%A8%E6%94%AF%E4%BB%98%E9%80%9A%E9%81%93%E5%BC%80%E9%80%9A%E5%90%8E%EF%BC%8C%E8%AF%B7%E5%8F%91%E4%BB%98%E6%AC%BE%E9%93%BE%E6%8E%A5%E7%BB%99%E6%88%91%E3%80%82%E8%B0%A2%E8%B0%A2%EF%BC%81" class="early-bird-cta-primary">
+            ✉️ 预订早鸟 ¥199 →
           </a>
           <a href="#faq-early-bird" class="early-bird-cta-secondary">
             了解早鸟权益
@@ -1422,9 +1454,9 @@
         </div>
 
         <p class="early-bird-howto">
-          购买流程：点击 → 跳转爱发电创作者主页 → 选「<strong>早鸟 · Pro 终身买断 ¥199</strong>」档位 → 用支付宝/微信付款 →
-          在订单留言里写下你的<strong>邮箱</strong>（用于发版通知 + license 发放）。
-          <br>1-3 个工作日内会收到欢迎邮件。
+          <strong>预订流程</strong>：点击「预订早鸟」→ 发邮件给开发者（已自动填好预订正文，你可补充称呼/期待功能）→
+          支付通道开通后我会发付款链接给你 → 完成支付即获早鸟身份，自动锁定 ¥199 价格。<br>
+          <strong>预订也算早鸟 100 名额</strong>，按邮件时间排序，先到先得。
         </p>
       </div>
 
@@ -1592,6 +1624,13 @@
             订阅 = 持续按年付费。如果你打算长期用 KnowMe，
             早鸟相当于把"未来 N 年的订阅费"折成一笔买断。
             <strong>仅前 100 名独享</strong>，售完即止。
+          </p>
+          <p style="margin-top: 0.65rem;">
+            <strong>现在怎么购买？</strong>
+            爱发电支付通道认证审核中（1-2 个工作日）。
+            点 <a href="mailto:contact@useknowme.com?subject=KnowMe%20%E6%97%A9%E9%B8%9F%20%C2%A5199%20%E9%A2%84%E8%AE%A2&amp;body=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E6%88%91%E6%83%B3%E9%A2%84%E8%AE%A2%E7%9F%A5%E6%88%91%20Pro%20%E7%BB%88%E8%BA%AB%E4%B9%B0%E6%96%AD%EF%BC%88%E6%97%A9%E9%B8%9F%20%C2%A5199%E3%80%81%E5%89%8D%20100%20%E5%90%8D%EF%BC%89%E3%80%82" style="color: var(--primary-dark); font-weight: 600;">📧 邮件预订</a>
+            锁定一个早鸟名额（按邮件时间排序）；
+            通道开通后我会发付款链接给你完成支付。
           </p>
         </details>
 
