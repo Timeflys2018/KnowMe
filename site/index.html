@@ -789,6 +789,60 @@
       transform: translateY(-1px);
     }
 
+    .early-bird-actions {
+      display: flex;
+      gap: 0.75rem;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-top: 0.5rem;
+    }
+    .early-bird-cta-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: #78350f;
+      color: white !important;
+      padding: 0.95rem 1.75rem;
+      border-radius: var(--radius);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1rem;
+      transition: all 0.15s;
+      box-shadow: 0 4px 12px -2px rgba(120, 53, 15, 0.4);
+    }
+    .early-bird-cta-primary:hover {
+      background: #451a03;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px -2px rgba(120, 53, 15, 0.5);
+    }
+    .early-bird-cta-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      background: transparent;
+      color: #78350f;
+      padding: 0.95rem 1.25rem;
+      border-radius: var(--radius);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.15s;
+      border: 1px solid rgba(120, 53, 15, 0.25);
+    }
+    .early-bird-cta-secondary:hover {
+      background: rgba(255, 255, 255, 0.5);
+      border-color: rgba(120, 53, 15, 0.5);
+    }
+    .early-bird-howto {
+      margin-top: 1.5rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid rgba(120, 53, 15, 0.15);
+      font-size: 0.83rem;
+      color: #78350f;
+      line-height: 1.7;
+      opacity: 0.85;
+    }
+
     /* ========================================
        承诺 Promises
     ======================================== */
@@ -1355,10 +1409,23 @@
           相比 Pro 订阅模式，长期使用更划算。
         </p>
         <div class="early-bird-counter">
-          <span>📊</span> 还剩 <strong>100</strong> 个名额（公测期招募中）
+          <span>📊</span> 还剩 <strong>100</strong> 个名额 · 公测期招募中
         </div>
-        <br>
-        <a href="#faq-early-bird" class="early-bird-cta">了解早鸟权益 →</a>
+
+        <div class="early-bird-actions">
+          <a href="https://useknowme.com/sponsor" class="early-bird-cta-primary">
+            💗 立即购买 ¥199 →
+          </a>
+          <a href="#faq-early-bird" class="early-bird-cta-secondary">
+            了解早鸟权益
+          </a>
+        </div>
+
+        <p class="early-bird-howto">
+          购买流程：点击 → 跳转爱发电创作者主页 → 选「<strong>早鸟 · Pro 终身买断 ¥199</strong>」档位 → 用支付宝/微信付款 →
+          在订单留言里写下你的<strong>邮箱</strong>（用于发版通知 + license 发放）。
+          <br>1-3 个工作日内会收到欢迎邮件。
+        </p>
       </div>
 
     </div>
