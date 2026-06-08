@@ -14,6 +14,15 @@ KnowMe 编辑器有三个模式：
 
 <!-- SCREENSHOT: 三种模式横向对比，每个截图标注模式名称。文件名建议：02-editor-three-modes-1.png -->
 
+## 2.1.1 Markdown 与 HTML 双格式
+
+在 KnowMe 里，**Markdown 和 HTML 都是一等公民**：
+
+- **Markdown** 适合顺滑写作 —— 标题、列表、链接、公式随手敲
+- **HTML** 适合精准排版 —— 当你需要 Markdown 表达不了的结构（自定义样式、复杂表格、嵌入块），可以直接写 HTML，编辑器同样渲染
+
+同一篇笔记里两者可以混用，导出时（如[微信公众号导出](/06-export-wechat)）也会一并处理。你的内容、你的格式，不被单一语法束缚。
+
 ## 2.2 标题
 
 ```markdown

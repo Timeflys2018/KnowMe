@@ -33,3 +33,6 @@ Thumbs.db
 .cache/
 .temp/
 .tmp/
+
+# OhMyOpenCode runtime
+.omo/
