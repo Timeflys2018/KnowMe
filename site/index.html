@@ -175,6 +175,8 @@
       background-clip: text;
       color: transparent;
     }
+    /* 让标题短语在小屏不被从词中间拆断，只在标点/换行处折行 */
+    h1.hero-title .nowrap { white-space: nowrap; }
     .hero-tagline {
       font-size: clamp(1rem, 2vw, 1.25rem);
       color: var(--text-muted);
@@ -1161,11 +1163,11 @@
         v1.0 公测期 · 2026-06-06 → 2027-07-06 完全免费
       </div>
 
-      <h1 class="hero-title">你的本地第二大脑，<br>记下你想过的一切。</h1>
+      <h1 class="hero-title"><span class="nowrap">随心记录，</span><span class="nowrap">知识自然生长，</span><br><span class="nowrap">AI 一路同行。</span></h1>
 
       <p class="hero-tagline">
-        本地优先的 AI 知识管理工具 · 把笔记编译成可查询的 Wiki<br>
-        让 Claude Code / Cursor 等 AI 工具共享你的记忆。
+        本地优先的第二大脑 · 一支懂你的 AI 舰队<br>
+        随时调用你的全部知识。
       </p>
 
       <div class="button-group">
