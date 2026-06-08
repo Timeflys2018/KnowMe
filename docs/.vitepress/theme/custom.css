@@ -1,0 +1,46 @@
+/**
+ * 知我 KnowMe 文档站主题
+ * 主色对齐主站 useknowme.com 的 indigo (#6366f1) + amber accent (#f59e0b)
+ */
+
+:root {
+  /* 品牌主色 — 与主站 index.html :root --primary 一致 */
+  --vp-c-brand-1: #4f46e5; /* indigo-600 · 文字/链接（保证对比度） */
+  --vp-c-brand-2: #6366f1; /* indigo-500 · hover */
+  --vp-c-brand-3: #6366f1; /* indigo-500 · 实色按钮底 */
+  --vp-c-brand-soft: rgba(99, 102, 241, 0.14);
+
+  /* hero name 渐变 — 对齐主站 h1.hero-title 的 slate→indigo 渐变 */
+  --vp-home-hero-name-color: transparent;
+  --vp-home-hero-name-background: linear-gradient(135deg, #0f172a 30%, #6366f1 100%);
+
+  /* hero 图标光晕 — indigo→amber，呼应主站 title-accent */
+  --vp-home-hero-image-background-image: linear-gradient(135deg, rgba(99, 102, 241, 0.28) 0%, rgba(245, 158, 11, 0.18) 100%);
+  --vp-home-hero-image-filter: blur(44px);
+}
+
+.dark {
+  --vp-c-brand-1: #a5b4fc; /* indigo-300 · 暗色下提亮 */
+  --vp-c-brand-2: #818cf8;
+  --vp-c-brand-3: #6366f1;
+  --vp-c-brand-soft: rgba(99, 102, 241, 0.20);
+
+  --vp-home-hero-name-background: linear-gradient(135deg, #e2e8f0 30%, #a5b4fc 100%);
+}
+
+/* feature 卡片：emoji 图标在不支持彩色字体的系统上会渲染成灰块，
+   这里给图标容器一个浅色背景 + 圆角，弱化灰块、统一观感 */
+.VPFeature .icon {
+  background: var(--vp-c-brand-soft) !important;
+  border-radius: 10px;
+}
+
+/* feature 卡片 hover：轻微上浮 + indigo 描边，呼应主站 diff-card */
+.VPFeature {
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+}
+.VPFeature:hover {
+  border-color: var(--vp-c-brand-2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+}
