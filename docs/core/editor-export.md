@@ -89,7 +89,7 @@ graph TD
 > 这是一段引用
 ```
 
-<!-- SCREENSHOT[editor-markdown-render.png]: 一篇富内容笔记，标题 / 列表 / 代码块 / 公式 / Mermaid 都有 -->
+![一篇富内容笔记，标题 / 列表 / 代码块 / 公式 / Mermaid 都有](/screenshots/editor-markdown-render.jpg)
 
 ## 列表与折叠
 
@@ -118,7 +118,7 @@ graph TD
 - **标题折叠**:对标题行同样生效,折叠到下一个同级标题前。
 - **折叠状态持久化**:按文件记住,重启后保持。
 
-<!-- SCREENSHOT[editor-list-fold.png]: 嵌套列表 + 1./a./i. 循环 + 折叠效果 -->
+![嵌套列表 + 1./a./i. 循环 + 折叠效果](/screenshots/editor-list-fold.jpg)
 
 ## 高级编辑
 
@@ -130,7 +130,7 @@ graph TD
 - **Selection toolbar** —— 选中文字浮现工具栏,做格式化(以及 [问知我](/ai/collaboration))。
 - **Wikilink 自动补全** —— 输入 `[[` 弹出已有词条搜索补全。
 
-<!-- SCREENSHOT[editor-slash-menu.png]: 空行敲 / 唤出的 Slash 插入菜单 -->
+![空行敲 / 唤出的 Slash 插入菜单](/screenshots/editor-slash-menu.jpg)
 
 ## 查找 / 替换
 

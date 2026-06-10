@@ -30,7 +30,7 @@
 - 看到提示 **`Drop a .md file anywhere to ingest`** —— 直接把任意 markdown 文件拖进窗口即可。
 - 随时按 **⌘K**(macOS)/ **Ctrl+K**(Win/Linux)搜索。
 
-<!-- SCREENSHOT[quickstart-welcome.png]: 首次启动的欢迎页，显示 "Drop a .md file..." 拖入提示 -->
+![首次启动的欢迎页，显示 "Drop a .md file..." 拖入提示](/screenshots/quickstart-welcome.jpg)
 
 ::: tip vault 在哪？
 所有数据存在你本地。原始笔记目录路径可以在欢迎页和 [配置中心 → 目录](/settings) 里看到、复制、修改。不上传任何云。
@@ -53,7 +53,7 @@
 
 知我**默认自动保存**,输入停顿后自动写盘;也可随时 `⌘S` / `Ctrl+S`。
 
-<!-- SCREENSHOT[quickstart-first-note.png]: 编辑器里写第一篇笔记，能看到 wikilink 高亮 + 任务列表 + 公式渲染 -->
+![编辑器里写第一篇笔记，能看到 wikilink 高亮 + 任务列表 + 公式渲染](/screenshots/quickstart-first-note.jpg)
 
 ### 三种编辑模式
 
@@ -92,7 +92,7 @@
 3. 编译结果**先进 [Review queue](/core/knowledge-engine#review-queue)**,你确认后才进知识库——AI 不会静默污染你的笔记。
 4. 在左栏 `WIKI` 区查看生成的词条。
 
-<!-- SCREENSHOT[quickstart-compiled-wiki.png]: 一篇 raw note 编译成 wiki 后，左栏 WIKI 区出现新词条 -->
+![一篇 raw note 编译成 wiki 后，左栏 WIKI 区出现新词条](/screenshots/quickstart-compiled-wiki.jpg)
 
 ## 推荐的第一个闭环
 

@@ -75,6 +75,10 @@ Claude Code：[search "LLM Wiki" → 找到 5 条]
 你的核心观点是 …
 ```
 
+下面是 PyClaw（外部 agent）通过 MCP 调用知我工具回答问题的实际效果——它真实调用了 `knowme__search` 和 `knowme__get_page` 两个工具:
+
+![PyClaw 通过 MCP 调用知我工具问答](/screenshots/mcp-example.jpg)
+
 ## Agent 内置工具
 
 除了外部 MCP,知我内部的 Agent(在 [Agents 设置](/start/llm-setup)里配)可调用 8 个内置工具:

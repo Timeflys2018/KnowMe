@@ -41,7 +41,7 @@
 
 > 这是知我与 Obsidian 的核心差异:**LLM 协助提取,但人工把关**,避免 AI 噪声污染知识库。
 
-<!-- SCREENSHOT[review-queue.png]: Review queue 页面，待审核条目 + 接受 / 拒绝 -->
+![Review queue 页面，待审核条目 + 接受 / 拒绝](/screenshots/review-queue.jpg)
 
 ## Wikilink
 
@@ -73,6 +73,8 @@ Wikilink 是 `[[词条]]` 形式的内部链接,把笔记织成网络。
 
 其中 **Timeline(时间线)** 值得单说:它把这个词条相关的事件按时间排好,每条来自某篇原始笔记,记录"这件事是怎么随时间发生、积累的"。来自 [Wiki 改进](/ai/collaboration) 的条目会标「来自改进」。
 
+![词条页底部的 Timeline 时间线](/screenshots/timeline.jpg)
+
 ::: tip 页内 Related vs 右栏「相关」
 两者不是一回事:
 - **页内 Related** 是 **LLM 编译时声明**的相关词条(静态,出现在 Wiki 页头)。
@@ -93,7 +95,7 @@ Co-source 关系是知我的特色:从同一篇笔记里抽出的实体天然相
 
 > 反向链接是**结构性**的(谁链到我);页内 Related 是 **LLM 语义判定**的(谁和我相关)——两者不同,可能重叠。
 
-<!-- SCREENSHOT[wiki-backlinks.png]: Wiki 页右栏「链接」tab，Wikilinks / Mentions / Co-sourced 三类 -->
+![Wiki 页右栏「链接」tab，Wikilinks / Mentions / Co-sourced 三类](/screenshots/wiki-backlinks.jpg)
 
 ## 图谱
 

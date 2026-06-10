@@ -32,8 +32,8 @@
 
 填完点「测试连接」确认通,再「保存」。
 
-<!-- SCREENSHOT[llm-providers-list.png]: Providers 列表，显示已配置的 provider 卡片 -->
-<!-- SCREENSHOT[llm-provider-form.png]: 添加/编辑 Provider 的表单（协议下拉 / Base URL / 模型 / API Key），真实 key 已马赛克 -->
+![Providers 列表，显示已配置的 provider 卡片](/screenshots/llm-providers-list.jpg)
+![添加/编辑 Provider 的表单（协议下拉 / Base URL / 模型 / API Key），真实 key 已马赛克](/screenshots/llm-provider-form.jpg)
 
 ### 接入国产模型
 
@@ -69,7 +69,7 @@
   - `Yolo` —— 允许写入(写操作仍受工具白名单约束)。
 - **可用工具** —— 该 Agent 能调用哪些[内置工具](/integrate/mcp#agent-内置工具)。
 
-<!-- SCREENSHOT[llm-agents.png]: Agents 屏幕，Wiki / Orchestrator / Comment Agent 及其 Tier / Provider 绑定 -->
+![Agents 屏幕，Wiki / Orchestrator / Comment Agent 及其 Tier / Provider 绑定](/screenshots/llm-agents.jpg)
 
 ::: tip 最小可用配置
 只要给 **Wiki Agent** 绑一个 Provider,就能开始编译 Wiki。想用 Chat,再给 **Orchestrator** 绑一个。
@@ -87,7 +87,7 @@
 
 选「@ 立即 + 其余批量」时,可开启**批量调度**并设定每日处理时间。
 
-<!-- SCREENSHOT[llm-reply-modes.png]: 回复模式屏幕，评论回复模式 + Wiki 改进模式 + 三档单选 + 批量调度时间 -->
+![回复模式屏幕，评论回复模式 + Wiki 改进模式 + 三档单选 + 批量调度时间](/screenshots/llm-reply-modes.jpg)
 
 ## 隐私说明
 

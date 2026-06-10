@@ -4,7 +4,7 @@
 
 涉及 AI 模型的详细配置(Providers / Agents / 回复模式)单独成篇,见 [配置 LLM](/start/llm-setup);本页讲其余设置项。
 
-<!-- SCREENSHOT[settings-overview.png]: 设置面板全貌，左侧三组导航：通用 / AI 基建 / 系统 -->
+![设置面板全貌，左侧三组导航：通用 / AI 基建 / 系统](/screenshots/settings-overview.jpg)
 
 ## 通用
 
@@ -29,7 +29,7 @@
 - **实时编辑** 开关:ON 是 Live 内联渲染;OFF 是经典「编辑 ↔ 预览」切换(`⌘E`)。
 - **排版**:字体(无衬线 / 衬线 / 等宽)、字号、行间距。
 
-<!-- SCREENSHOT[settings-appearance.png]: 外观设置，Mode / Theme / Accent 12 色 + 排版 -->
+![外观设置，Mode / Theme / Accent 12 色 + 排版](/screenshots/settings-appearance.jpg)
 
 ### 目录
 
@@ -64,7 +64,7 @@
 
 操作前有确认弹窗,清楚列出"X 个图片 → 回收站,Y 条评论 → 永久删除"。
 
-<!-- SCREENSHOT[settings-maintenance.png]: 清理 / 维护屏幕，扫描范围 + 保留窗口 -->
+![清理 / 维护屏幕，扫描范围 + 保留窗口](/screenshots/settings-maintenance.jpg)
 
 ### 快捷键
 
