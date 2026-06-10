@@ -25,7 +25,7 @@ export default defineConfig({
 
     nav: [
       { text: '主页', link: 'https://useknowme.com', target: '_self' },
-      { text: '快速上手', link: '/01-quickstart' },
+      { text: '快速上手', link: '/start/quickstart' },
       { text: '下载', link: 'https://useknowme.com/#download', target: '_self' },
       { text: 'GitHub', link: 'https://github.com/Timeflys2018/KnowMe' },
       { text: '赞助', link: 'https://useknowme.com/sponsor', target: '_self' },
@@ -35,32 +35,43 @@ export default defineConfig({
       {
         text: '入门',
         items: [
-          { text: '0. 总览（README）', link: '/' },
-          { text: '1. 快速上手', link: '/01-quickstart' },
-        ],
-      },
-      {
-        text: '核心功能',
-        items: [
-          { text: '2. 编辑器三模 · Markdown', link: '/02-editor' },
-          { text: '3. Wikilink · 知识图谱', link: '/03-wikilink-and-knowledge' },
-          { text: '4. 列表 · 折叠', link: '/04-list-and-fold' },
-          { text: '5. 多标签页 · 挂载', link: '/05-tabs-and-mounts' },
-        ],
-      },
-      {
-        text: '进阶',
-        items: [
-          { text: '6. 导出微信公众号', link: '/06-export-wechat' },
-          { text: '7. MCP · AI Agent', link: '/07-mcp-and-agents' },
+          { text: '欢迎与导览', link: '/' },
+          { text: '快速上手', link: '/start/quickstart' },
+          { text: '配置 LLM', link: '/start/llm-setup' },
         ],
       },
       {
         text: '配置',
         items: [
-          { text: '8. 设置 · 主题', link: '/08-settings-and-themes' },
-          { text: '9. 快捷键速查', link: '/09-shortcuts' },
-          { text: '10. FAQ · 排错', link: '/10-faq-and-troubleshooting' },
+          { text: '配置中心', link: '/settings' },
+        ],
+      },
+      {
+        text: '核心功能',
+        items: [
+          { text: '编辑与导出', link: '/core/editor-export' },
+          { text: '知识引擎', link: '/core/knowledge-engine' },
+        ],
+      },
+      {
+        text: 'AI 能力',
+        items: [
+          { text: 'AI 协作', link: '/ai/collaboration' },
+          { text: 'Chat 对话', link: '/ai/chat' },
+        ],
+      },
+      {
+        text: '集成',
+        items: [
+          { text: 'MCP 接入', link: '/integrate/mcp' },
+          { text: 'Agent Fleet（v1.5）', link: '/integrate/agent-fleet' },
+        ],
+      },
+      {
+        text: '参考',
+        items: [
+          { text: '快捷键速查', link: '/reference/shortcuts' },
+          { text: 'FAQ + 排错', link: '/reference/faq' },
         ],
       },
     ],

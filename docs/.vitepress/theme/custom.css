@@ -44,3 +44,24 @@
   transform: translateY(-2px);
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.05);
 }
+
+/* sidebar 分组标题 vs 文档项：拉开视觉层级
+   分组标题（核心功能 / 配置 / AI 能力）做成 indigo 大写小标，
+   文档项保持常规，避免两者字重接近、难以区分 */
+.VPSidebarItem.level-0 > .item > .text {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--vp-c-brand-1);
+}
+/* 文档项（level-1）：常规字重、正文色，明显区别于分组标题 */
+.VPSidebarItem.level-1 > .item .link .text {
+  font-size: 14px;
+  font-weight: 400;
+}
+/* 当前选中项：加粗 + 主色，强化"我在哪一页" */
+.VPSidebarItem.level-1.is-active > .item .link .text {
+  font-weight: 600;
+  color: var(--vp-c-brand-1);
+}

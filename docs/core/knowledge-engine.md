@@ -1,0 +1,122 @@
+# 知识引擎
+
+知识引擎是知我的"大脑"——它把你的原始笔记编译成结构化、可查询、可互链的 Wiki,并维护实体、链接、图谱和时间线。这正是知我区别于普通 Markdown 笔记的地方。
+
+## 笔记 → Wiki 编译
+
+把原始笔记倾倒进知我,引擎会自动跑一条编译管线:
+
+```text
+原始笔记 → 分析（抽取实体/概念/来源） → 生成 wiki 词条 → 合并去重 → 建立链接 + 时间线
+```
+
+- 你只管**写原材料**(笔记 / 聊天记录 / 剪藏)。
+- AI 负责**整理成 Wiki**——这就是 [LLM Wiki 流派](https://github.com/Timeflys2018/KnowMe)的核心理念:人倾倒,AI 编译。
+- 编译需要先[配置 LLM](/start/llm-setup)。
+
+::: tip 人工把关,不污染
+所有编译结果先进 [Review queue](#review-queue),你确认后才进知识库。AI 不会静默改你的笔记。
+:::
+
+## 三种实体类型
+
+引擎从笔记里抽取三类节点:
+
+| 类型 | 用途 | 例子 |
+|---|---|---|
+| **Entity（实体）** | 具体的人 / 物 / 项目 | Karpathy、知我、PyClaw |
+| **Concept（概念）** | 抽象概念 | LLM、CoT、RAG |
+| **Source（来源）** | 信息来源 | 某篇文章、某本书、某个仓库 |
+
+类型由 LLM 编译自动推断(也可由笔记 frontmatter `type:` 指定)。不同类型在界面里用不同强调色区分。
+
+<!-- SCREENSHOT[wiki-page.png]: 一个 Wiki 词条页，显示 entity / concept / source 类型 + 正文 -->
+
+## Review queue
+
+引擎从原始笔记**抽取候选**实体,但**不直接进 Wiki**——先进 Review queue 等你审核:
+
+- **接受** → 进 Wiki,可被 wikilink 引用。
+- **拒绝** → 标记不再提取。
+
+支持**批量操作**。sidebar 底部有「Review queue」入口,带数字徽章显示待审核数。
+
+> 这是知我与 Obsidian 的核心差异:**LLM 协助提取,但人工把关**,避免 AI 噪声污染知识库。
+
+<!-- SCREENSHOT[review-queue.png]: Review queue 页面，待审核条目 + 接受 / 拒绝 -->
+
+## Wikilink
+
+Wikilink 是 `[[词条]]` 形式的内部链接,把笔记织成网络。
+
+```markdown
+今天读了 [[Karpathy]] 关于 [[LLM]] 的文章。
+```
+
+- **自动补全**:输入 `[[` 弹出已有词条搜索列表,也可输入新词条名(创建待编译词条)。
+- **Hover 预览**:悬停 wikilink 浮出预览卡——标题、类型、摘要、backlinks 数。
+- **活链 vs 死链**:已有词条 = 实线 + 类型色;还没有 = 虚线 + 灰色,点击进入"创建新词条"。
+
+<!-- SCREENSHOT[wiki-hover-chip.png]: Hover wikilink 弹出的预览 chip -->
+
+## Backlinks 与关系
+
+打开任一 Wiki 词条页,底部有 **Backlinks** 区,按关系类型分组:
+
+| 关系 | 含义 |
+|---|---|
+| **Wikilinks** | 直接 `[[]]` 引用(最强) |
+| **Mentions** | 提到了词条名但没用 `[[]]` 包裹 |
+| **Co-sourced** | 来自同一篇原始笔记的"兄弟"词条 |
+
+Co-source 关系是知我的特色:从同一篇笔记里抽出的实体天然相关,引擎会帮你建立这层联系。
+
+<!-- SCREENSHOT[wiki-backlinks.png]: Wiki 词条页底部 backlinks 面板，Wikilinks / Mentions / Co-sourced 三类 -->
+
+## 图谱与时间线
+
+- **知识图谱(Graph)** —— 把实体和它们的链接可视化成网络,用来发现意料之外的关联。图谱适合"宏观看结构",细节仍以词条页为准。
+- **时间线(Timeline)** —— 词条按时间整理的结构化条目,记录知识是怎么随时间积累的。
+
+<!-- SCREENSHOT[graph.png]: 知识图谱视图（可选）-->
+<!-- SCREENSHOT[timeline.png]: 词条时间线（可选）-->
+
+## 全文搜索
+
+知我用 SQLite FTS5 索引所有 Wiki 词条,配合中文分词(jieba),`⌘K` 快速全文检索。
+
+## 多挂载：迁移与外部目录
+
+不用搬家——把现有的 Obsidian / iCloud / 任意文件夹**挂载**进知我即可。
+
+在[配置中心 → 目录](/settings)添加挂载后,sidebar 出现新的目录组。
+
+| 维度 | RAW NOTES（主目录） | 外部挂载 |
+|---|---|---|
+| 编辑 | 可读可写 | 可读可写 |
+| 进知识库索引 | ✅ 进 FTS / Wiki / MCP | ❌ **不进索引**(隔离) |
+| 典型用途 | 你的主力笔记 | 把老 Obsidian 笔记拖进来编辑 / 导出 |
+
+挂载的文件**不会被编译进 Wiki**——这是有意的隔离,让你能安全地浏览、编辑外部笔记而不污染知识库。
+
+<!-- SCREENSHOT[mounts.png]: sidebar 中 RAW NOTES + 外部挂载两组目录 -->
+
+### 文件冲突保护
+
+若知我打开某文件时,外部程序(Obsidian / VS Code)也改了同一文件,知我检测到变化会弹三按钮:**覆盖 / 重载外部 / 取消**,不会静默丢失你的改动。
+
+## 多标签页
+
+类浏览器的多 tab 编辑:
+
+- `⌘T` 新建 · `⌘W` 关闭 · `⌘⇧T` 重开最近关闭 · `⌘1`~`⌘9` 切换。
+- 拖拽 tab 重排;每个 tab 独立的编辑历史 / 滚动 / 光标位置。
+- 关闭有未保存改动的 tab 会弹「取消 / 丢弃 / 保存」。
+
+侧栏文件右键支持新建 / 重命名 / 删除(删除优先进系统回收站)。
+
+## 接下来
+
+- 让 AI 在词条上帮你改进 → [AI 协作](/ai/collaboration)
+- 把知识库暴露给 Claude / Cursor → [MCP 接入](/integrate/mcp)
+- 配置编译引擎(并发 / 定时)→ [配置中心](/settings)
