@@ -30,8 +30,6 @@
 
 类型由 LLM 编译自动推断(也可由笔记 frontmatter `type:` 指定)。不同类型在界面里用不同强调色区分。
 
-<!-- SCREENSHOT[wiki-page.png]: 一个 Wiki 词条页，显示 entity / concept / source 类型 + 正文 -->
-
 ## Review queue
 
 引擎从原始笔记**抽取候选**实体,但**不直接进 Wiki**——先进 Review queue 等你审核:
@@ -71,7 +69,7 @@ Wikilink 是 `[[词条]]` 形式的内部链接,把笔记织成网络。
 | **正文** | AI 编译出的结构化内容 | LLM 生成 |
 | **Timeline（时间线）** | 按时间排列的事件条目,每条标注来源 | 从原始笔记抽取的事件 |
 
-<!-- SCREENSHOT[wiki-page.png]: Wiki 词条页全貌：类型徽章 + Sources / Related + 正文 + Timeline -->
+![Wiki 词条页：类型徽章 + Sources / Related + 正文 + Timeline，hover wikilink 显示预览卡](/screenshots/wiki-page.png)
 
 其中 **Timeline(时间线)** 值得单说:它把这个词条相关的事件按时间排好,每条来自某篇原始笔记,记录"这件事是怎么随时间发生、积累的"。来自 [Wiki 改进](/ai/collaboration) 的条目会标「来自改进」。
 
@@ -119,7 +117,7 @@ Co-source 关系是知我的特色:从同一篇笔记里抽出的实体天然相
 | **相关** | 检索式相关页面——基于当前段落召回相关 Wiki / 笔记(需索引;仅笔记页) |
 | **链接** | Wiki 的[反向链接](#反向链接-右栏「链接」)(仅 Wiki 页) |
 
-<!-- SCREENSHOT[right-panel-tabs.png]: 笔记页右栏 交流 / 评论 / 相关 三个标签 -->
+![笔记页右栏面板：交流 / 评论 / 相关 三个标签](/screenshots/right-panel-tabs.png)
 
 ## 全文搜索
 
@@ -128,6 +126,8 @@ Co-source 关系是知我的特色:从同一篇笔记里抽出的实体天然相
 ## 相关页面（右栏「相关」）
 
 在**笔记页**的右栏面板有一个 **「相关」** tab,基于检索为你当前段落找出**相关的 wiki 词条和笔记**,不用手动搜就能顺藤摸瓜。
+
+![笔记页右栏「相关」tab：检索出的相关 wiki 列表](/screenshots/related-panel.png)
 
 > 「相关」需要内容已被索引,所以只在主笔记目录的笔记上出现;[外部挂载](#多挂载-迁移与外部目录)的文件不索引,因此没有这个 tab。
 
