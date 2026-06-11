@@ -1,10 +1,10 @@
 # MCP 接入
 
-知我内置 MCP(Model Context Protocol)server,让 Claude Code / Cursor / 任何 MCP 客户端都能直接读写你的笔记库——**一份记忆,所有 AI 都能用**。写操作全部进 [Review queue](/core/knowledge-engine#review-queue) 等你确认。
+知我内置 MCP(Model Context Protocol)server,让 Claude Code / Cursor / 任何 MCP 客户端都能直接读取你的笔记库——**一份记忆/知识层,所有 AI 都能用**。当前对外只读(供 AI 消费),写入能力规划中。
 
 ## MCP 是什么
 
-MCP 是 Anthropic 在 2024 年推出的协议,让 LLM agent 通过统一接口调用外部工具 / 数据源。知我实现了一个 MCP server——**外部 agent 把知我当成记忆 / 知识层来读写**。
+MCP 是 Anthropic 在 2024 年推出的协议,让 LLM agent 通过统一接口调用外部工具 / 数据源。知我实现了一个 MCP server——**外部 agent 把知我当成记忆 / 知识层来读取**。
 
 ## 启动 MCP server
 
@@ -79,9 +79,11 @@ Claude Code：[search "LLM Wiki" → 找到 5 条]
 
 ![PyClaw 通过 MCP 调用知我工具问答](/screenshots/mcp-example.jpg)
 
-## Agent 内置工具
+## Agent 内置工具(app 内部,非对外 MCP)
 
-除了外部 MCP,知我内部的 Agent(在 [Agents 设置](/start/llm-setup)里配)可调用 8 个内置工具:
+> 区分清楚:**对外 MCP server 当前只读**(上面 5 个工具,供 Claude Code 等外部 agent 消费)。下面是**知我 app 内部**的 Agent(在 [Agents 设置](/start/llm-setup)里配)能用的工具——这是笔记本身的 AI 能力([问知我 / @知我 / Wiki 改进](/ai/collaboration)),和对外 MCP 是两回事。
+
+内部 Agent 可调用 8 个内置工具:
 
 | 工具 | 类别 | 作用 |
 |---|---|---|
@@ -96,13 +98,11 @@ Claude Code：[search "LLM Wiki" → 找到 5 条]
 
 写类工具(`write_note` / `edit_note` / `reingest_page`)**需审批**,且只对 Tier 为 `Yolo` 的 Agent 生效。
 
-## 写权限与安全
+## 写权限说明
 
-知我的 MCP / Agent 写入遵循 safety-first:
-
-- 写入**不直接落盘**,全部进 [Review queue](/core/knowledge-engine#review-queue)。
-- 你确认前,AI 改不动任何已有内容。
-- 这让 AI 能帮你沉淀知识,同时你对知识库有最终控制权。
+- **对外 MCP server:当前只读。** 外部 agent(Claude Code / Cursor)只能查询、读取你的知识库,不能写入。
+- **写入能力规划中。** 因为笔记本身已有 AI 写入能力([问知我 / @知我 / Wiki 改进](/ai/collaboration)),对外 MCP 是否开放写入,视需求后续评估。
+- **内部 Agent 写入遵循 safety-first**:即便内部 Agent 写入,也**不直接落盘**,全部进 [Review queue](/core/knowledge-engine#review-queue) 等你确认——AI 改不动你没看过的内容。
 
 ## 与 PyClaw 互通
 
