@@ -39,8 +39,8 @@ See [`docs/`](./docs/) for the full user guide (10 chapters). Currently in Chine
 | Use case | Price |
 |---|---|
 | **Personal use** | Free |
-| **Lifetime early-bird** (first 100 users) | $19.9 one-time (includes all future versions) |
-| **Commercial use** (company / team) | $50 / year / user |
+| **Early-bird Pro 3-year** (first 100 users) | Price TBD · one-time payment for 3 years of local Pro capabilities; hosted cloud services billed separately |
+| **Commercial use** (company / team) | TBD during public beta; paid commercial license starts with Pro launch |
 
 See [EULA](./EULA.md) for details. Honor system — we trust you.
 
