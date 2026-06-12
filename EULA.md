@@ -25,10 +25,10 @@ We do not employ DRM, license servers, or telemetry to enforce the commercial li
 | Use case | Price |
 |---|---|
 | Personal use | Free |
-| Lifetime early-bird (first 100 users, any use case) | $19.9 USD one-time |
-| Commercial license (per user / per year) | $50 USD |
+| Early-bird Pro 3-year (first 100 users) | Price TBD; one-time payment for 3 years of local Pro capabilities |
+| Commercial license (per user / per year) | TBD; public beta is free for commercial use until the Pro launch |
 
-The Lifetime Early-Bird tier includes all future major versions for the duration of the Software's existence. Commercial Licenses cover one calendar year and must be renewed annually for continued commercial use.
+The Early-Bird Pro 3-year tier covers local Pro capabilities and local major-version updates for 3 years after Pro launch. Hosted cloud services such as cloud sync, hosted AI, cloud indexing, and remote APIs are billed separately because they have ongoing operating costs. Commercial Licenses cover one calendar year and must be renewed annually for continued commercial use after the public beta.
 
 Pricing in CNY and other currencies will follow at v1+1-2 months.
 
@@ -86,7 +86,7 @@ Questions about this EULA: file a [Question issue](https://github.com/Timeflys20
 > **Plain-language summary** (not legally binding, but our intent):
 >
 > - Free for personal use, no strings attached.
-> - $19.9 lifetime early-bird if you want to support the project (first 100 users).
-> - $50/year if you use it at work.
+> - Early-bird Pro 3-year if you want to buy future local Pro capabilities early (first 100 users; price TBD).
+> - Commercial licensing is free during public beta; paid commercial terms will be announced before Pro launch.
 > - We don't track you, don't sell your data, and don't lock features behind license servers.
 > - Honor system. Be cool.
