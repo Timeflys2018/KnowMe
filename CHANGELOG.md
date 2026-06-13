@@ -8,11 +8,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 ## [Unreleased]
 
+### Added (recent pre-v1 builds)
+- Wiki page right sidebar now has a unified **脉络 (relations)** panel: semantic relations plus backlinks in one place
+- Rendered tables / columns reach prose parity: selections support comments, inline formatting, and wikilink interactions, with more precise comment highlighting
+- Knowledge spaces (vaults): switching the main directory switches its wiki / comments / database together, with per-space isolation
+- External mounts can be scoped **global / current-space** (new mounts default to global)
+- AI collaboration polish: chat sessions / fullscreen / popout, `@知我` ghost-text autocomplete, redesigned comments (anchors, status filter, numbering), unified Wiki improve feedback
+- Review queue batch operations and custom reply-mode scheduling
+- Read-only built-in keyboard shortcuts panel in Settings
+
 ### Added (planned for v1)
 - Local-only logging UI ("Open log directory" in Settings) — D2 from owner sign-off
 - License-key entry UI for Commercial / Lifetime tiers — D5 + D6 from owner sign-off
 - Cloudflare R2 mirror for installer downloads (China CDN) — to be deployed at v1 ship time
 - 知识星球 (Zhishi Xingqiu) + theme-pack purchase channels (CN) — D8
+
+### Changed (recent pre-v1 builds)
+- Wiki relationship model: removed the noisy "Co-sourced" backlink category; relations now focus on semantic relations, wikilinks, and mentions
 
 ### Changed (planned for v1)
 - Public release readiness pass: README_CN as primary, English secondary
@@ -34,7 +46,7 @@ Pre-v1 development happened in a private repository. Highlights of the in-progre
   - Mermaid diagram rendering
 
 - **Knowledge graph**:
-  - Entity / Concept / Source three-class auto-extraction via LLM
+  - Six built-in Wiki types auto-extracted via LLM: Person / Project / Entity / Concept / Source / Decision
   - Review queue with Pending / Resolved / All views — Phase 12.67
   - SQLite-backed FTS for fast knowledge-base search
   - Page-slug-aware wikilink resolution

@@ -13,7 +13,11 @@
 |---|---|
 | **Local-first** | All data lives on your machine. Nothing uploads to any cloud. Privacy is 100% yours. |
 | **AI-compiled notes** | Raw notes / chats / clippings → LLM auto-extracts entities, concepts, sources → compiled into a wiki-style knowledge graph |
-| **Bidirectional MCP** | Both consumed by AI agents (Claude Code / Cursor read your knowledge base directly) and consuming other agents' output |
+| **Ask KnowMe** | Select any text → "Ask KnowMe" → AI answers with your knowledge base, streamed, saved as a comment |
+| **Comment @KnowMe** | Write `@知我 ...` in a comment → AI replies automatically (all-instant / @-only / @+batch modes) |
+| **Wiki improve** | Inaccurate entry? Select + describe the fix → AI recompiles the entity; changes go through the review queue |
+| **脉络 (relations)** | Wiki pages show a unified relations panel: semantic relations + backlinks in one place |
+| **Bidirectional MCP** | Consumed by AI agents (Claude Code / Cursor read your knowledge base directly, read-only for now) and consuming other agents' output |
 | **Multi-channel publishing** | One-click export to WeChat Official Account / Markdown / coming: 小红书, Medium |
 | **Live editor** | CodeMirror 6 based, with live markdown rendering, list folding, find/replace, wikilink hover, KaTeX math |
 | **Review queue** | LLM-extracted content never directly pollutes your knowledge base — everything goes through a review queue you control |
