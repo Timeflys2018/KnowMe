@@ -70,7 +70,7 @@
 
 ### 快捷键
 
-设置里有快捷键 section(标注**即将推出**);完整快捷键见 [快捷键速查](/reference/shortcuts)。
+设置里有快捷键 section,只读展示内置键盘快捷键;完整列表见 [快捷键速查](/reference/shortcuts)。
 
 ## 数据存储位置
 
