@@ -18,3 +18,10 @@
 # Sponsor page should bypass cache (track every scan)
 /sponsor.html
   Cache-Control: public, max-age=60
+
+# Version metadata consumed by desktop version-nudge pipeline
+/meta.json
+  Content-Type: application/json; charset=utf-8
+  Cache-Control: public, max-age=300, must-revalidate
+  X-Content-Type-Options: nosniff
+  Access-Control-Allow-Origin: *
