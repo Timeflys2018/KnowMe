@@ -22,7 +22,7 @@ hero:
 features:
   - icon: ✍️
     title: 写，AI 整理成 Wiki
-    details: 倾倒原始笔记，AI 自动抽取实体 / 概念 / 来源，编译成结构化 Wiki，进 Review queue 等你确认。
+    details: 倾倒原始笔记，AI 自动抽取六类 Wiki 节点（人物 / 项目 / 实体 / 概念 / 来源 / 决策），编译成结构化 Wiki，进 Review queue 等你确认。
     link: /core/knowledge-engine
     linkText: 了解知识引擎
   - icon: 💬
@@ -61,7 +61,7 @@ features:
 
 ## 五大核心能力
 
-1. **写，AI 整理成 wiki** —— 倾倒原始笔记，自动抽取实体 / 概念 / 来源，编译成结构化 Wiki。
+1. **写，AI 整理成 wiki** —— 倾倒原始笔记，自动抽取六类节点（人物 / 项目 / 实体 / 概念 / 来源 / 决策），编译成结构化 Wiki。
 2. **圈选，随时问知我** —— 选任意文本点「问知我」，流式回复并持久化为评论。
 3. **评论 @知我，AI 答疑** —— 评论里 `@知我`，AI 自动回复，三档可配置（local-first 不打扰）。
 4. **Wiki 选词，AI 改进** —— 圈选 Wiki 段落 + 写改进意见，AI 重新编译该词条。
