@@ -37,5 +37,8 @@ Thumbs.db
 # OhMyOpenCode runtime
 .omo/
 
+# OpenCode / OpenSpec tooling
+.opencode/
+
 # Local planning drafts
 plans/
