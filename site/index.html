@@ -270,6 +270,9 @@
        Download Section
     ======================================== */
     .download-section { text-align: center; }
+    /* 这些元素在 display:inline-flex / grid 时会盖掉 [hidden] 的默认 display:none，
+       发版切换时需要强制隐藏。 */
+    .download-section [hidden] { display: none !important; }
     .download-intro {
       max-width: 580px;
       margin: 1rem auto 2rem;
@@ -471,8 +474,16 @@
     .platform-name { font-weight: 600; font-size: 0.95rem; }
     .platform-arch { font-size: 0.8rem; color: var(--text-muted); }
 
+    .download-live-note {
+      margin-top: 1.75rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+    .download-live-note a { color: var(--primary); text-decoration: none; }
+    .download-live-note a:hover { text-decoration: underline; }
     .download-live-meta {
-      margin-top: 2rem;
+      margin-top: 0.75rem;
       font-size: 0.85rem;
       color: var(--text-muted);
     }
@@ -1270,20 +1281,16 @@
               <span class="platform-name">Windows</span>
               <span class="platform-arch">x64 · Win 10/11</span>
             </a>
-            <a class="download-platform-card" data-os="linux" href="#">
-              <span class="platform-icon">🐧</span>
-              <span class="platform-name">Linux</span>
-              <span class="platform-arch">AppImage · x64</span>
-            </a>
           </div>
         </details>
 
+        <p class="download-live-note">
+          公测版（beta）· 安装包未做代码签名，首次打开可能需要在系统里手动放行 ·
+          <a href="https://github.com/Timeflys2018/KnowMe/releases" target="_blank" rel="noopener">查看安装说明 →</a>
+        </p>
+
         <p class="download-live-meta">
           <a href="https://github.com/Timeflys2018/KnowMe/releases">查看所有版本与发行说明 →</a>
-          <span class="download-live-sep">·</span>
-          <a href="https://github.com/Timeflys2018/KnowMe/releases/latest/download/checksums.txt">SHA256 校验和</a>
-          <span class="download-live-sep">·</span>
-          <span class="download-live-mirror">国内下载慢？<a href="#download" id="download-mirror-toggle">使用镜像源</a></span>
         </p>
       </div>
     </div>
@@ -1816,37 +1823,49 @@
     (function () {
       'use strict';
 
-      // 发版配置：v1.0.0 安装包就绪后改 RELEASED = true 并填准 FILES 文件名
-      var RELEASED = false;
-      var VERSION = 'v1.0.0';
+      // 发版配置：0.1.0 公测版，已作为正式 Latest Release 发布。
+      // 发新版时只需改 VERSION 一个常量（文件名内嵌版本号）；
+      // 下载路径走 /latest/，tag 自动指向最新版本，无需手动改。
+      var RELEASED = true;
+      var VERSION = '0.1.0';
       var REPO = 'Timeflys2018/KnowMe';
       var FILES = {
-        'mac-arm':   'KnowMe-' + VERSION + '-mac-arm64.dmg',
-        'mac-intel': 'KnowMe-' + VERSION + '-mac-x64.dmg',
-        'win':       'KnowMe-' + VERSION + '-win-x64.exe',
-        'linux':     'KnowMe-' + VERSION + '-linux-x64.AppImage'
+        'mac-arm':   'KnowMe-' + VERSION + '-arm64.dmg',
+        'mac-intel': 'KnowMe-' + VERSION + '.dmg',
+        'win':       'KnowMe-Setup-' + VERSION + '.exe'
       };
 
-      function ghUrl(platform, mirror) {
-        var base = mirror
-          ? 'https://ghproxy.com/https://github.com/' + REPO
-          : 'https://github.com/' + REPO;
-        return base + '/releases/latest/download/' + FILES[platform];
+      function ghUrl(platform) {
+        // TODO: R2 mirror base —— 国内镜像就绪后在此处接入备用下载域名
+        // var mirrorBase = 'https://<r2-domain>/v' + VERSION + '/';
+        // On new release: bump VERSION (filenames embed it). Path uses /latest/ so the tag is automatic.
+        var base = 'https://github.com/' + REPO + '/releases/latest/download/';
+        return base + FILES[platform];
       }
 
+      // 同步返回粗判平台；Mac 架构默认 arm64，再由 refineMacArch() 异步校正。
       function detectPlatform() {
         var ua = navigator.userAgent;
         var p = navigator.platform || '';
         if (/Win/i.test(p) || /Windows/i.test(ua)) return 'win';
-        if (/Linux/i.test(p) && !/Android/i.test(ua)) return 'linux';
-        if (/Mac/i.test(p)) {
-          // Apple Silicon 检测：navigator.userAgentData.architecture（Chrome 90+）
-          if (navigator.userAgentData && navigator.userAgentData.getHighEntropyValues) {
-            return 'mac-arm';
-          }
-          return 'mac-arm';
-        }
+        if (/Mac/i.test(p) || /Mac/i.test(ua)) return 'mac-arm';
         return 'mac-arm';
+      }
+
+      // Chromium 上用 high-entropy UA 探测 CPU 架构，区分 Intel / Apple Silicon。
+      // resolve 'mac-intel' 或 'mac-arm'；不可用时回退 null（保持默认 mac-arm）。
+      function refineMacArch() {
+        if (navigator.userAgentData && navigator.userAgentData.getHighEntropyValues) {
+          return navigator.userAgentData.getHighEntropyValues(['architecture'])
+            .then(function (hv) {
+              var arch = (hv && hv.architecture) || '';
+              if (/arm/i.test(arch)) return 'mac-arm';
+              if (/x86|x64/i.test(arch)) return 'mac-intel';
+              return null;
+            })
+            .catch(function () { return null; });
+        }
+        return Promise.resolve(null);
       }
 
       var preEl = document.getElementById('download-pre');
@@ -1863,46 +1882,46 @@
       preEl.hidden = true;
       liveEl.hidden = false;
       if (prepGrid) prepGrid.hidden = true;
-      if (titleEl) titleEl.textContent = '立即下载 知我 KnowMe ' + VERSION;
+      var prepMeta = document.querySelector('.download-prep-meta');
+      if (prepMeta) prepMeta.hidden = true;
+      if (titleEl) titleEl.textContent = '立即下载 知我 KnowMe ' + VERSION + ' 公测版';
       if (introEl) introEl.hidden = true;
 
-      var platform = detectPlatform();
       var labels = {
         'mac-arm':   '下载 macOS (Apple Silicon)',
         'mac-intel': '下载 macOS (Intel)',
-        'win':       '下载 Windows',
-        'linux':     '下载 Linux'
+        'win':       '下载 Windows'
       };
 
       var primaryBtn = document.getElementById('download-primary');
       var primaryText = primaryBtn.querySelector('.download-primary-text');
       var primaryMeta = document.getElementById('download-primary-meta');
-      primaryBtn.href = ghUrl(platform, false);
-      primaryText.textContent = labels[platform];
-      primaryMeta.textContent = VERSION;
 
       var cards = document.querySelectorAll('.download-platform-card');
       cards.forEach(function (card) {
         var os = card.getAttribute('data-os');
         if (os && FILES[os]) {
-          card.href = ghUrl(os, false);
+          card.href = ghUrl(os);
         }
       });
 
-      var mirrorOn = false;
-      var mirrorToggle = document.getElementById('download-mirror-toggle');
-      if (mirrorToggle) {
-        mirrorToggle.addEventListener('click', function (e) {
-          e.preventDefault();
-          mirrorOn = !mirrorOn;
-          primaryBtn.href = ghUrl(platform, mirrorOn);
-          cards.forEach(function (c) {
-            var os = c.getAttribute('data-os');
-            if (os) c.href = ghUrl(os, mirrorOn);
-          });
-          mirrorToggle.textContent = mirrorOn
-            ? '切回 GitHub 直连'
-            : '使用镜像源';
+      function applyPrimary(platform) {
+        primaryBtn.href = ghUrl(platform);
+        primaryText.textContent = labels[platform] || labels['mac-arm'];
+        primaryMeta.textContent = VERSION;
+      }
+
+      // 先用同步粗判渲染（Apple Silicon 是当前主流，默认 mac-arm），
+      // Mac 设备再异步校正到 Intel/ARM。
+      var platform = detectPlatform();
+      applyPrimary(platform);
+
+      if (platform === 'mac-arm') {
+        refineMacArch().then(function (refined) {
+          if (refined && refined !== platform) {
+            platform = refined;
+            applyPrimary(platform);
+          }
         });
       }
     })();
