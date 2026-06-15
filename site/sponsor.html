@@ -4,196 +4,153 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>支持知我 KnowMe</title>
-
-  <!-- 默认 meta refresh 走桌面（移动端 JS 会先抢跑覆盖到 ifdian.net）-->
-  <meta http-equiv="refresh" content="2; url=https://afdian.com/a/knowme?from=qr">
-  <link rel="canonical" href="https://afdian.com/a/knowme">
-
-  <meta name="description" content="支持知我 KnowMe 独立开发。赞助是自愿支持，不解锁功能、不绑定 Pro 权益。">
-  <meta property="og:title" content="支持知我 KnowMe — 在爱发电赞助">
-  <meta property="og:description" content="本地优先 AI 第二大脑 · 开发者赞助通道">
+  <meta name="description" content="支持知我 KnowMe 独立开发。赞赏是自愿支持，不解锁功能、不绑定 Pro 权益。">
+  <meta property="og:title" content="支持知我 KnowMe">
+  <meta property="og:description" content="本地优先 AI 第二大脑 · 自愿支持开发者">
   <meta property="og:url" content="https://useknowme.com/sponsor">
   <meta property="og:image" content="https://useknowme.com/assets/og-image.jpg">
-
   <link rel="icon" type="image/png" href="assets/favicon.png">
-
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --text: #1f2937;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --soft: #f8fafc;
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+    }
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC",
-                   "Microsoft YaHei", "Helvetica Neue", sans-serif;
-      background: linear-gradient(135deg, #fff7ed 0%, #fef3c7 100%);
       min-height: 100vh;
       display: flex;
       align-items: center;
       justify-content: center;
       padding: 1.5rem;
-      color: #1a1a1a;
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(99, 102, 241, 0.14), transparent 36rem),
+        linear-gradient(135deg, #fff7ed 0%, #eef2ff 100%);
       -webkit-font-smoothing: antialiased;
     }
-
     .card {
-      max-width: 420px;
       width: 100%;
-      background: white;
-      border-radius: 16px;
-      padding: 2.5rem 2rem;
-      box-shadow: 0 10px 40px -10px rgba(0,0,0,0.15);
+      max-width: 520px;
+      padding: 2.25rem;
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: 0 24px 70px -32px rgba(15, 23, 42, 0.35);
       text-align: center;
     }
-
     .logo {
       width: 64px;
       height: 64px;
       border-radius: 14px;
-      margin: 0 auto 1.25rem;
       display: block;
-    }
-
-    h1 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      margin-bottom: 0.5rem;
-    }
-
-    .sub {
-      color: #64748b;
-      font-size: 0.95rem;
-      margin-bottom: 1.75rem;
-      line-height: 1.6;
-    }
-
-    .spinner {
-      width: 28px;
-      height: 28px;
-      border: 3px solid #fed7aa;
-      border-top-color: #d97706;
-      border-radius: 50%;
       margin: 0 auto 1.25rem;
-      animation: spin 0.8s linear infinite;
     }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
+    h1 {
+      font-size: clamp(1.55rem, 5vw, 2rem);
+      letter-spacing: -0.03em;
+      margin-bottom: 0.65rem;
     }
-
-    .manual {
-      margin-top: 1.5rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid #f1f5f9;
-      font-size: 0.875rem;
-      color: #64748b;
+    .sub {
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 0.98rem;
+      margin-bottom: 1.5rem;
     }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      margin-top: 0.75rem;
-      padding: 0.75rem 1.5rem;
-      background: #d97706;
-      color: white;
-      text-decoration: none;
+    .qr {
+      width: 196px;
+      margin: 0 auto 1rem;
+      padding: 10px;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 18px;
+    }
+    .qr img {
+      display: block;
+      width: 174px;
+      height: 174px;
+      object-fit: cover;
       border-radius: 10px;
-      font-weight: 600;
+    }
+    .caption {
+      color: var(--muted);
+      font-size: 0.88rem;
+      margin-bottom: 1.35rem;
+    }
+    .actions {
+      display: grid;
+      gap: 0.75rem;
+      margin: 1.35rem 0;
+    }
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      padding: 0.85rem 1rem;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 700;
       transition: all 0.15s;
     }
-
-    .btn:hover {
-      background: #b45309;
-      transform: translateY(-1px);
+    .btn-primary {
+      color: white;
+      background: var(--primary);
+      box-shadow: 0 10px 22px -12px var(--primary);
     }
-
-    .url {
-      display: block;
-      margin-top: 0.75rem;
-      padding: 0.5rem 0.75rem;
-      background: #fafafa;
-      border: 1px solid #e2e8f0;
-      border-radius: 8px;
-      font-family: ui-monospace, "SF Mono", Menlo, monospace;
-      font-size: 0.8rem;
-      color: #475569;
-      word-break: break-all;
+    .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); }
+    .btn-secondary {
+      color: var(--text);
+      background: var(--soft);
+      border: 1px solid var(--border);
     }
-
-    .wechat-tip {
-      display: none;
-      margin-top: 1rem;
-      padding: 0.85rem 1rem;
-      background: #fffbeb;
-      border: 1px solid #fde68a;
-      border-radius: 10px;
-      font-size: 0.85rem;
-      color: #92400e;
-      line-height: 1.55;
+    .btn-secondary:hover { border-color: var(--primary); transform: translateY(-1px); }
+    .note {
+      margin-top: 1.35rem;
+      padding: 1rem;
       text-align: left;
+      border-radius: 14px;
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      color: #92400e;
+      font-size: 0.88rem;
+      line-height: 1.65;
     }
-    .wechat-tip strong { display: block; margin-bottom: 0.25rem; color: #78350f; }
-
-    .is-wechat .wechat-tip { display: block; }
+    .footer {
+      margin-top: 1.35rem;
+      color: var(--muted);
+      font-size: 0.84rem;
+    }
+    .footer a { color: var(--primary-dark); text-decoration: none; }
+    .footer a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
-  <main class="card" id="card">
+  <main class="card">
     <img class="logo" src="assets/icon-256.png" alt="知我 KnowMe">
+    <h1>支持知我 KnowMe</h1>
+    <p class="sub">知我是独立开发者长期维护的本地优先 AI 第二大脑。如果它对你有价值,欢迎通过公众号赞赏或邮件表达支持。</p>
 
-    <div class="spinner" aria-hidden="true"></div>
-
-    <h1>正在跳转到爱发电…</h1>
-    <p class="sub">知我 KnowMe 创作者主页 · 用支付宝 / 微信支持开发者</p>
-
-    <div class="manual">
-      <p>如果没有自动跳转，请点击：</p>
-      <a class="btn" id="manualBtn" href="https://afdian.com/a/knowme?from=qr">
-        💗 前往爱发电
-      </a>
-      <code class="url" id="urlText">afdian.com/a/knowme</code>
-
-      <div class="wechat-tip">
-        <strong>📱 微信内打开提示</strong>
-        如果页面停在爱发电首页而非「知我 KnowMe」创作者主页，请点击右上角「···」→「在浏览器打开」，或长按上方按钮「在浏览器中打开」。
-      </div>
+    <div class="qr">
+      <img src="assets/wechat-mp-qr.jpg" alt="微信公众号 Time留痕 二维码">
     </div>
+    <p class="caption">扫码关注公众号「Time留痕」。支持文章发布后,可在文章文末使用微信赞赏。</p>
+
+    <div class="actions">
+      <a class="btn btn-primary" href="mailto:contact@useknowme.com?subject=支持知我%20KnowMe&body=你好，我想支持知我 KnowMe 的持续开发。">📬 邮件联系支持</a>
+      <a class="btn btn-secondary" href="mailto:contact@useknowme.com?subject=KnowMe%20Pro%20等待名单&body=你好，我希望 Pro 发布时得到通知。">⏳ 加入 Pro 等待名单</a>
+    </div>
+
+    <div class="note">
+      <strong>赞赏不解锁任何功能。</strong><br>
+      赞赏是自愿支持,不构成购买,不绑定 Pro 权益、早鸟名额或折扣。公测期所有用户都享有完整体验;正式购买通道会单独公布。
+    </div>
+
+    <p class="footer"><a href="/">返回首页</a> · <a href="https://docs.useknowme.com">阅读文档</a></p>
   </main>
-
-  <script>
-    (function () {
-      var ua = navigator.userAgent || '';
-      var isMobile = /android|iphone|ipad|ipod|harmonyos|micromessenger/i.test(ua);
-      var isWeChat = /micromessenger/i.test(ua);
-
-      // afdian.com 在移动端会被重定向到 ifdian.net 并丢失路径，
-      // 直接跳 ifdian.net 移动版可以保留 /a/knowme 路径。
-      var target = isMobile
-        ? 'https://ifdian.net/a/knowme?from=qr'
-        : 'https://afdian.com/a/knowme?from=qr';
-
-      // 同步更新可见的手动链接和提示
-      var btn = document.getElementById('manualBtn');
-      if (btn) btn.setAttribute('href', target);
-      var urlText = document.getElementById('urlText');
-      if (urlText) urlText.textContent = target.replace(/^https?:\/\//, '').split('?')[0];
-
-      if (isWeChat) {
-        document.getElementById('card').classList.add('is-wechat');
-      }
-
-      // 覆盖 <meta refresh>：移动端用 ifdian.net，桌面端用 afdian.com
-      try {
-        var metaRefresh = document.querySelector('meta[http-equiv="refresh"]');
-        if (metaRefresh) metaRefresh.setAttribute('content', '0; url=' + target);
-      } catch (e) {}
-
-      // 主动 JS 跳转（不等 meta refresh）
-      try {
-        window.location.replace(target);
-      } catch (e) {
-        window.location.href = target;
-      }
-    })();
-  </script>
 </body>
 </html>
