@@ -494,6 +494,50 @@
       color: var(--border-strong);
     }
 
+    .download-source {
+      margin-top: 1.25rem;
+    }
+    .download-source-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    .download-source-pill {
+      cursor: pointer;
+      font: inherit;
+      font-size: 0.8rem;
+      line-height: 1;
+      padding: 0.45rem 0.8rem;
+      background: var(--bg-card);
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      transition: all 0.15s;
+      white-space: nowrap;
+    }
+    .download-source-pill:hover {
+      border-color: var(--primary-light);
+      color: var(--text);
+    }
+    .download-source-pill[aria-pressed="true"] {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+    }
+    .download-source-pill[aria-pressed="true"]:hover {
+      background: var(--primary-dark);
+      border-color: var(--primary-dark);
+      color: #fff;
+    }
+    .download-source-note {
+      max-width: 560px;
+      margin: 0.85rem auto 0;
+      font-size: 0.78rem;
+      line-height: 1.6;
+      color: var(--text-subtle);
+    }
+
     /* ========================================
        Section Common
     ======================================== */
@@ -1263,6 +1307,13 @@
           <span class="download-primary-meta" id="download-primary-meta">0.1.0</span>
         </a>
 
+        <div class="download-source" id="download-source" hidden>
+          <div class="download-source-row" id="download-source-row" role="group" aria-label="下载源"></div>
+          <p class="download-source-note">
+            国内下载慢可切换镜像源；镜像由第三方公益服务提供，偶有不稳定，失败可切换其他源或用 GitHub 直连。
+          </p>
+        </div>
+
         <details class="download-platforms">
           <summary>其他平台 / 不同架构</summary>
           <div class="download-platform-grid">
@@ -1835,12 +1886,24 @@
         'win':       'KnowMe-Setup-' + VERSION + '.exe'
       };
 
-      function ghUrl(platform) {
-        // TODO: R2 mirror base —— 国内镜像就绪后在此处接入备用下载域名
-        // var mirrorBase = 'https://<r2-domain>/v' + VERSION + '/';
-        // On new release: bump VERSION (filenames embed it). Path uses /latest/ so the tag is automatic.
-        var base = 'https://github.com/' + REPO + '/releases/latest/download/';
-        return base + FILES[platform];
+      // 下载源：base 为空 = GitHub 直连；其余为公益 GitHub 代理前缀。
+      // 代理 URL = base + 完整 github 直链。改这里即可增删/调整镜像源。
+      var SOURCES = [
+        { id: 'direct',      label: 'GitHub 直连',        base: '' },
+        { id: 'gh-proxy',    label: '镜像 · gh-proxy',    base: 'https://gh-proxy.com/' },
+        { id: 'v6',          label: '镜像 · v6.gh-proxy', base: 'https://v6.gh-proxy.org/' },
+        { id: 'ghproxy-net', label: '镜像 · ghproxy.net', base: 'https://ghproxy.net/' },
+        { id: 'ghfast',      label: '镜像 · ghfast.top',  base: 'https://ghfast.top/' }
+      ];
+      var DEFAULT_SOURCE = SOURCES[0];
+
+      // On new release: bump VERSION (filenames embed it). Path uses /latest/ so the tag is automatic.
+      function githubLatestUrl(platform) {
+        return 'https://github.com/' + REPO + '/releases/latest/download/' + FILES[platform];
+      }
+      function ghUrl(platform, source) {
+        var src = source || DEFAULT_SOURCE;
+        return (src.base || '') + githubLatestUrl(platform);
       }
 
       // 同步返回粗判平台；Mac 架构默认 arm64，再由 refineMacArch() 异步校正。
@@ -1898,32 +1961,85 @@
       var primaryMeta = document.getElementById('download-primary-meta');
 
       var cards = document.querySelectorAll('.download-platform-card');
-      cards.forEach(function (card) {
-        var os = card.getAttribute('data-os');
-        if (os && FILES[os]) {
-          card.href = ghUrl(os);
-        }
-      });
 
-      function applyPrimary(platform) {
-        primaryBtn.href = ghUrl(platform);
+      // 架构决定文件名(platform)，下载源决定代理前缀(activeSource)，二者正交。
+      var platform = detectPlatform();
+      var activeSource = DEFAULT_SOURCE;
+      var userPicked = false; // 用户手动选过源后，自动竞速不再覆盖。
+
+      // 用当前 platform + activeSource 刷新主按钮与所有平台卡片的 href。
+      function applyLinks() {
+        primaryBtn.href = ghUrl(platform, activeSource);
         primaryText.textContent = labels[platform] || labels['mac-arm'];
         primaryMeta.textContent = VERSION;
+        cards.forEach(function (card) {
+          var os = card.getAttribute('data-os');
+          if (os && FILES[os]) card.href = ghUrl(os, activeSource);
+        });
       }
 
-      // 先用同步粗判渲染（Apple Silicon 是当前主流，默认 mac-arm），
-      // Mac 设备再异步校正到 Intel/ARM。
-      var platform = detectPlatform();
-      applyPrimary(platform);
+      // 立即用直连渲染：竞速完成前点击也能拿到有效下载。
+      applyLinks();
 
+      // Mac 设备异步校正架构；保留当前已选的源。
       if (platform === 'mac-arm') {
         refineMacArch().then(function (refined) {
           if (refined && refined !== platform) {
             platform = refined;
-            applyPrimary(platform);
+            applyLinks();
           }
         });
       }
+
+      // ---- 手动源切换器 ----
+      var sourceWrap = document.getElementById('download-source');
+      var sourceRow = document.getElementById('download-source-row');
+      var pillById = {};
+      function setActiveSource(src, fromUser) {
+        activeSource = src;
+        if (fromUser) userPicked = true;
+        applyLinks();
+        SOURCES.forEach(function (s) {
+          var pill = pillById[s.id];
+          if (pill) pill.setAttribute('aria-pressed', s.id === src.id ? 'true' : 'false');
+        });
+      }
+      if (sourceWrap && sourceRow) {
+        SOURCES.forEach(function (s) {
+          var pill = document.createElement('button');
+          pill.type = 'button';
+          pill.className = 'download-source-pill';
+          pill.textContent = s.label;
+          pill.setAttribute('aria-pressed', s.id === activeSource.id ? 'true' : 'false');
+          pill.addEventListener('click', function () { setActiveSource(s, true); });
+          pillById[s.id] = pill;
+          sourceRow.appendChild(pill);
+        });
+        sourceWrap.hidden = false;
+      }
+
+      // ---- 自动竞速选源（尽力而为的可达性探测，非真实测速）----
+      // no-cors HEAD 返回 opaque 响应，读不到状态码：promise resolve 即视为“可达”，
+      // reject/超时视为不可达。这只是连通性启发式，不代表下载速度。
+      // 不支持 fetch / AbortSignal.timeout 时直接跳过，保持直连。
+      function raceSources() {
+        if (typeof fetch !== 'function' ||
+            !AbortSignal || typeof AbortSignal.timeout !== 'function') {
+          return;
+        }
+        SOURCES.forEach(function (s) {
+          var probeUrl = ghUrl(platform, s);
+          fetch(probeUrl, { method: 'HEAD', mode: 'no-cors', signal: AbortSignal.timeout(2500) })
+            .then(function () {
+              // 首个可达的源胜出；用户已手动选过则不覆盖。
+              if (!userPicked && activeSource.id === DEFAULT_SOURCE.id && s.id !== DEFAULT_SOURCE.id) {
+                setActiveSource(s, false);
+              }
+            })
+            .catch(function () { /* 不可达：忽略，保持当前/直连 */ });
+        });
+      }
+      raceSources();
     })();
 
     (function () {
