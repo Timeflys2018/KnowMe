@@ -1128,6 +1128,59 @@
       line-height: 1.65;
     }
 
+    /* 安装说明 FAQ 专用样式（仅作用于 #faq-install，复用现有 token） */
+    #faq-install h5 {
+      margin: 1.1rem 0 0.4rem;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+    #faq-install ol {
+      margin: 0.4rem 0 0;
+      padding-left: 1.3rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+    #faq-install ol li { margin-bottom: 0.35rem; }
+    #faq-install .install-callout {
+      margin-top: 0.85rem;
+      padding: 0.75rem 1rem;
+      background: var(--bg-soft);
+      border-left: 3px solid var(--accent);
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+      line-height: 1.65;
+      font-size: 0.92rem;
+    }
+    #faq-install .install-cmd {
+      display: block;
+      margin: 0.5rem 0;
+      padding: 0.7rem 0.9rem;
+      background: var(--bg-soft);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-sm);
+      font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+      font-size: 0.88rem;
+      color: var(--text);
+      overflow-x: auto;
+      white-space: pre;
+      user-select: all;
+      -webkit-user-select: all;
+    }
+    #faq-install .install-note {
+      margin-top: 0.6rem;
+      font-size: 0.85rem;
+      color: var(--text-subtle);
+      line-height: 1.6;
+    }
+    #faq-install code {
+      background: var(--bg-soft);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+      font-size: 0.85em;
+    }
+
     /* ========================================
        Footer
     ======================================== */
@@ -1337,7 +1390,7 @@
 
         <p class="download-live-note">
           公测版（beta）· 安装包未做代码签名，首次打开可能需要在系统里手动放行 ·
-          <a href="https://github.com/Timeflys2018/KnowMe/releases" target="_blank" rel="noopener">查看安装说明 →</a>
+          <a href="#faq-install">查看安装说明 →</a>
         </p>
 
         <p class="download-live-meta">
@@ -1726,6 +1779,37 @@
       <h2 class="section-title">还有疑问？</h2>
 
       <div class="faq-list">
+        <details class="faq-item" id="faq-install">
+          <summary>下载后提示"已损坏"或"无法验证开发者"怎么办？</summary>
+          <p>
+            当前为公开测试版，<strong>暂未进行 Apple 代码签名 / 公证</strong>。因此 macOS 会拦截首次打开，提示
+            <strong>"KnowMe 已损坏，无法打开"</strong> 或 <strong>"无法验证开发者"</strong>。
+          </p>
+          <p class="install-callout">
+            ⚠️ 这是 macOS 对未签名 App 的标准拦截，<strong>并非 App 真的损坏，也不是病毒</strong>。按下面方法解除即可正常使用。
+          </p>
+
+          <h5>macOS（Apple 芯片与 Intel 通用）</h5>
+          <ol>
+            <li>双击 dmg，把 <strong>KnowMe 拖入"应用程序"文件夹</strong>。</li>
+            <li>
+              打开"终端"（聚焦搜索 <code>终端</code> 或 <code>Terminal</code>），粘贴下面这行后回车：
+              <code class="install-cmd">xattr -cr /Applications/KnowMe.app</code>
+            </li>
+            <li>然后到"应用程序"里<strong>双击 KnowMe</strong> 即可正常打开。</li>
+          </ol>
+          <p class="install-note">
+            如果弹窗只给了"取消 / 移到废纸篓"，请点<strong>"取消"</strong>（不要点"移到废纸篓"，那会删掉 App），再执行上面第 2 步。
+            <code>xattr -cr</code> 清除系统给下载文件打的"隔离"标记，不修改 App 本身，安全无副作用。
+          </p>
+
+          <h5>Windows</h5>
+          <ol>
+            <li>双击 <code>KnowMe-Setup-0.1.0.exe</code> 安装。</li>
+            <li>若出现蓝色 <strong>"Windows 已保护你的电脑"（SmartScreen）</strong> 提示，点击 <strong>"更多信息" → "仍要运行"</strong>。</li>
+          </ol>
+        </details>
+
         <details class="faq-item">
           <summary>知我和 Obsidian / Notion / Logseq 的区别？</summary>
           <p>
