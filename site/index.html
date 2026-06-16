@@ -1310,7 +1310,7 @@
         <div class="download-source" id="download-source" hidden>
           <div class="download-source-row" id="download-source-row" role="group" aria-label="下载源"></div>
           <p class="download-source-note">
-            国内下载慢可切换下载源：「官方源」为自建 Cloudflare 加速、稳定可靠；其余镜像由第三方公益服务提供，偶有不稳定，失败可切换其他源或用 GitHub 直连。
+            默认走「官方源」（自建 Cloudflare 加速、稳定可靠）。如需可切换 GitHub 直连或第三方公益镜像；公益镜像偶有不稳定，失败可换其他源。
           </p>
         </div>
 
@@ -1899,9 +1899,9 @@
         { id: 'ghproxy-net', label: '镜像 · ghproxy.net', base: 'https://ghproxy.net/' },
         { id: 'ghfast',      label: '镜像 · ghfast.top',  base: 'https://ghfast.top/' }
       ];
-      // 竞速完成前的初始/兜底源：用 GitHub 直连这一“永远有效”的基线，
-      // R2 探测成功后会被竞速升级为首选（见 raceSources）。
-      var DEFAULT_SOURCE = SOURCES[1]; // direct
+      // 默认源直接用 R2（自有 Cloudflare 稳定源，国内外都快）；无需自动竞速探测，
+      // 用户可在下方手动切到 GitHub 直连或第三方镜像。
+      var DEFAULT_SOURCE = SOURCES[0]; // r2
       // 文件名内嵌版本号：发新版时 R2 需以新名重传，且 github 走 /latest/ 自动。
       // 两边都只由单个 VERSION 常量驱动，发版改 VERSION 一处即可。
 
@@ -1973,10 +1973,9 @@
 
       var cards = document.querySelectorAll('.download-platform-card');
 
-      // 架构决定文件名(platform)，下载源决定代理前缀(activeSource)，二者正交。
+      // 架构决定文件名(platform)，下载源决定前缀(activeSource)，二者正交。
       var platform = detectPlatform();
       var activeSource = DEFAULT_SOURCE;
-      var userPicked = false; // 用户手动选过源后，自动竞速不再覆盖。
 
       // 用当前 platform + activeSource 刷新主按钮与所有平台卡片的 href。
       function applyLinks() {
@@ -1989,7 +1988,7 @@
         });
       }
 
-      // 立即用直连渲染：竞速完成前点击也能拿到有效下载。
+      // 立即用默认 R2 源渲染，主按钮/平台卡片加载即有有效下载链接。
       applyLinks();
 
       // Mac 设备异步校正架构；保留当前已选的源。
@@ -2006,9 +2005,8 @@
       var sourceWrap = document.getElementById('download-source');
       var sourceRow = document.getElementById('download-source-row');
       var pillById = {};
-      function setActiveSource(src, fromUser) {
+      function setActiveSource(src) {
         activeSource = src;
-        if (fromUser) userPicked = true;
         applyLinks();
         SOURCES.forEach(function (s) {
           var pill = pillById[s.id];
@@ -2022,43 +2020,12 @@
           pill.className = 'download-source-pill';
           pill.textContent = s.label;
           pill.setAttribute('aria-pressed', s.id === activeSource.id ? 'true' : 'false');
-          pill.addEventListener('click', function () { setActiveSource(s, true); });
+          pill.addEventListener('click', function () { setActiveSource(s); });
           pillById[s.id] = pill;
           sourceRow.appendChild(pill);
         });
         sourceWrap.hidden = false;
       }
-
-      // ---- 自动竞速选源（尽力而为的可达性探测，非真实测速）----
-      // no-cors HEAD 返回 opaque 响应，读不到状态码：promise resolve 即视为“可达”，
-      // reject/超时视为不可达。这只是连通性启发式，不代表下载速度。
-      // SOURCES 已按偏好排序（R2 最优先）：可达的源中取偏好最高者（数组下标最小），
-      // 所以即便某代理先 resolve，只要 R2 也可达就会被 R2 覆盖。
-      // 不支持 fetch / AbortSignal.timeout 时直接跳过，保持兜底直连。
-      function sourceRank(id) {
-        for (var i = 0; i < SOURCES.length; i++) {
-          if (SOURCES[i].id === id) return i;
-        }
-        return SOURCES.length;
-      }
-      function raceSources() {
-        if (typeof fetch !== 'function' ||
-            !AbortSignal || typeof AbortSignal.timeout !== 'function') {
-          return;
-        }
-        SOURCES.forEach(function (s) {
-          var probeUrl = ghUrl(platform, s);
-          fetch(probeUrl, { method: 'HEAD', mode: 'no-cors', signal: AbortSignal.timeout(2500) })
-            .then(function () {
-              // 用户手动选过则不覆盖；否则仅当该源偏好高于当前激活源时才升级。
-              if (!userPicked && sourceRank(s.id) < sourceRank(activeSource.id)) {
-                setActiveSource(s, false);
-              }
-            })
-            .catch(function () { /* 不可达：忽略，保持当前/兜底直连 */ });
-        });
-      }
-      raceSources();
     })();
 
     (function () {
