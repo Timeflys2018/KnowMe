@@ -1305,7 +1305,7 @@
     </div>
   </header>
 
-  <!-- ========== Download 0.1.1 ========== -->
+  <!-- ========== Download (版本号由 VERSION 注入) ========== -->
   <section id="download" class="download-section">
     <div class="container">
       <span class="section-eyebrow">下载</span>
@@ -1319,16 +1319,16 @@
       <div id="download-pre" class="download-pre">
         <span class="download-pre-dot" aria-hidden="true"></span>
         <span class="download-pre-text">
-          <strong>0.1.1 已发布</strong> ·
+          <strong id="download-pre-version">0.1.1 已发布</strong> ·
           <a href="https://github.com/Timeflys2018/KnowMe/releases" target="_blank" rel="noopener">前往 GitHub Releases 看进度 →</a>
         </span>
       </div>
 
       <div class="download-prep-grid" id="download-prep-grid">
-        <a class="download-prep-card" href="mailto:timeflying2026@163.com?subject=KnowMe%200.1.1%20%E4%B8%8A%E7%BA%BF%E9%80%9A%E7%9F%A5&body=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E6%83%B3%E6%88%90%E4%B8%BA%E7%9F%A5%E6%88%91%20KnowMe%200.1.1%20%E5%85%AC%E6%B5%8B%E7%89%88%E7%9A%84%E7%AC%AC%E4%B8%80%E6%89%B9%E7%94%A8%E6%88%B7%EF%BC%8C%E8%AF%B7%E5%9C%A8%E4%B8%8A%E7%BA%BF%E5%90%8E%E9%80%9A%E7%9F%A5%E6%88%91%E3%80%82">
+        <a class="download-prep-card" id="download-prep-mail" href="mailto:timeflying2026@163.com?subject=KnowMe%200.1.1%20%E4%B8%8A%E7%BA%BF%E9%80%9A%E7%9F%A5&body=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E6%83%B3%E6%88%90%E4%B8%BA%E7%9F%A5%E6%88%91%20KnowMe%200.1.1%20%E5%85%AC%E6%B5%8B%E7%89%88%E7%9A%84%E7%AC%AC%E4%B8%80%E6%89%B9%E7%94%A8%E6%88%B7%EF%BC%8C%E8%AF%B7%E5%9C%A8%E4%B8%8A%E7%BA%BF%E5%90%8E%E9%80%9A%E7%9F%A5%E6%88%91%E3%80%82">
           <div class="prep-icon">📧</div>
           <h4>邮件通知</h4>
-          <p>给开发者发一封"我想要 0.1.1"，上线当天回信。<strong>最直接</strong>，也可用于登记早鸟购买意向。</p>
+          <p id="download-prep-mail-text">给开发者发一封"我想要 0.1.1"，上线当天回信。<strong>最直接</strong>，也可用于登记早鸟购买意向。</p>
           <span class="prep-cta">写邮件 →</span>
         </a>
 
@@ -1488,7 +1488,7 @@
         <span class="title-accent">写、问、答、改，AI 全程在帮你想</span>
       </h2>
       <p class="section-intro">
-        知识图谱和 Wiki 是骨架，AI 是让它活起来的引擎。
+        Wiki、知识图谱、全局时间线是骨架，AI 是让它活起来的引擎。
         而且 <strong>local-first 不打扰</strong> —— AI 何时介入，你说了算。
       </p>
 
@@ -1553,7 +1553,7 @@
           <div class="pricing-name">个人基础版</div>
           <div class="pricing-blurb">完整本地能力，用户自备 key / 本地模型，自由使用自己的数据。</div>
           <div class="pricing-price">¥0 <small>/ 永久免费</small></div>
-          <div class="pricing-period">现可用 · 0.1.1（2026-06-16）</div>
+          <div class="pricing-period" id="pricing-period-version">现可用 · 0.1.1（2026-06-16）</div>
 
           <ul class="pricing-features">
             <li><span class="check">✓</span> <strong>三模编辑器</strong>：Live / Edit / Reading 自由切</li>
@@ -1562,13 +1562,14 @@
             <li><span class="check">✓</span> Review queue 安全审核（人工把关 AI 写入）</li>
             <li><span class="check">✓</span> 多通道导出（微信公众号 / 小红书规划中）</li>
             <li><span class="check">✓</span> <strong>本地 MCP / localhost API</strong> · 接入 Claude Code / Cursor（本机基础能力免费）</li>
-            <li><span class="check">✓</span> 接入 OpenAI / Anthropic / Gemini / Ollama / LM Studio · <strong>用户自备 API key 或本地模型</strong></li>
+            <li><span class="check">✓</span> 接入 OpenAI / Anthropic / Gemini / Ollama / LM Studio · <strong>用户自备 API key 或本地模型</strong> · 免费 / 试用 API 预设一键接入</li>
             <li><span class="check">✓</span> 本地 SQLite · 数据导出永久可用</li>
-            <li><span class="check">✓</span> 6 种内置 Wiki Types · 已有类型数据可读取 / 导出 · 本地图谱 WebGL 渲染（即将推出）</li>
+            <li><span class="check">✓</span> 6 种内置 Wiki Types · 已有类型数据可读取 / 导出</li>
+            <li><span class="check">✓</span> <strong>本地知识图谱</strong>（中心邻域探索 / 全局视图）· <strong>全局时间线</strong>（分支树 + 放射心智图）</li>
             <li><span class="dim">— Pro 启动后（2027-07-07 起）：本地核心继续免费；公测期高级/预览能力可能进入 Pro</span></li>
           </ul>
 
-          <a href="#download" class="pricing-cta pricing-cta-primary">下载 0.1.1 →</a>
+          <a href="#download" class="pricing-cta pricing-cta-primary" id="pricing-cta-version">下载 0.1.1 →</a>
         </div>
 
         <!-- Pro 即将推出 -->
@@ -1589,7 +1590,7 @@
             <li><span class="check">✓</span> <strong>高级导出</strong>（PDF / EPUB / Notion / Obsidian 双向）</li>
             <li><span class="check">✓</span> <strong>自定义 Wiki Types</strong>（字段 / 提取规则 / 渲染模板 / 导入导出 / 版本历史）</li>
             <li><span class="check">✓</span> <strong>Schema 模板市场 / 云端 Schema Registry</strong></li>
-            <li><span class="check">✓</span> <strong>云端图谱 / 跨设备索引计算</strong>（本地图谱 WebGL 渲染免费）</li>
+            <li><span class="check">✓</span> <strong>云端图谱 / 跨设备索引计算</strong>（本地知识图谱免费）</li>
           </ul>
 
           <a href="mailto:contact@useknowme.com?subject=KnowMe%20Pro%20%E7%AD%89%E5%BE%85%E5%90%8D%E5%8D%95&body=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E6%88%91%E5%B8%8C%E6%9C%9B%20Pro%20%E5%8F%91%E7%89%88%E6%97%B6%E5%BE%97%E5%88%B0%E9%80%9A%E7%9F%A5%E3%80%82" class="pricing-cta pricing-cta-secondary">加入等待名单</a>
@@ -1826,7 +1827,7 @@
 
           <h5>Windows</h5>
           <ol>
-            <li>双击 <code>KnowMe-Setup-0.1.1.exe</code> 安装。</li>
+            <li>双击 <code id="install-win-filename">KnowMe-Setup-0.1.1.exe</code> 安装。</li>
             <li>若出现蓝色 <strong>"Windows 已保护你的电脑"（SmartScreen）</strong> 提示，点击 <strong>"更多信息" → "仍要运行"</strong>。</li>
           </ol>
         </details>
@@ -1979,11 +1980,13 @@
     (function () {
       'use strict';
 
-      // 发版配置：0.1.1 公测版，已作为正式 Latest Release 发布。
-      // 发新版时只需改 VERSION 一个常量（文件名内嵌版本号）；
-      // 下载路径走 /latest/，tag 自动指向最新版本，无需手动改。
+      // 发版配置：发新版时只改 VERSION + RELEASE_DATE 两个常量即可。
+      // 文件名内嵌 VERSION；GitHub 源走 /latest/ 自动；R2 需以新文件名重传。
+      // 页面上所有写版本号的文案（标题/按钮/价格/安装说明/邮件）都在
+      // applyVersionStrings() 里由 VERSION 统一注入，HTML 里的字面值仅作 fallback。
       var RELEASED = true;
-      var VERSION = '0.1.1';
+      var VERSION = '0.2.0';
+      var RELEASE_DATE = '2026-06-21';
       var REPO = 'Timeflys2018/KnowMe';
       var FILES = {
         'mac-arm':   'KnowMe-' + VERSION + '-arm64.dmg',
@@ -2054,6 +2057,32 @@
       var introEl = document.getElementById('download-intro');
       if (!preEl || !liveEl) return;
 
+      // 页面上所有写版本号的文案统一由 VERSION/RELEASE_DATE 注入（含预发布态才可见的
+      // download-pre-version 与邮件卡片），发版只改这两个常量。HTML 字面值仅作 fallback。
+      // 无条件执行：放在 RELEASED 早退之前，确保预发布态的可见文案也被覆盖。
+      (function applyVersionStrings() {
+        var hero = document.getElementById('hero-download');
+        if (hero) hero.textContent = '↓ 下载 ' + VERSION;
+        if (titleEl) titleEl.textContent = '立即下载 知我 KnowMe ' + VERSION + ' 公测版';
+        var preVer = document.getElementById('download-pre-version');
+        if (preVer) preVer.textContent = VERSION + ' 已发布';
+        var pricingPeriod = document.getElementById('pricing-period-version');
+        if (pricingPeriod) pricingPeriod.textContent = '现可用 · ' + VERSION + '（' + RELEASE_DATE + '）';
+        var pricingCta = document.getElementById('pricing-cta-version');
+        if (pricingCta) pricingCta.textContent = '下载 ' + VERSION + ' →';
+        var winFile = document.getElementById('install-win-filename');
+        if (winFile) winFile.textContent = 'KnowMe-Setup-' + VERSION + '.exe';
+        // 邮件卡片：href 的 subject/body 与提示文案都嵌版本号，统一重建。
+        var mail = document.getElementById('download-prep-mail');
+        if (mail) {
+          var subject = 'KnowMe ' + VERSION + ' 上线通知';
+          var body = '你好，想成为知我 KnowMe ' + VERSION + ' 公测版的第一批用户，请在上线后通知我。';
+          mail.href = 'mailto:timeflying2026@163.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+        }
+        var mailText = document.getElementById('download-prep-mail-text');
+        if (mailText) mailText.innerHTML = '给开发者发一封"我想要 ' + VERSION + '"，上线当天回信。<strong>最直接</strong>，也可用于登记早鸟购买意向。';
+      })();
+
       if (!RELEASED) {
         return;
       }
@@ -2063,7 +2092,6 @@
       if (prepGrid) prepGrid.hidden = true;
       var prepMeta = document.querySelector('.download-prep-meta');
       if (prepMeta) prepMeta.hidden = true;
-      if (titleEl) titleEl.textContent = '立即下载 知我 KnowMe ' + VERSION + ' 公测版';
       if (introEl) introEl.hidden = true;
 
       var labels = {
