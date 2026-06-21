@@ -98,11 +98,12 @@ Wikilink 是 `[[词条]]` 形式的内部链接,把笔记织成网络。
 
 ![Wiki 页右栏「脉络」tab，语义关系 + Wikilinks / Mentions](/screenshots/wiki-backlinks.jpg)
 
-## 图谱
+## 图谱与时间线
 
-**知识图谱(Graph)** 把实体和它们的链接可视化成网络,用来发现意料之外的关联。图谱适合"宏观看结构",细节仍以词条页为准。
+引擎维护的实体关系和事件还有两个全局视图:
 
-<!-- SCREENSHOT[graph.png]: 知识图谱视图（可选）-->
+- **[知识图谱](/core/graph)**——把实体和链接画成可探索的网络,宏观看结构、发现关联。
+- **[全局时间线](/core/timeline)**——把所有词条的事件跨页面聚到一张时间全景图。
 
 ## 右栏面板
 
@@ -193,6 +194,8 @@ Wikilink 是 `[[词条]]` 形式的内部链接,把笔记织成网络。
 
 ## 接下来
 
+- 宏观看实体关系网络 → [知识图谱](/core/graph)
+- 看跨页面的事件全景 → [全局时间线](/core/timeline)
 - 让 AI 在词条上帮你改进 → [AI 协作](/ai/collaboration)
 - 把知识库暴露给 Claude / Cursor → [MCP 接入](/integrate/mcp)
 - 配置编译引擎(并发 / 定时)→ [配置中心](/settings)

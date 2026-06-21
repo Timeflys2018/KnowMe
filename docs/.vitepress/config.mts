@@ -51,6 +51,8 @@ export default defineConfig({
         items: [
           { text: '编辑与导出', link: '/core/editor-export' },
           { text: '知识引擎', link: '/core/knowledge-engine' },
+          { text: '知识图谱', link: '/core/graph' },
+          { text: '全局时间线', link: '/core/timeline' },
         ],
       },
       {
