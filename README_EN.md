@@ -17,7 +17,7 @@
 | **Comment @KnowMe** | Write `@知我 ...` in a comment → AI replies automatically (all-instant / @-only / @+batch modes) |
 | **Wiki improve** | Inaccurate entry? Select + describe the fix → AI recompiles the entity; changes go through the review queue |
 | **脉络 (relations)** | Wiki pages show a unified relations panel: semantic relations + backlinks in one place |
-| **Bidirectional MCP** | Consumed by AI agents (Claude Code / Cursor read your knowledge base directly, read-only for now) and consuming other agents' output |
+| **Bidirectional MCP** | Consumed by AI agents: Claude Code / Cursor can read your knowledge base and submit write suggestions through the review queue |
 | **Multi-channel publishing** | One-click export to WeChat Official Account / Markdown / coming: 小红书, Medium |
 | **Live editor** | CodeMirror 6 based, with live markdown rendering, list folding, find/replace, wikilink hover, KaTeX math |
 | **Review queue** | LLM-extracted content never directly pollutes your knowledge base — everything goes through a review queue you control |

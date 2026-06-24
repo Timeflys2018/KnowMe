@@ -46,7 +46,8 @@
 |---|---|
 | **Providers** | 连接 LLM 端点(4 种协议,BYOK) |
 | **Agents** | 给 Wiki / Orchestrator / Comment 三个内置 Agent 绑定 Provider、设 Tier、配工具 |
-| **回复模式** | 评论 / Wiki 改进的自动回复策略(三档 + 批量调度) |
+| **访问与回复** | 评论 / Wiki 改进的自动回复策略(三档 + 批量调度) |
+| **令牌管理** | MCP 令牌签发 / 吊销。scope 可选 read / write;write 令牌可设写入范围:全部挂载 / 指定挂载 / 仅主目录 |
 | **Tools** | 内置工具注册表(只读查看;哪个 Agent 能用在 Agents 里配) |
 | **引擎** | Wiki 编译引擎配置:执行(定时重 ingest / 并发)、用途、引擎指令、写作规则 |
 

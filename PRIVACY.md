@@ -87,9 +87,9 @@ You can disable update checks in Settings → Updates → "Check for updates aut
 
 ## 6. MCP server
 
-If you enable the MCP server, KnowMe exposes a local-only MCP endpoint that AI agents (Claude Code, Cursor, etc.) can query. This endpoint is **bound to localhost only** and is not exposed to the public internet.
+If you enable the MCP server, KnowMe exposes a local-only MCP endpoint that AI agents (Claude Code, Cursor, etc.) can query. Write capability requires a write-scoped token and the local desktop app bridge, reached only through loopback. This endpoint is **bound to localhost only** and is not exposed to the public internet.
 
-The agents you connect get access to the queries you authorize via MCP — see [docs/07-mcp-and-agents.md](./docs/07-mcp-and-agents.md) for the details.
+The agents you connect get access to the MCP tools you authorize — see [docs/integrate/mcp.md](./docs/integrate/mcp.md) for the details.
 
 ## 7. Children's privacy
 
