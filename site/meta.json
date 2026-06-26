@@ -16,17 +16,6 @@
         "label": "前往下载",
         "url": "https://useknowme.com/#download"
       }
-    },
-    {
-      "id": "v0.3.2-update",
-      "level": "info",
-      "carrier": "banner",
-      "title": "知我 KnowMe 0.3.2 已发布",
-      "body": "已发布新版本，修复若干问题并加固稳定性，建议更新到最新版本。如已经更新请忽略。",
-      "cta": {
-        "label": "前往下载",
-        "url": "https://useknowme.com/#download"
-      }
     }
   ],
   "riskBlock": null
