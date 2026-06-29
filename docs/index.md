@@ -13,7 +13,7 @@ hero:
       text: 快速上手
       link: /start/quickstart
     - theme: alt
-      text: 下载 v1.0
+      text: 下载最新版
       link: https://useknowme.com/#download
     - theme: alt
       text: GitHub

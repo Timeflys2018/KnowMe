@@ -3,7 +3,7 @@
 > A local-first AI second brain that knows you.
 > Everything you've written, thought, and read — still here.
 
-[中文 README](./README.md) · [User Guide](./docs/) · [Changelog](./CHANGELOG.md) · [FAQ](./docs/10-faq-and-troubleshooting.md)
+[中文 README](./README.md) · [User Guide](./docs/) · [Changelog](./CHANGELOG.md) · [FAQ](./docs/reference/faq.md)
 
 ---
 
@@ -32,7 +32,7 @@
 | Windows | [GitHub Release](https://github.com/Timeflys2018/KnowMe/releases/latest) | _CDN mirror coming soon_ |
 | Linux (AppImage) | [GitHub Release](https://github.com/Timeflys2018/KnowMe/releases/latest) | _CDN mirror coming soon_ |
 
-> **Note**: v1 ships without an Apple Developer signature. On macOS, you'll see "unidentified developer" warning — see [install guide](./docs/01-quickstart.md#macos-安装) to bypass.
+> **Note**: the current public beta ships without an Apple Developer signature. On macOS, you'll see an "unidentified developer" warning — see the [install guide](./docs/start/quickstart.md#macos) to bypass.
 
 ## 📖 Documentation
 
