@@ -37,6 +37,7 @@ export default defineConfig({
         items: [
           { text: '欢迎与导览', link: '/' },
           { text: '快速上手', link: '/start/quickstart' },
+          { text: '账号与登录', link: '/start/account' },
           { text: '配置 LLM', link: '/start/llm-setup' },
         ],
       },
@@ -66,7 +67,7 @@ export default defineConfig({
         text: '集成',
         items: [
           { text: 'MCP 接入', link: '/integrate/mcp' },
-          { text: 'Agent Fleet（v1.5）', link: '/integrate/agent-fleet' },
+          { text: 'Agent Fleet', link: '/integrate/agent-fleet' },
         ],
       },
       {
