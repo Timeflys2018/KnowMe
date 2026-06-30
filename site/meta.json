@@ -1,22 +1,22 @@
 {
   "schemaVersion": 1,
-  "latestVersion": "0.5.3",
+  "latestVersion": "0.5.5",
   "proReleasedAt": "2027-07-07T00:00:00Z",
   "lifecycle": "active",
   "downloadUrl": "https://useknowme.com/#download",
   "releaseNotesUrl": "https://github.com/Timeflys2018/knowme/releases/latest",
   "announcements": [
     {
-      "id": "v0.5.3-update",
+      "id": "v0.5.5-update",
       "level": "info",
       "carrier": "banner",
-      "title": "知我 KnowMe 0.5.3 已发布",
+      "title": "知我 KnowMe 0.5.5 已发布",
       "body": "已发布新版本，修复若干问题并加固稳定性，建议更新到最新版本。如已经更新请忽略。",
       "cta": {
         "label": "前往下载",
         "url": "https://useknowme.com/#download"
       },
-      "affectedBelow": "0.5.3"
+      "affectedBelow": "0.5.5"
     }
   ],
   "riskBlock": null
