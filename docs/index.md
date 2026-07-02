@@ -4,7 +4,7 @@ layout: home
 hero:
   name: 知我 KnowMe
   text: 使用文档
-  tagline: 本地 AI 第二大脑 — 笔记自动成 wiki，圈选就问知我，一份记忆所有 AI 都能用
+  tagline: 本地 AI 第二大脑 — Markdown 零配置可用，配好自己的模型后自动编译候选 Wiki，一份记忆所有 AI 都能用
   image:
     src: https://useknowme.com/assets/icon-256.png
     alt: 知我 KnowMe
@@ -70,7 +70,7 @@ features:
 ## 按场景找文档
 
 ::: tip 我是第一次用，想快速跑通
-零配置：装好直接拖一个 `.md` 进来 → AI 编译成 Wiki → 圈选问知我。
+装好后直接拖一个 `.md` 进来写和搜；再配置一个 LLM Provider，就能生成候选 Wiki → Review queue 审核 → 圈选问知我。
 → [快速上手](/start/quickstart)
 :::
 
