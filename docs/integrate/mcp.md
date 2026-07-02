@@ -2,6 +2,12 @@
 
 知我内置 MCP(Model Context Protocol)server,让 Claude Code / Cursor / 任何 MCP 客户端读取你的笔记库,也可在授权后写入 raw 捕获区或提交 wiki 改进建议。默认只读;提供 write scope 令牌且桌面 app 正在运行时,解锁写模式。
 
+你通常会在这三种情况下用到 MCP:
+
+- 让 Claude Code / Cursor 查询你的项目笔记和 Wiki。
+- 让外部 agent 在写代码前先理解你的长期上下文。
+- 让外部 agent 把临时结论写回 raw 捕获区,之后由你整理进知识库。
+
 ## MCP 是什么
 
 MCP 是 Anthropic 在 2024 年推出的协议,让 LLM agent 通过统一接口调用外部工具 / 数据源。知我实现了一个 MCP server——**外部 agent 把知我当成记忆 / 知识层来读取**。
