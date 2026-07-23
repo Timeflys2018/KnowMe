@@ -64,10 +64,20 @@ export default defineConfig({
         ],
       },
       {
+        text: 'Agent Fleet 智能舰队',
+        items: [
+          { text: '总览', link: '/integrate/agent-fleet' },
+          { text: '消息与深聊', link: '/fleet/messages' },
+          { text: '任务看板', link: '/fleet/board' },
+          { text: '指挥室', link: '/fleet/command-center' },
+          { text: '定时任务', link: '/fleet/autopilots' },
+          { text: '小队（开发中）', link: '/fleet/squad' },
+        ],
+      },
+      {
         text: '集成',
         items: [
           { text: 'MCP 接入', link: '/integrate/mcp' },
-          { text: 'Agent Fleet', link: '/integrate/agent-fleet' },
         ],
       },
       {

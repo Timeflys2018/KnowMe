@@ -40,6 +40,11 @@ features:
     details: 圈选 Wiki 段落 + 写改进意见，AI 重新编译该 entity，改动进 Review queue 可回退。
     link: /ai/collaboration
     linkText: 了解 Wiki 改进
+  - icon: 🚀
+    title: Agent Fleet 智能舰队
+    details: 在一个入口下调度本地 Claude Code / opencode —— 派活、盯盘、续聊，真逐字流式，产出一键编回知识库。已 ship 的真实工作台。
+    link: /integrate/agent-fleet
+    linkText: 了解 Agent Fleet
   - icon: 🔌
     title: 本地 + MCP，一份记忆共享
     details: Claude Code / Cursor / 任意 AI agent 都能通过 MCP 直接读你的本地知识库。
