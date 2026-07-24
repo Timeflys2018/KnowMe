@@ -1,6 +1,6 @@
 # Agent Fleet 智能舰队
 
-Agent Fleet 是知我的**智能工作台** —— 在一个入口下调度本地的 Claude Code(codex)与 opencode，把你的 AI agent 编成一支舰队：派活、盯盘、续聊、沉淀，结果直接编回你的知识库。
+Agent Fleet 是知我的**智能工作台** —— 在一个入口下调度本地的 codex 与 opencode，把你的 AI agent 编成一支舰队：派活、盯盘、续聊、沉淀，结果直接编回你的知识库。
 
 MCP 让外部 agent **读**知我；Agent Fleet 反过来，让知我成为**指挥位**：你在这里下达目标，由真实的 codex / opencode 进程执行，全程实时流式，产出可一键编入 vault。
 
