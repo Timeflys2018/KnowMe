@@ -89,7 +89,7 @@ Wikilink 是 `[[词条]]` 形式的内部链接,把笔记织成网络。
 - **Hover 预览**:悬停 wikilink 浮出预览卡——标题、类型、摘要、backlinks 数。
 - **活链 vs 死链**:已有词条 = 实线 + 类型色;还没有 = 虚线 + 灰色,点击进入"创建新词条"。
 
-<!-- SCREENSHOT[wiki-hover-chip.jpg]: Hover wikilink 弹出的预览 chip -->
+![悬停 wikilink 浮出的预览 chip：标题、类型、摘要、backlinks 数](/screenshots/wiki-hover-chip.jpg)
 
 ## Wiki 词条页的结构
 
