@@ -50,6 +50,11 @@ features:
     details: Claude Code / Cursor / 任意 AI agent 都能通过 MCP 直接读你的本地知识库。
     link: /integrate/mcp
     linkText: 了解 MCP
+  - icon: 💬
+    title: 飞书接入，让第二大脑对外答疑
+    details: 飞书联系人 1:1 私聊你的知我，默认只读你编译好的 Wiki、碰不到原始笔记；能读什么由你给访客绑定的应答助手决定。长连接接入，无需公网 / webhook；陌生人首触先进待审批。
+    link: /integrate/channel
+    linkText: 了解飞书接入
   - icon: 📤
     title: 多通道导出
     details: 一键导出微信公众号（6 套主题）、Markdown，复制粘贴即用。

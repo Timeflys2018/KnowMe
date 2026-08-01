@@ -78,6 +78,7 @@ export default defineConfig({
         text: '集成',
         items: [
           { text: 'MCP 接入', link: '/integrate/mcp' },
+          { text: '飞书接入 · 对外问答', link: '/integrate/channel' },
         ],
       },
       {
