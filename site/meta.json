@@ -1,22 +1,22 @@
 {
   "schemaVersion": 1,
-  "latestVersion": "0.8.0",
+  "latestVersion": "0.8.1",
   "proReleasedAt": "2027-07-07T00:00:00Z",
   "lifecycle": "active",
   "downloadUrl": "https://useknowme.com/#download",
   "releaseNotesUrl": "https://github.com/Timeflys2018/knowme/releases/latest",
   "announcements": [
     {
-      "id": "v0.8.0-update",
+      "id": "v0.8.1-update",
       "level": "info",
       "carrier": "banner",
-      "title": "知我 KnowMe 0.8.0 已发布",
-      "body": "新增「飞书接入」：飞书联系人 1:1 私聊向知我提问，默认只读你编译好的 Wiki、碰不到原始笔记；能读什么由你给访客绑定的应答助手决定。另有协作与指挥室重做、多项修复与稳定性加固，建议更新。如已更新请忽略。",
+      "title": "知我 KnowMe 0.8.1 已发布",
+      "body": "已发布新版本，修复若干问题并加固稳定性，建议更新到最新版本。如已经更新请忽略。",
       "cta": {
         "label": "前往下载",
         "url": "https://useknowme.com/#download"
       },
-      "affectedBelow": "0.8.0"
+      "affectedBelow": "0.8.1"
     }
   ],
   "riskBlock": null
