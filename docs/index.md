@@ -42,7 +42,7 @@ features:
     linkText: 了解 Wiki 改进
   - icon: 🚀
     title: Agent Fleet 智能舰队
-    details: 在一个入口下调度本地 Claude Code / opencode —— 派活、盯盘、续聊，真逐字流式，产出一键编回知识库。已 ship 的真实工作台。
+    details: 在一个标签页里调度本地 Claude Code / opencode —— 派活、盯盘、续聊，真逐字流式，产出一键编回知识库。可与笔记并排分屏：一边写、一边看它跑。
     link: /integrate/agent-fleet
     linkText: 了解 Agent Fleet
   - icon: 🔌

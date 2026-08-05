@@ -50,6 +50,7 @@ export default defineConfig({
       {
         text: '核心功能',
         items: [
+          { text: '多面板工作区', link: '/core/workspace' },
           { text: '编辑与导出', link: '/core/editor-export' },
           { text: '知识引擎', link: '/core/knowledge-engine' },
           { text: '知识图谱', link: '/core/graph' },

@@ -79,6 +79,10 @@
 
 <!-- SCREENSHOT[quickstart-three-modes.png]: Live / Edit / Reading 三种模式对比（横向 3 联图）-->
 
+::: tip 窗口可以分屏
+标签栏最右的**向右分屏**按钮能把窗口拆成并排的多个面板，每个面板都是独立的工作区（自己的标签、文件树、右栏）——一边写笔记、一边在旁边跟 AI 深聊。详见 [多面板工作区](/core/workspace)。
+:::
+
 ## 4. 配置 AI（看到 Wiki 编译的前提）
 
 知我的 AI 能力用你**自己的 LLM key**(BYOK),所以编译 Wiki、问知我等功能需要先配一个 Provider:
