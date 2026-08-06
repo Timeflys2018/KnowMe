@@ -74,5 +74,5 @@ opencode 本地会话直读 opencode 自己的 session（像 opencode TUI 那样
 ## 接下来
 
 - [任务看板](/fleet/board)：把会话组织成可派发、可定时的任务
-- [指挥室](/fleet/command-center)：多窗并排盯多个会话
+- [指挥室](/fleet/command-center)：收件箱签收待办 + 全局统揽
 - [Agent Fleet 总览](/integrate/agent-fleet)
