@@ -1,22 +1,22 @@
 {
   "schemaVersion": 1,
-  "latestVersion": "0.10.0",
+  "latestVersion": "0.10.1",
   "proReleasedAt": "2027-07-07T00:00:00Z",
   "lifecycle": "active",
   "downloadUrl": "https://useknowme.com/#download",
   "releaseNotesUrl": "https://github.com/Timeflys2018/knowme/releases/latest",
   "announcements": [
     {
-      "id": "v0.10.0-update",
+      "id": "v0.10.1-update",
       "level": "info",
       "carrier": "banner",
-      "title": "知我 KnowMe 0.10.0 已发布",
-      "body": "指挥室重设计：把「需处理收件箱」（权限待批 / 任务待验收 / 新访客待审批，一处就地签收）+「全局统揽」+ 可选 LLM「凝练」合成一个控制塔视图。另新增：可只读打开知识库外的任意文件（Obsidian 式新标签页）。建议更新到最新版本，如已更新请忽略。",
+      "title": "知我 KnowMe 0.10.1 已发布",
+      "body": "新增智能模式 Agent 引导安装：未安装 opencode / codex 时，可在配置页一键安装，无需手动敲命令。建议更新到最新版本。如已更新请忽略。",
       "cta": {
         "label": "前往下载",
         "url": "https://useknowme.com/#download"
       },
-      "affectedBelow": "0.10.0"
+      "affectedBelow": "0.10.1"
     }
   ],
   "riskBlock": null
