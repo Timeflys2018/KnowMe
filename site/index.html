@@ -1,2219 +1,1785 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>知我 KnowMe — 你的本地第二大脑</title>
-  <meta name="description" content="本地优先的 AI 第二大脑。MCP 原生 · LLM 编译 Wiki · 多通道一键发布。让 Claude / Cursor / OpenCode 读取同一套笔记。">
-  <meta name="keywords" content="知识管理,AI 笔记,Obsidian 替代,本地优先,MCP,Claude Code,知识图谱,Wiki 编译,AI 第二大脑">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>知我 KnowMe — 写下此刻，知识会自己长出来</title>
+<meta name="description" content="本地优先的 AI 第二大脑。知我把零散笔记编译成可追溯的 Wiki，让你和每一个 AI 都能随时调用。MCP 原生 · 数据留在本机。">
+<meta name="keywords" content="知识管理,AI 笔记,Obsidian 替代,本地优先,MCP,Claude Code,知识图谱,Wiki 编译,AI 第二大脑">
+<meta property="og:title" content="知我 KnowMe — 你的本地第二大脑">
+<meta property="og:description" content="本地优先的 AI 第二大脑。MCP 原生 · LLM 编译 Wiki · 多通道一键发布。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://useknowme.com">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://useknowme.com/assets/og-image.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="知我 KnowMe — 你的本地第二大脑">
+<meta name="twitter:image" content="https://useknowme.com/assets/og-image.jpg">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/icon-256.png">
+<style>
+/* ============================================================
+   知我 KnowMe · 落地页 v2（纸墨书斋 × 叙事交互融合版）
+   视觉：暖纸/墨/朱砂/琥珀（与桌面应用同源 lake-warm）
+   叙事：三态 demo + 四步闭环 + 场景贯穿（林工/rerank）
+   ============================================================ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="知我 KnowMe — 你的本地第二大脑">
-  <meta property="og:description" content="本地优先的 AI 第二大脑。MCP 原生 · LLM 编译 Wiki · 多通道一键发布。">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://useknowme.com">
-  <meta property="og:locale" content="zh_CN">
-  <meta property="og:image" content="https://useknowme.com/assets/og-image.jpg">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="知我 KnowMe — 你的本地第二大脑">
-  <meta name="twitter:image" content="https://useknowme.com/assets/og-image.jpg">
+:root {
+  --paper: #f0ede5;
+  --paper-deep: #e9e4d8;
+  --paper-elev: #faf8f2;
+  --paper-card: #f6f3ea;
+  --ink: #2b2620;
+  --ink-soft: #4a443a;
+  --ink-muted: #6f6759;
+  --ink-subtle: #9a917f;
+  --hairline: rgba(43, 38, 32, 0.12);
+  --hairline-strong: rgba(43, 38, 32, 0.22);
 
-  <link rel="icon" type="image/png" href="assets/favicon.png">
-  <link rel="apple-touch-icon" href="assets/icon-256.png">
+  --cinnabar: #a13b32;
+  --cinnabar-deep: #863026;
+  --cinnabar-soft: rgba(161, 59, 50, 0.08);
+  --amber: #a35e07;
+  --amber-deep: #7c4605;
+  --amber-soft: rgba(163, 94, 7, 0.10);
+  --amber-glow: rgba(163, 94, 7, 0.16);
+  --moss: #2e5a47;
+  --moss-soft: rgba(46, 90, 71, 0.10);
 
-  <style>
-    *,
-    *::before,
-    *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  --font-serif: 'Source Han Serif SC', 'Songti SC', 'Noto Serif CJK SC', 'STSong', 'SimSun', Georgia, serif;
+  --font-sans: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
 
-    :root {
-      --primary: #6366f1;          /* indigo-500 */
-      --primary-dark: #4f46e5;
-      --primary-light: #a5b4fc;
-      --accent: #f59e0b;            /* amber-500 早鸟特权色 */
-      --accent-dark: #d97706;
-      --bg: #ffffff;
-      --bg-soft: #fafafa;
-      --bg-card: #ffffff;
-      --text: #0f172a;              /* slate-900 */
-      --text-muted: #64748b;        /* slate-500 */
-      --text-subtle: #94a3b8;       /* slate-400 */
-      --border: #e2e8f0;             /* slate-200 */
-      --border-strong: #cbd5e1;     /* slate-300 */
-      --green: #10b981;
-      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.05);
-      --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.05);
-      --radius-sm: 8px;
-      --radius: 12px;
-      --radius-lg: 16px;
-      --radius-xl: 20px;
-    }
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --reading: 680px;
 
-    html { scroll-behavior: smooth; }
+  --shadow-card: 0 1px 2px rgba(43,38,32,0.04), 0 4px 14px -4px rgba(43,38,32,0.08);
+  --shadow-lift: 0 2px 4px rgba(43,38,32,0.05), 0 16px 40px -12px rgba(43,38,32,0.18);
+  --shadow-window: 0 1px 0 rgba(255,255,255,0.6) inset, 0 24px 64px -16px rgba(43,38,32,0.28), 0 4px 16px -4px rgba(43,38,32,0.10);
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC",
-                   "Microsoft YaHei", "Helvetica Neue", "Inter", sans-serif;
-      line-height: 1.65;
-      color: var(--text);
-      background: var(--bg);
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-    }
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-lg: 14px;
+}
 
-    .container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-    }
+html { scroll-behavior: smooth; }
+[id] { scroll-margin-top: 84px; }
 
-    /* ========================================
-       Nav
-    ======================================== */
-    nav {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: saturate(180%) blur(12px);
-      -webkit-backdrop-filter: saturate(180%) blur(12px);
-      border-bottom: 1px solid var(--border);
-    }
-    nav .container {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 64px;
-    }
-    .nav-brand {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      text-decoration: none;
-      color: var(--text);
-      font-weight: 700;
-      font-size: 1.125rem;
-    }
-    .nav-brand-icon {
-      width: 28px;
-      height: 28px;
-      border-radius: 6px;
-      object-fit: cover;
-    }
-    .nav-links {
-      display: flex;
-      gap: 1.75rem;
-      list-style: none;
-      align-items: center;
-    }
-    .nav-links a {
-      color: var(--text-muted);
-      text-decoration: none;
-      font-size: 0.95rem;
-      font-weight: 500;
-      transition: color 0.15s;
-    }
-    .nav-links a:hover { color: var(--text); }
-    .nav-cta {
-      background: var(--text);
-      color: white !important;
-      padding: 0.5rem 1rem;
-      border-radius: 8px;
-      font-size: 0.9rem !important;
-    }
-    .nav-cta:hover { background: var(--primary-dark) !important; color: white !important; }
+body {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--ink);
+  background:
+    radial-gradient(1200px 600px at 80% -10%, rgba(163, 94, 7, 0.05), transparent 60%),
+    radial-gradient(900px 500px at 10% 0%, rgba(161, 59, 50, 0.04), transparent 55%),
+    var(--paper);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
 
-    /* 移动端简化 nav：隐藏次要链接（特性/定价/文档/GitHub），保留下载 CTA */
-    @media (max-width: 640px) {
-      .nav-links { gap: 0; }
-      .nav-links li:not(:last-child) { display: none; }
-    }
+::selection { background: rgba(161, 59, 50, 0.16); }
 
-    /* ========================================
-       Hero
-    ======================================== */
-    .hero {
-      padding: 6rem 0 5rem;
-      text-align: center;
-      background:
-        radial-gradient(ellipse at top, rgba(99, 102, 241, 0.08) 0%, transparent 50%),
-        radial-gradient(ellipse at bottom, rgba(245, 158, 11, 0.05) 0%, transparent 50%);
-    }
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.4rem 0.9rem;
-      border: 1px solid var(--border-strong);
-      border-radius: 100px;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      margin-bottom: 2rem;
-      background: var(--bg-soft);
-    }
-    .hero-badge .dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--green);
-      animation: pulse 2s ease-in-out infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
-    }
+.container { max-width: 1120px; margin: 0 auto; padding: 0 1.5rem; }
+.nb { white-space: nowrap; }
 
-    h1.hero-title {
-      font-size: clamp(2.25rem, 5vw, 3.75rem);
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      line-height: 1.1;
-      margin-bottom: 1.25rem;
-      background: linear-gradient(135deg, #0f172a 30%, #6366f1 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-    /* 让标题短语在小屏不被从词中间拆断，只在标点/换行处折行 */
-    h1.hero-title .nowrap { white-space: nowrap; }
-    .hero-tagline {
-      font-size: clamp(1rem, 2vw, 1.25rem);
-      color: var(--text-muted);
-      max-width: 640px;
-      margin: 0 auto 2.5rem;
-      line-height: 1.6;
-    }
+/* 跳转主内容链接：仅聚焦时可见 */
+.skip-link {
+  position: absolute; left: 1rem; top: -3rem; z-index: 100;
+  background: var(--ink); color: var(--paper);
+  padding: 0.5rem 1rem; border-radius: var(--r-sm);
+  font-size: 0.88rem; text-decoration: none;
+  transition: top 0.2s var(--ease);
+}
+.skip-link:focus-visible { top: 0.75rem; }
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px;
+  clip-path: inset(50%); overflow: hidden; white-space: nowrap;
+}
 
-    .button-group {
-      display: flex;
-      gap: 0.75rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-bottom: 1.25rem;
-    }
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.875rem 1.5rem;
-      border-radius: var(--radius);
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 1rem;
-      transition: all 0.2s;
-      border: none;
-      cursor: pointer;
-    }
-    .btn-primary {
-      background: var(--text);
-      color: white;
-      box-shadow: var(--shadow-md);
-    }
-    .btn-primary:hover {
-      background: var(--primary-dark);
-      transform: translateY(-1px);
-      box-shadow: var(--shadow-lg);
-    }
-    .btn-secondary {
-      background: white;
-      color: var(--text);
-      border: 1px solid var(--border-strong);
-    }
-    .btn-secondary:hover {
-      border-color: var(--text);
-    }
-    .btn-ghost {
-      background: transparent;
-      color: var(--text-muted);
-      border: none;
-      padding: 0.5rem 0.75rem;
-    }
-    .btn-ghost:hover { color: var(--text); }
+@keyframes rise {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.rise { animation: rise 0.9s var(--ease) both; }
+.rise-1 { animation-delay: 0.08s; }
+.rise-2 { animation-delay: 0.18s; }
+.rise-3 { animation-delay: 0.30s; }
+.rise-4 { animation-delay: 0.44s; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .rise { animation: none; }
+  * { animation-duration: 0.001s !important; animation-iteration-count: 1 !important; transition-duration: 0.001s !important; }
+}
 
-    .platform-meta {
-      font-size: 0.85rem;
-      color: var(--text-subtle);
-    }
-    .platform-meta strong { color: var(--text-muted); }
+.seal {
+  display: inline-flex; align-items: center; justify-content: center;
+  background: var(--cinnabar); color: #fdf9f0;
+  font-family: var(--font-serif); font-weight: 700;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(134, 48, 38, 0.35);
+  letter-spacing: 0.05em;
+  user-select: none;
+}
 
-    /* ========================================
-       Beta Banner
-    ======================================== */
-    .beta-banner {
-      max-width: 720px;
-      margin: 3rem auto 0;
-      background: linear-gradient(135deg, #fff7ed 0%, #fef3c7 100%);
-      border: 1px solid #fbbf24;
-      border-radius: var(--radius-lg);
-      padding: 1.25rem 1.5rem;
-      text-align: left;
-      display: flex;
-      align-items: flex-start;
-      gap: 1rem;
-    }
-    .beta-banner-icon {
-      font-size: 1.75rem;
-      flex-shrink: 0;
-    }
-    .beta-banner-content { flex: 1; font-size: 0.95rem; color: #78350f; line-height: 1.6; }
-    .beta-banner-title { font-weight: 700; color: #78350f; display: block; margin-bottom: 0.25rem; }
-    .beta-banner-cta {
-      color: #92400e;
-      font-weight: 600;
-      text-decoration: underline;
-      text-decoration-thickness: 1px;
-      text-underline-offset: 3px;
-    }
+/* ============ Nav ============ */
+nav {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(240, 237, 229, 0.82);
+  backdrop-filter: saturate(160%) blur(14px);
+  -webkit-backdrop-filter: saturate(160%) blur(14px);
+  border-bottom: 1px solid var(--hairline);
+}
+nav .container { display: flex; align-items: center; justify-content: space-between; height: 62px; }
+.nav-brand { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; color: var(--ink); }
+.brand-logo { border-radius: 6px; object-fit: cover; display: block; flex-shrink: 0; }
+.nav-brand .brand-logo { width: 30px; height: 30px; }
+.footer-brand .brand-logo { width: 24px; height: 24px; }
+.nav-brand .seal { width: 30px; height: 30px; font-size: 13px; }
+.nav-brand-name { font-family: var(--font-serif); font-weight: 700; font-size: 1.1rem; letter-spacing: 0.02em; }
+.nav-brand-name span { color: var(--ink-muted); font-family: var(--font-sans); font-weight: 500; font-size: 0.85rem; margin-left: 0.35rem; }
+.nav-links { display: flex; gap: 1.6rem; list-style: none; align-items: center; }
+.nav-links a { color: var(--ink-muted); text-decoration: none; font-size: 0.92rem; font-weight: 500; transition: color 0.15s; }
+.nav-links a:hover { color: var(--ink); }
+.nav-cta {
+  background: var(--cinnabar); color: #fdf9f0 !important;
+  padding: 0.45rem 1.05rem; border-radius: 8px; font-size: 0.88rem !important;
+  transition: background 0.15s, transform 0.15s;
+}
+.nav-cta:hover { background: var(--cinnabar-deep); transform: translateY(-1px); }
 
-    /* ========================================
-       Download Section
-    ======================================== */
-    .download-section { text-align: center; }
-    /* 这些元素在 display:inline-flex / grid 时会盖掉 [hidden] 的默认 display:none，
-       发版切换时需要强制隐藏。 */
-    .download-section [hidden] { display: none !important; }
-    .download-intro {
-      max-width: 580px;
-      margin: 1rem auto 2rem;
-      color: var(--text-muted);
-      line-height: 1.7;
-    }
+.nav-toggle {
+  display: none;
+  background: none; border: 1px solid var(--hairline-strong); border-radius: 8px;
+  width: 38px; height: 38px; align-items: center; justify-content: center;
+  color: var(--ink); cursor: pointer;
+}
+.nav-toggle svg { width: 20px; height: 20px; }
+.mobile-nav { border-bottom: 1px solid var(--hairline); background: var(--paper-elev); }
+.mobile-nav ul { list-style: none; padding: 0.6rem 1.5rem 1rem; display: flex; flex-direction: column; }
+.mobile-nav a {
+  display: block; padding: 0.7rem 0.2rem; text-decoration: none; color: var(--ink);
+  font-size: 0.98rem; border-bottom: 1px solid var(--hairline);
+}
+.mobile-nav li:last-child a { border-bottom: none; color: var(--cinnabar); font-weight: 600; }
+@media (max-width: 760px) {
+  .nav-links { display: none; }
+  .nav-toggle { display: inline-flex; }
+}
 
-    .download-pre {
-      max-width: 720px;
-      margin: 0 auto 2.5rem;
-      padding: 0.85rem 1.25rem;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.75rem;
-      font-size: 0.9rem;
-      line-height: 1.5;
-      color: var(--text-muted);
-      box-shadow: var(--shadow-sm);
-    }
-    @media (max-width: 600px) {
-      .download-pre {
-        border-radius: var(--radius-md);
-        padding: 0.85rem 1rem;
-        font-size: 0.85rem;
-        display: flex;
-      }
-    }
+/* ============ Hero（双栏：copy + 三态 demo） ============ */
+.hero { padding: 4.5rem 0 3.5rem; }
+.hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 3.5rem; align-items: center; }
+@media (max-width: 920px) { .hero-grid { grid-template-columns: 1fr; gap: 2.6rem; } }
 
-    .download-prep-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.25rem;
-      max-width: 960px;
-      margin: 0 auto;
-      text-align: left;
-    }
-    @media (max-width: 768px) {
-      .download-prep-grid { grid-template-columns: 1fr; }
-    }
-    .download-prep-card {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      padding: 1.5rem;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      text-decoration: none;
-      color: var(--text);
-      transition: all 0.2s;
-    }
-    .download-prep-card:hover {
-      border-color: var(--primary-light);
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
-    }
-    .prep-icon { font-size: 2rem; line-height: 1; }
-    .download-prep-card h4 {
-      font-size: 1.05rem;
-      font-weight: 700;
-      margin: 0;
-    }
-    .download-prep-card p {
-      font-size: 0.875rem;
-      color: var(--text-muted);
-      line-height: 1.6;
-      margin: 0;
-      flex: 1;
-    }
-    .prep-cta {
-      margin-top: 0.5rem;
-      font-size: 0.875rem;
-      color: var(--primary);
-      font-weight: 600;
-    }
-    .download-prep-card:hover .prep-cta {
-      color: var(--primary-dark);
-    }
-    .download-prep-meta {
-      max-width: 720px;
-      margin: 2.5rem auto 0;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      line-height: 1.7;
-      text-align: center;
-    }
-    .download-prep-meta a {
-      color: var(--primary);
-      text-decoration: underline;
-      text-decoration-thickness: 1px;
-      text-underline-offset: 3px;
-    }
-    .download-pre-dot {
-      flex-shrink: 0;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.15);
-      animation: download-pre-pulse 2s ease-in-out infinite;
-    }
-    @keyframes download-pre-pulse {
-      0%, 100% { box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.15); }
-      50% { box-shadow: 0 0 0 7px rgba(245, 158, 11, 0.05); }
-    }
-    .download-pre-text strong { color: var(--text); font-weight: 600; }
-    .download-pre-text a {
-      color: var(--primary);
-      text-decoration: underline;
-      text-decoration-thickness: 1px;
-      text-underline-offset: 2px;
-    }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 0.55rem;
+  padding: 0.38rem 0.95rem;
+  border: 1px solid var(--hairline-strong); border-radius: 100px;
+  background: var(--paper-elev);
+  font-size: 0.85rem; color: var(--ink-muted);
+  margin-bottom: 1.8rem;
+}
+.hero-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--moss); animation: pulse 2.2s ease-in-out infinite; }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
 
-    .download-live {
-      max-width: 720px;
-      margin: 2rem auto 0;
-      text-align: center;
-    }
-    .btn-download-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.85rem;
-      padding: 1.25rem 2.5rem;
-      background: var(--text);
-      color: white;
-      text-decoration: none;
-      border-radius: var(--radius-md);
-      font-weight: 700;
-      font-size: 1.15rem;
-      box-shadow: var(--shadow-lg);
-      transition: all 0.2s;
-    }
-    .btn-download-primary:hover {
-      background: var(--primary-dark);
-      transform: translateY(-2px);
-    }
-    .download-primary-icon {
-      font-size: 1.4rem;
-    }
-    .download-primary-meta {
-      font-size: 0.85rem;
-      opacity: 0.7;
-      font-weight: 500;
-      padding-left: 0.5rem;
-      border-left: 1px solid rgba(255,255,255,0.25);
-    }
+h1.hero-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2.2rem, 4.6vw, 3.4rem);
+  font-weight: 700; letter-spacing: 0.01em; line-height: 1.32;
+  margin-bottom: 1.3rem; color: var(--ink);
+  text-wrap: balance;
+}
+h1.hero-title em { font-style: normal; color: var(--cinnabar); }
+.hero-tagline {
+  font-size: clamp(1rem, 1.6vw, 1.15rem);
+  color: var(--ink-muted); max-width: 520px; line-height: 1.85;
+  margin-bottom: 2.2rem; word-break: keep-all;
+}
 
-    .download-platforms {
-      margin-top: 2rem;
-      text-align: left;
-    }
-    .download-platforms summary {
-      cursor: pointer;
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      padding: 0.5rem 0;
-      list-style: none;
-      text-align: center;
-    }
-    .download-platforms summary::-webkit-details-marker { display: none; }
-    .download-platforms summary::before {
-      content: '▸';
-      display: inline-block;
-      margin-right: 0.5rem;
-      transition: transform 0.2s;
-    }
-    .download-platforms[open] summary::before {
-      transform: rotate(90deg);
-    }
-    .download-platform-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.75rem;
-      margin-top: 1rem;
-    }
-    @media (max-width: 600px) {
-      .download-platform-grid { grid-template-columns: 1fr; }
-    }
-    .download-platform-card {
-      display: flex;
-      flex-direction: column;
-      gap: 0.25rem;
-      padding: 1rem 1.25rem;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      text-decoration: none;
-      color: var(--text);
-      transition: all 0.15s;
-    }
-    .download-platform-card:hover {
-      border-color: var(--primary-light);
-      transform: translateY(-1px);
-    }
-    .platform-icon { font-size: 1.5rem; }
-    .platform-name { font-weight: 600; font-size: 0.95rem; }
-    .platform-arch { font-size: 0.8rem; color: var(--text-muted); }
+.button-group { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 1.3rem; }
+.btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.9rem 1.7rem; border-radius: var(--r-md);
+  text-decoration: none; font-weight: 600; font-size: 1rem;
+  transition: transform 0.18s var(--ease), box-shadow 0.18s, background 0.15s, border-color 0.15s;
+  border: none; cursor: pointer;
+}
+.btn svg { width: 17px; height: 17px; }
+.btn-primary { background: var(--cinnabar); color: #fdf9f0; box-shadow: 0 4px 14px -4px rgba(134,48,38,0.45); }
+.btn-primary:hover { background: var(--cinnabar-deep); transform: translateY(-2px); box-shadow: 0 10px 24px -8px rgba(134,48,38,0.5); }
+.btn-secondary { background: var(--paper-elev); color: var(--ink); border: 1px solid var(--hairline-strong); }
+.btn-secondary:hover { border-color: var(--ink); transform: translateY(-1px); }
 
-    .download-live-note {
-      margin-top: 1.75rem;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-      line-height: 1.6;
-    }
-    .download-live-note a { color: var(--primary); text-decoration: none; }
-    .download-live-note a:hover { text-decoration: underline; }
-    .download-live-meta {
-      margin-top: 0.75rem;
-      font-size: 0.85rem;
-      color: var(--text-muted);
-    }
-    .download-live-meta a { color: var(--primary); text-decoration: none; }
-    .download-live-meta a:hover { text-decoration: underline; }
-    .download-live-sep {
-      margin: 0 0.65rem;
-      color: var(--border-strong);
-    }
+.platform-meta { font-size: 0.86rem; color: var(--ink-muted); display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+.platform-meta strong { color: var(--ink-soft); font-weight: 600; }
+.platform-meta .sep { color: var(--ink-subtle); }
 
-    .download-source {
-      margin-top: 1.25rem;
-    }
-    .download-source-row {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 0.5rem;
-    }
-    .download-source-pill {
-      cursor: pointer;
-      font: inherit;
-      font-size: 0.8rem;
-      line-height: 1;
-      padding: 0.45rem 0.8rem;
-      background: var(--bg-card);
-      color: var(--text-muted);
-      border: 1px solid var(--border);
-      border-radius: 999px;
-      transition: all 0.15s;
-      white-space: nowrap;
-    }
-    .download-source-pill:hover {
-      border-color: var(--primary-light);
-      color: var(--text);
-    }
-    .download-source-pill[aria-pressed="true"] {
-      background: var(--primary);
-      border-color: var(--primary);
-      color: #fff;
-    }
-    .download-source-pill[aria-pressed="true"]:hover {
-      background: var(--primary-dark);
-      border-color: var(--primary-dark);
-      color: #fff;
-    }
-    .download-source-note {
-      max-width: 560px;
-      margin: 0.85rem auto 0;
-      font-size: 0.78rem;
-      line-height: 1.6;
-      color: var(--text-subtle);
-    }
+/* ============ 三态 demo 卡 ============ */
+.demo-card {
+  background: var(--paper-elev);
+  border: 1px solid var(--hairline); border-radius: var(--r-lg);
+  box-shadow: var(--shadow-window);
+  overflow: hidden;
+}
+.demo-tabs {
+  display: flex; gap: 0.25rem;
+  padding: 0.6rem 0.7rem;
+  background: var(--paper-deep);
+  border-bottom: 1px solid var(--hairline);
+}
+.demo-tab {
+  font: inherit; font-size: 0.85rem; font-weight: 600;
+  padding: 0.45rem 0.95rem; border-radius: 7px;
+  background: transparent; color: var(--ink-muted);
+  border: none; cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.demo-tab:hover { color: var(--ink); }
+.demo-tab[aria-selected="true"] { background: var(--paper-elev); color: var(--cinnabar); box-shadow: var(--shadow-card); }
+.demo-tab:focus-visible { outline: 2px solid var(--cinnabar); outline-offset: 1px; }
 
-    /* ========================================
-       Section Common
-    ======================================== */
-    section {
-      padding: 5rem 0;
-      border-top: 1px solid var(--border);
-      scroll-margin-top: 80px;
-    }
-    [id] { scroll-margin-top: 80px; }
-    html { scroll-behavior: smooth; }
-    .section-eyebrow {
-      display: inline-block;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--primary);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: 0.75rem;
-    }
-    h2.section-title {
-      font-size: clamp(1.75rem, 3vw, 2.5rem);
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      margin-bottom: 1rem;
-      line-height: 1.2;
-    }
-    h2.section-title-hero {
-      font-size: clamp(2rem, 4.2vw, 3.25rem);
-      line-height: 1.18;
-      margin-bottom: 1.25rem;
-    }
-    h2.section-title-hero .title-accent {
-      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      color: transparent;
-      font-weight: 900;
-      letter-spacing: -0.025em;
-      display: inline-block;
-      position: relative;
-    }
-    h2.section-title-hero .title-accent::after {
-      content: '';
-      position: absolute;
-      left: 0; right: 0;
-      bottom: -6px;
-      height: 4px;
-      background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
-      border-radius: 2px;
-      opacity: 0.18;
-    }
-    .section-intro {
-      font-size: 1.1rem;
-      color: var(--text-muted);
-      max-width: 640px;
-      margin-bottom: 3rem;
-    }
+.demo-panel { padding: 1.5rem 1.6rem 1.4rem; min-height: 240px; }
+.demo-panel[hidden] { display: none; }
+.demo-panel.is-active { animation: demoIn 0.35s var(--ease) both; }
+@keyframes demoIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* ========================================
-       5 大独占位 (Differentiators)
-    ======================================== */
-    .differentiators {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.5rem;
-    }
-    .diff-card {
-      padding: 2rem;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      transition: all 0.2s;
-      position: relative;
-      overflow: hidden;
-    }
-    .diff-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(99, 102, 241, 0.04) 0%, transparent 100%);
-      opacity: 0;
-      transition: opacity 0.3s;
-      pointer-events: none;
-    }
-    .diff-card:hover {
-      border-color: var(--primary-light);
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
-    }
-    .diff-card:hover::before { opacity: 1; }
-    .diff-num {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 32px;
-      height: 32px;
-      background: var(--text);
-      color: white;
-      border-radius: 8px;
-      font-weight: 700;
-      font-size: 0.9rem;
-      margin-bottom: 1rem;
-    }
-    .diff-card h3 {
-      font-size: 1.25rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-      letter-spacing: -0.01em;
-    }
-    .diff-card p {
-      color: var(--text-muted);
-      font-size: 0.95rem;
-      line-height: 1.6;
-    }
-    .diff-tag {
-      display: inline-block;
-      margin-top: 1rem;
-      padding: 0.25rem 0.625rem;
-      background: rgba(99, 102, 241, 0.1);
-      color: var(--primary-dark);
-      border-radius: 6px;
-      font-size: 0.78rem;
-      font-weight: 600;
-    }
+.demo-note {
+  font-family: var(--font-serif); font-size: 1.05rem; color: var(--ink); line-height: 1.9;
+  padding: 0.9rem 1.1rem; background: #fff;
+  border: 1px solid var(--hairline); border-radius: var(--r-md);
+  margin-bottom: 0.9rem;
+}
+.demo-hint { font-size: 0.82rem; color: var(--ink-subtle); line-height: 1.7; }
+.demo-entities { list-style: none; margin-bottom: 0.9rem; }
+.demo-entities li {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.55rem 0.8rem; margin-bottom: 0.45rem;
+  background: #fff; border: 1px solid var(--hairline); border-radius: var(--r-sm);
+  font-size: 0.92rem; color: var(--ink-soft);
+}
+.entity-kind {
+  flex-shrink: 0; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.05em;
+  padding: 0.14rem 0.5rem; border-radius: 4px;
+  background: var(--amber-soft); color: var(--amber-deep);
+}
+.entity-kind.concept { background: var(--cinnabar-soft); color: var(--cinnabar); }
+.demo-q { font-size: 0.95rem; font-weight: 600; color: var(--ink); margin-bottom: 0.7rem; }
+.demo-a {
+  font-size: 0.92rem; color: var(--ink-soft); line-height: 1.8;
+  padding: 0.85rem 1rem; background: #fff;
+  border: 1px solid var(--hairline); border-left: 3px solid var(--cinnabar);
+  border-radius: var(--r-sm); margin-bottom: 0.9rem;
+}
+.demo-a .src { display: block; margin-top: 0.5rem; font-size: 0.78rem; color: var(--moss); font-weight: 600; }
 
-    /* ========================================
-       三档版本对比 Pricing
-    ======================================== */
-    .pricing-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1rem;
-      margin-top: 2rem;
-    }
-    @media (max-width: 900px) {
-      .pricing-grid { grid-template-columns: repeat(2, 1fr); }
-      .pricing-grid > .pricing-card:first-child { grid-column: 1 / -1; }
-    }
-    @media (max-width: 600px) {
-      .pricing-grid { grid-template-columns: 1fr; }
-      .pricing-grid > .pricing-card:first-child { grid-column: auto; }
-    }
-    .pricing-card {
-      position: relative;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 2rem 1.75rem;
-      display: flex;
-      flex-direction: column;
-    }
-    .pricing-card.highlighted {
-      border: 2px solid var(--primary);
-      box-shadow: 0 8px 32px -4px rgba(99, 102, 241, 0.18);
-      transform: translateY(-4px);
-      background: var(--bg-card);
-      opacity: 1;
-    }
-    .pricing-card.coming-soon {
-      background: var(--bg-soft);
-      opacity: 0.85;
-    }
-    .pricing-card.highlighted.coming-soon {
-      background: var(--bg-card);
-      opacity: 1;
-    }
-    .pricing-soon-tag {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      padding: 0.25rem 0.625rem;
-      background: rgba(245, 158, 11, 0.15);
-      color: var(--accent-dark);
-      font-size: 0.75rem;
-      font-weight: 700;
-      border-radius: 100px;
-      letter-spacing: 0.02em;
-    }
-    .pricing-name {
-      font-size: 1.25rem;
-      font-weight: 700;
-      margin-bottom: 0.25rem;
-    }
-    .pricing-blurb {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-      margin-bottom: 1.5rem;
-      min-height: 2.6em;
-    }
-    .pricing-price {
-      font-size: 2.5rem;
-      font-weight: 800;
-      letter-spacing: -0.03em;
-      margin-bottom: 0.25rem;
-      color: var(--text);
-    }
-    .pricing-price small {
-      font-size: 1rem;
-      font-weight: 500;
-      color: var(--text-muted);
-    }
-    .pricing-period {
-      color: var(--text-muted);
-      font-size: 0.85rem;
-      margin-bottom: 1.5rem;
-    }
-    .pricing-features {
-      list-style: none;
-      padding: 0;
-      flex: 1;
-      margin-bottom: 1.5rem;
-    }
-    .pricing-features li {
-      padding: 0.5rem 0;
-      font-size: 0.9rem;
-      color: var(--text);
-      display: flex;
-      align-items: flex-start;
-      gap: 0.5rem;
-      line-height: 1.5;
-    }
-    .pricing-features .check {
-      color: var(--green);
-      font-weight: 700;
-      flex-shrink: 0;
-      margin-top: 0.05em;
-    }
-    .pricing-features .dim { color: var(--text-subtle); }
-    .pricing-features li.pricing-divider {
-      padding: 0.85rem 0 0.35rem;
-      justify-content: center;
-      border-top: 1px dashed var(--border);
-      margin-top: 0.5rem;
-    }
-    .pricing-features li.pricing-divider .dim {
-      font-size: 0.8rem;
-      letter-spacing: 0.04em;
-      color: var(--text-muted);
-    }
-    .pricing-cta {
-      display: block;
-      text-align: center;
-      padding: 0.75rem 1rem;
-      border-radius: var(--radius);
-      font-weight: 600;
-      font-size: 0.95rem;
-      text-decoration: none;
-      transition: all 0.15s;
-    }
-    .pricing-cta-primary {
-      background: var(--text);
-      color: white;
-    }
-    .pricing-cta-primary:hover { background: var(--primary-dark); }
-    .pricing-cta-secondary {
-      background: white;
-      color: var(--text);
-      border: 1px solid var(--border-strong);
-    }
-    .pricing-cta-secondary:hover { border-color: var(--text); }
-    .pricing-cta-disabled {
-      background: var(--bg-soft);
-      color: var(--text-subtle);
-      border: 1px dashed var(--border-strong);
-      cursor: not-allowed;
-    }
+/* ============ 应用窗口 Mock ============ */
+.stage { padding: 1rem 0 5rem; }
+.window {
+  background: var(--paper-elev);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-window);
+  overflow: hidden;
+}
+.window-bar {
+  height: 38px; display: flex; align-items: center; gap: 0.5rem;
+  padding: 0 0.9rem;
+  background: var(--paper-deep);
+  border-bottom: 1px solid var(--hairline);
+}
+.tl { width: 11px; height: 11px; border-radius: 50%; }
+.tl-r { background: #c96f66; } .tl-y { background: #d5a94f; } .tl-g { background: #7ea87e; }
+.window-title { margin-left: 0.6rem; font-size: 0.78rem; color: var(--ink-subtle); font-family: var(--font-mono); }
+.window-body { display: grid; grid-template-columns: 190px 1fr 250px; min-height: 400px; }
 
-    /* 早鸟特别区 */
-    .early-bird {
-      max-width: 720px;
-      margin: 3rem auto 0;
-      background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 100%);
-      border: 2px solid var(--accent);
-      border-radius: var(--radius-xl);
-      padding: 2rem;
-      text-align: center;
-      position: relative;
-    }
-    .early-bird-badge {
-      position: absolute;
-      top: -14px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: var(--accent-dark);
-      color: white;
-      padding: 0.4rem 1rem;
-      border-radius: 100px;
-      font-size: 0.85rem;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-    }
-    .early-bird h3 {
-      font-size: 1.5rem;
-      font-weight: 800;
-      margin: 0.5rem 0;
-      color: #78350f;
-    }
-    .early-bird-price {
-      font-size: 3rem;
-      font-weight: 800;
-      color: #78350f;
-      letter-spacing: -0.03em;
-      margin: 0.5rem 0;
-    }
-    .early-bird-price small { font-size: 1.1rem; font-weight: 500; }
-    .early-bird p { color: #92400e; margin-bottom: 1.5rem; font-size: 0.95rem; }
-    .early-bird-counter {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.5rem 1rem;
-      background: rgba(255, 255, 255, 0.6);
-      border-radius: 100px;
-      font-size: 0.85rem;
-      color: #78350f;
-      font-weight: 600;
-      margin-bottom: 1.5rem;
-    }
-    .early-bird-cta {
-      display: inline-block;
-      background: #78350f;
-      color: white;
-      padding: 0.875rem 2rem;
-      border-radius: var(--radius);
-      text-decoration: none;
-      font-weight: 700;
-      transition: all 0.15s;
-    }
-    .early-bird-cta:hover {
-      background: #451a03;
-      transform: translateY(-1px);
-    }
+.pane { padding: 0.9rem; }
+.pane-tree { border-right: 1px solid var(--hairline); background: var(--paper-card); }
+.pane-head { font-size: 0.68rem; letter-spacing: 0.12em; color: var(--ink-subtle); text-transform: uppercase; margin-bottom: 0.7rem; font-weight: 600; }
+.tree-row {
+  display: flex; align-items: center; gap: 0.45rem;
+  padding: 0.32rem 0.45rem; border-radius: 5px;
+  font-size: 0.8rem; color: var(--ink-muted);
+}
+.tree-row svg { width: 13px; height: 13px; flex-shrink: 0; opacity: 0.7; }
+.tree-row.active {
+  background: var(--amber-soft); color: var(--ink); font-weight: 600;
+  box-shadow: inset 2px 0 0 var(--cinnabar);
+}
+.tree-row.indent { padding-left: 1.35rem; }
 
-    .early-bird-status-banner {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: rgba(255, 251, 235, 0.9);
-      border: 1px solid rgba(120, 53, 15, 0.2);
-      border-radius: var(--radius);
-      padding: 0.65rem 1rem;
-      margin-bottom: 1rem;
-      font-size: 0.85rem;
-      color: #78350f;
-      line-height: 1.5;
-    }
-    .early-bird-status-banner .status-dot {
-      flex-shrink: 0;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: #f59e0b;
-      box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.6);
-      animation: status-pulse 2s ease-in-out infinite;
-    }
-    @keyframes status-pulse {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
-      50% { box-shadow: 0 0 0 5px rgba(245, 158, 11, 0.15); }
-    }
+.pane-editor { padding: 1.4rem 1.7rem; }
+.doc-title { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--ink); }
+.doc-meta { font-size: 0.72rem; color: var(--ink-subtle); margin-bottom: 1rem; font-family: var(--font-mono); }
+.doc-text { font-family: var(--font-serif); font-size: 0.88rem; color: var(--ink-soft); line-height: 1.9; margin-bottom: 0.75rem; }
+.doc-text mark {
+  background: var(--amber-soft); color: var(--amber-deep);
+  padding: 0.02rem 0.3rem; border-radius: 4px; font-weight: 600;
+}
+.wikilink-chip {
+  display: inline-block;
+  padding: 0.05rem 0.45rem; margin: 0 0.1rem;
+  background: var(--amber-soft); color: var(--amber-deep);
+  border-radius: 5px; font-size: 0.78rem; font-weight: 600;
+  font-family: var(--font-sans);
+}
+.comment-card {
+  margin-top: 1.2rem; padding: 0.85rem 1rem;
+  background: #fff; border: 1px solid var(--hairline); border-radius: var(--r-md);
+  box-shadow: var(--shadow-card);
+}
+.comment-card .cc-head { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.4rem; }
+.cc-avatar { width: 18px; height: 18px; border-radius: 50%; background: var(--moss); flex-shrink: 0; }
+.cc-name { font-size: 0.78rem; font-weight: 700; }
+.cc-time { font-size: 0.72rem; color: var(--ink-subtle); }
+.comment-card p { font-size: 0.82rem; color: var(--ink-muted); line-height: 1.65; }
+.comment-card .cc-hl { border-left: 3px solid var(--amber); padding-left: 0.6rem; margin-bottom: 0.5rem; font-family: var(--font-serif); font-size: 0.85rem; color: var(--ink-soft); }
 
-    .early-bird-actions {
-      display: flex;
-      gap: 0.75rem;
-      align-items: center;
-      flex-wrap: wrap;
-      margin-top: 0.5rem;
-    }
-    .early-bird-cta-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      background: #78350f;
-      color: white !important;
-      padding: 0.95rem 1.75rem;
-      border-radius: var(--radius);
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 1rem;
-      transition: all 0.15s;
-      box-shadow: 0 4px 12px -2px rgba(120, 53, 15, 0.4);
-    }
-    .early-bird-cta-primary:hover {
-      background: #451a03;
-      transform: translateY(-1px);
-      box-shadow: 0 6px 16px -2px rgba(120, 53, 15, 0.5);
-    }
-    .early-bird-cta-secondary {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      background: transparent;
-      color: #78350f;
-      padding: 0.95rem 1.25rem;
-      border-radius: var(--radius);
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.9rem;
-      transition: all 0.15s;
-      border: 1px solid rgba(120, 53, 15, 0.25);
-    }
-    .early-bird-cta-secondary:hover {
-      background: rgba(255, 255, 255, 0.5);
-      border-color: rgba(120, 53, 15, 0.5);
-    }
-    .early-bird-howto {
-      margin-top: 1.5rem;
-      padding-top: 1.25rem;
-      border-top: 1px solid rgba(120, 53, 15, 0.15);
-      font-size: 0.83rem;
-      color: #78350f;
-      line-height: 1.7;
-      opacity: 0.85;
-    }
+.pane-ai { border-left: 1px solid var(--hairline); background: var(--paper-card); }
+.ai-head { display: flex; align-items: center; gap: 0.45rem; margin-bottom: 0.8rem; }
+.ai-head .seal { width: 20px; height: 20px; font-size: 10px; border-radius: 4px; }
+.ai-head span { font-size: 0.82rem; font-weight: 700; }
+.ai-q {
+  background: #fff; border: 1px solid var(--hairline); border-radius: var(--r-md);
+  padding: 0.6rem 0.75rem; font-size: 0.8rem; color: var(--ink-soft); margin-bottom: 0.7rem;
+}
+.ai-a { font-size: 0.8rem; color: var(--ink-muted); line-height: 1.7; }
+.ai-a .caret { display: inline-block; width: 7px; height: 14px; background: var(--cinnabar); vertical-align: -2px; margin-left: 2px; animation: caret 1s steps(2) infinite; }
+@keyframes caret { 50% { opacity: 0; } }
+.ai-tag { display: inline-block; margin-top: 0.7rem; font-size: 0.7rem; color: var(--moss); background: var(--moss-soft); padding: 0.15rem 0.5rem; border-radius: 4px; font-weight: 600; }
 
-    /* ========================================
-       承诺 Promises
-    ======================================== */
-    .promises-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-    }
-    .promise {
-      padding: 1.5rem;
-      background: var(--bg-soft);
-      border-radius: var(--radius);
-      display: flex;
-      gap: 1rem;
-      align-items: flex-start;
-    }
-    .promise-icon {
-      flex-shrink: 0;
-      width: 36px;
-      height: 36px;
-      background: var(--green);
-      color: white;
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 1rem;
-    }
-    .promise h4 {
-      font-size: 1rem;
-      font-weight: 700;
-      margin-bottom: 0.35rem;
-    }
-    .promise p { color: var(--text-muted); font-size: 0.875rem; line-height: 1.55; }
+@media (max-width: 920px) { .window-body { grid-template-columns: 1fr 220px; } .pane-tree { display: none; } }
+@media (max-width: 640px) { .window-body { grid-template-columns: 1fr; min-height: 320px; } .pane-ai { display: none; } }
 
-    /* ========================================
-       Sponsor 支持开发者
-    ======================================== */
-    .sponsor-section {
-      background: var(--bg-soft);
-    }
-    .sponsor-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-      align-items: stretch;
-    }
-    .sponsor-grid-single {
-      grid-template-columns: minmax(0, 480px);
-      justify-content: center;
-    }
-    @media (max-width: 768px) {
-      .sponsor-grid { grid-template-columns: 1fr; }
-      .sponsor-grid-single { grid-template-columns: 1fr; }
-    }
-    .sponsor-card {
-      padding: 2rem;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      text-align: center;
-    }
-    .sponsor-card h3 {
-      font-size: 1.25rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-    }
-    .sponsor-card p {
-      color: var(--text-muted);
-      font-size: 0.9rem;
-      margin-bottom: 1.5rem;
-      line-height: 1.55;
-    }
-    .qr-placeholder {
-      width: 180px;
-      height: 180px;
-      margin: 0 auto 1rem;
-      background: white;
-      border: 2px dashed var(--border-strong);
-      border-radius: var(--radius);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      gap: 0.5rem;
-      color: var(--text-subtle);
-      font-size: 0.85rem;
-      padding: 1rem;
-    }
-    .qr-placeholder-icon { font-size: 3rem; }
-    .qr-real {
-      width: 200px;
-      margin: 0 auto 1rem;
-      text-align: center;
-    }
-    .qr-real img {
-      display: block;
-      margin: 0 auto;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 8px;
-      background: white;
-    }
-    .sponsor-buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-      margin-top: 1rem;
-    }
-    .sponsor-btn {
-      padding: 0.75rem 1.25rem;
-      border-radius: var(--radius);
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 0.95rem;
-      border: 1px solid var(--border-strong);
-      color: var(--text);
-      background: white;
-      transition: all 0.15s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-    }
-    .sponsor-btn:hover {
-      border-color: var(--text);
-      transform: translateY(-1px);
-    }
-    .sponsor-disclaimer {
-      max-width: 640px;
-      margin: 2rem auto 0;
-      text-align: center;
-      color: var(--text-muted);
-      font-size: 0.85rem;
-      line-height: 1.6;
-    }
-    .sponsor-disclaimer strong { color: var(--text); }
+/* ============ Section 骨架 ============ */
+section { padding: 5rem 0; border-top: 1px solid var(--hairline); }
+.section-head { margin-bottom: 3rem; }
+.section-no {
+  display: flex; align-items: center; gap: 0.9rem;
+  font-family: var(--font-serif); font-size: 0.95rem; color: var(--cinnabar); font-weight: 700;
+  letter-spacing: 0.08em; margin-bottom: 1.1rem;
+}
+.section-no::after { content: ''; height: 1px; width: 56px; background: var(--cinnabar); opacity: 0.4; }
+h2.section-title {
+  font-family: var(--font-serif);
+  font-size: clamp(1.8rem, 3.4vw, 2.6rem);
+  font-weight: 700; letter-spacing: 0.005em; line-height: 1.32;
+  margin-bottom: 1rem; text-wrap: balance;
+}
+h2.section-title em { font-style: normal; color: var(--cinnabar); }
+.section-intro { font-size: 1.05rem; color: var(--ink-muted); max-width: 640px; line-height: 1.8; }
+.section-intro strong { color: var(--ink-soft); }
 
-    /* ========================================
-       FAQ
-    ======================================== */
-    .faq-list {
-      max-width: 720px;
-      margin: 0 auto;
-    }
-    details.faq-item {
-      border-top: 1px solid var(--border);
-      padding: 1.25rem 0;
-    }
-    details.faq-item:last-child { border-bottom: 1px solid var(--border); }
-    details.faq-item summary {
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 1.05rem;
-      list-style: none;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-    }
-    details.faq-item summary::-webkit-details-marker { display: none; }
-    details.faq-item summary::after {
-      content: "+";
-      font-size: 1.5rem;
-      color: var(--text-subtle);
-      transition: transform 0.2s;
-    }
-    details.faq-item[open] summary::after { transform: rotate(45deg); }
-    details.faq-item p {
-      margin-top: 0.75rem;
-      color: var(--text-muted);
-      line-height: 1.65;
-    }
+/* ============ 下载（默认折叠为一条摘要带，暖纸浅色） ============ */
+.download-section { padding: 0; }
+.download-strip {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding-top: 1.25rem; padding-bottom: 1.25rem;
+  text-decoration: none; color: inherit;
+}
+.download-strip:hover .strip-cue { color: var(--amber-deep); }
+.strip-left { display: flex; align-items: baseline; gap: 0.9rem; min-width: 0; }
+.strip-kicker { font-family: var(--font-serif); font-size: 0.85rem; color: var(--cinnabar); font-weight: 700; letter-spacing: 0.08em; flex-shrink: 0; }
+.download-strip-title { font-family: var(--font-serif); font-size: 1.12rem; font-weight: 700; color: var(--ink); }
+.strip-cue { font-size: 0.84rem; color: var(--ink-muted); display: inline-flex; align-items: center; gap: 0.4rem; flex-shrink: 0; transition: color 0.15s; }
+.strip-cue svg { width: 15px; height: 15px; transition: transform 0.2s var(--ease); }
+.download-strip:hover .strip-cue svg { transform: translateY(2px); }
 
-    /* 安装说明 FAQ 专用样式（仅作用于 #faq-install，复用现有 token） */
-    #faq-install h5 {
-      margin: 1.1rem 0 0.4rem;
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: var(--text);
-    }
-    #faq-install ol {
-      margin: 0.4rem 0 0;
-      padding-left: 1.3rem;
-      color: var(--text-muted);
-      line-height: 1.7;
-    }
-    #faq-install ol li { margin-bottom: 0.35rem; }
-    #faq-install .install-callout {
-      margin-top: 0.85rem;
-      padding: 0.75rem 1rem;
-      background: var(--bg-soft);
-      border-left: 3px solid var(--accent);
-      border-radius: var(--radius-sm);
-      color: var(--text-muted);
-      line-height: 1.65;
-      font-size: 0.92rem;
-    }
-    #faq-install .install-cmd {
-      display: block;
-      margin: 0.5rem 0;
-      padding: 0.7rem 0.9rem;
-      background: var(--bg-soft);
-      border: 1px solid var(--border-strong);
-      border-radius: var(--radius-sm);
-      font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
-      font-size: 0.88rem;
-      color: var(--text);
-      overflow-x: auto;
-      white-space: pre;
-      user-select: all;
-      -webkit-user-select: all;
-    }
-    #faq-install .install-note {
-      margin-top: 0.6rem;
-      font-size: 0.85rem;
-      color: var(--text-subtle);
-      line-height: 1.6;
-    }
-    #faq-install code {
-      background: var(--bg-soft);
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
-      font-size: 0.85em;
-    }
+.download-body { display: grid; grid-template-rows: 0fr; transition: grid-template-rows 0.55s var(--ease); }
+.download-body-clip { overflow: hidden; min-height: 0; }
+.download-pad { padding: 4.5rem 0 5rem; opacity: 0; transition: opacity 0.35s var(--ease); }
+.download-section.is-open .download-strip { display: none; }
+.download-section.is-open .download-body { grid-template-rows: 1fr; }
+.download-section.is-open .download-pad { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .download-body, .download-pad { transition: none; }
+}
+.download-collapse {
+  margin-top: 1.8rem;
+  background: none; border: 1px solid var(--hairline-strong); border-radius: 999px;
+  color: var(--ink-muted); font: inherit; font-size: 0.8rem;
+  padding: 0.45rem 1rem; cursor: pointer; transition: all 0.15s;
+  display: inline-flex; align-items: center; gap: 0.35rem;
+}
+.download-collapse:hover { border-color: var(--ink); color: var(--ink); }
+.download-collapse svg { width: 13px; height: 13px; }
 
-    /* ========================================
-       Footer
-    ======================================== */
-    footer {
-      padding: 3rem 0 2rem;
-      border-top: 1px solid var(--border);
-      background: var(--bg-soft);
-    }
-    .footer-content {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr 1fr;
-      gap: 2rem;
-      margin-bottom: 2rem;
-    }
-    @media (max-width: 640px) {
-      .footer-content { grid-template-columns: 1fr 1fr; }
-    }
-    .footer-brand h4 {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-    }
-    .footer-brand p {
-      color: var(--text-muted);
-      font-size: 0.875rem;
-      line-height: 1.55;
-    }
-    .footer-col h5 {
-      font-size: 0.85rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--text-subtle);
-      margin-bottom: 1rem;
-    }
-    .footer-col ul {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }
-    .footer-col a {
-      color: var(--text-muted);
-      text-decoration: none;
-      font-size: 0.9rem;
-      transition: color 0.15s;
-    }
-    .footer-col a:hover { color: var(--text); }
-    .footer-bottom {
-      padding-top: 2rem;
-      border-top: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 1rem;
-      color: var(--text-subtle);
-      font-size: 0.85rem;
-    }
-  </style>
+/* ============ 下载（内容区） ============ */
+.download-section [hidden] { display: none !important; }
+.download-box { max-width: 760px; }
+.download-intro { color: var(--ink-muted); margin: 0.5rem 0 2rem; line-height: 1.8; max-width: 580px; }
+
+.download-pre {
+  display: inline-flex; align-items: center; gap: 0.75rem;
+  padding: 0.8rem 1.3rem; margin-bottom: 2rem;
+  background: var(--paper-elev); border: 1px solid var(--hairline); border-radius: 999px;
+  font-size: 0.9rem; color: var(--ink-muted); box-shadow: var(--shadow-card);
+}
+.download-pre-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--amber); box-shadow: 0 0 0 4px var(--amber-glow); animation: pulse 2s ease-in-out infinite; }
+.download-pre-text strong { color: var(--ink); }
+.download-pre-text a { color: var(--amber-deep); font-weight: 600; text-decoration: none; }
+
+.download-prep-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+@media (max-width: 768px) { .download-prep-grid { grid-template-columns: 1fr; } }
+.prep-card {
+  padding: 1.4rem; background: var(--paper-elev); border: 1px solid var(--hairline); border-radius: var(--r-lg);
+  text-decoration: none; color: var(--ink); transition: transform 0.18s var(--ease), box-shadow 0.18s, border-color 0.15s;
+  display: flex; flex-direction: column; gap: 0.45rem;
+}
+.prep-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lift); border-color: var(--hairline-strong); }
+.prep-icon { width: 34px; height: 34px; border-radius: 8px; background: var(--amber-soft); color: var(--amber-deep); display: flex; align-items: center; justify-content: center; }
+.prep-icon svg { width: 17px; height: 17px; }
+.prep-card h4 { font-size: 1rem; font-weight: 700; }
+.prep-card p { font-size: 0.85rem; color: var(--ink-muted); line-height: 1.65; flex: 1; }
+.prep-cta { font-size: 0.85rem; color: var(--cinnabar); font-weight: 600; }
+.download-prep-meta { font-size: 0.86rem; color: var(--ink-muted); line-height: 1.8; }
+.download-prep-meta a { color: var(--amber-deep); font-weight: 600; text-decoration: none; }
+
+.download-live { max-width: 760px; }
+.btn-download-primary {
+  display: inline-flex; align-items: center; gap: 0.9rem;
+  padding: 1.15rem 2.2rem;
+  background: var(--cinnabar); color: #fdf9f0;
+  border-radius: var(--r-md); text-decoration: none;
+  font-weight: 700; font-size: 1.1rem;
+  box-shadow: 0 8px 24px -8px rgba(134,48,38,0.5);
+  transition: transform 0.18s var(--ease), box-shadow 0.18s, background 0.15s;
+}
+.btn-download-primary:hover { background: var(--cinnabar-deep); transform: translateY(-2px); }
+.btn-download-primary svg { width: 19px; height: 19px; }
+.download-primary-meta { font-size: 0.85rem; opacity: 0.75; font-weight: 500; padding-left: 0.6rem; border-left: 1px solid rgba(253,249,240,0.3); font-family: var(--font-mono); }
+
+
+.download-platforms { margin-top: 1.8rem; }
+.download-platforms summary {
+  cursor: pointer; color: var(--ink-muted); font-size: 0.92rem; padding: 0.4rem 0;
+  list-style: none; display: inline-flex; align-items: center; gap: 0.45rem;
+}
+.download-platforms summary::-webkit-details-marker { display: none; }
+.download-platforms summary::before { content: '▸'; transition: transform 0.2s; color: var(--ink-subtle); }
+.download-platforms[open] summary::before { transform: rotate(90deg); }
+.download-platform-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.75rem; margin-top: 1rem; }
+@media (max-width: 640px) { .download-platform-grid { grid-template-columns: 1fr; } }
+.download-platform-card {
+  display: flex; align-items: flex-start; gap: 0.8rem;
+  padding: 0.9rem 1.1rem;
+  background: var(--paper-elev); border: 1px solid var(--hairline); border-radius: var(--r-md);
+  color: var(--ink); text-decoration: none; transition: border-color 0.15s, transform 0.15s;
+}
+.download-platform-card:hover { border-color: var(--cinnabar); transform: translateY(-1px); }
+.download-platform-card svg { width: 20px; height: 20px; color: var(--ink-muted); flex-shrink: 0; margin-top: 0.1rem; }
+.platform-name { font-weight: 600; font-size: 0.92rem; display: block; }
+.platform-arch { font-size: 0.78rem; color: var(--ink-subtle); display: block; line-height: 1.5; }
+
+/* 下载源切换器（多源：R2 / GitHub / 公益镜像） */
+.download-source { margin-top: 1.25rem; }
+.download-source-row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.download-source-pill {
+  cursor: pointer; font: inherit; font-size: 0.8rem; line-height: 1;
+  padding: 0.45rem 0.85rem;
+  background: var(--paper-elev); color: var(--ink-muted);
+  border: 1px solid var(--hairline-strong); border-radius: 999px;
+  transition: all 0.15s; white-space: nowrap;
+}
+.download-source-pill:hover { border-color: var(--cinnabar); color: var(--ink); }
+.download-source-pill[aria-pressed="true"] { background: var(--cinnabar); border-color: var(--cinnabar); color: #fdf9f0; }
+.download-source-pill[aria-pressed="true"]:hover { background: var(--cinnabar-deep); border-color: var(--cinnabar-deep); }
+.download-source-note { max-width: 620px; margin: 0.85rem 0 0; font-size: 0.8rem; line-height: 1.7; color: var(--ink-subtle); }
+
+.download-live-note { margin-top: 1.6rem; font-size: 0.84rem; color: var(--ink-muted); line-height: 1.7; max-width: 640px; }
+.download-live-note a { color: var(--amber-deep); font-weight: 600; text-decoration: none; }
+.download-live-meta { margin-top: 0.7rem; font-size: 0.84rem; }
+.download-live-meta a { color: var(--amber-deep); font-weight: 600; text-decoration: none; }
+
+/* ============ 差异化 ============ */
+.hero-feats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin-bottom: 3.2rem; }
+@media (max-width: 900px) { .hero-feats { grid-template-columns: 1fr; } }
+.hero-feat {
+  background: var(--paper-elev); border: 1px solid var(--hairline); border-radius: var(--r-lg);
+  padding: 1.9rem 1.7rem;
+  transition: transform 0.2s var(--ease), box-shadow 0.2s;
+  display: flex; flex-direction: column;
+}
+.hero-feat:hover { transform: translateY(-3px); box-shadow: var(--shadow-lift); }
+.hero-feat .hf-no { font-family: var(--font-serif); font-size: 0.85rem; color: var(--cinnabar); font-weight: 700; letter-spacing: 0.1em; margin-bottom: 1rem; }
+.hero-feat h3 { font-family: var(--font-serif); font-size: 1.3rem; font-weight: 700; line-height: 1.4; margin-bottom: 0.7rem; }
+.hero-feat p { font-size: 0.92rem; color: var(--ink-muted); line-height: 1.75; flex: 1; }
+.hero-feat p strong { color: var(--ink-soft); }
+.feat-tag {
+  display: inline-block; margin-top: 1.1rem; align-self: flex-start;
+  padding: 0.28rem 0.7rem; border-radius: 5px;
+  background: var(--moss-soft); color: var(--moss);
+  font-size: 0.76rem; font-weight: 600; letter-spacing: 0.02em;
+}
+.feat-tag.amber { background: var(--amber-soft); color: var(--amber-deep); }
+
+.rest-feats { display: grid; grid-template-columns: 1fr 1fr; column-gap: 3rem; }
+@media (max-width: 768px) { .rest-feats { grid-template-columns: 1fr; } }
+.rest-feat { padding: 1.5rem 0; border-top: 1px solid var(--hairline); display: flex; gap: 1.2rem; }
+.rest-feat .rf-no { font-family: var(--font-serif); color: var(--ink-muted); font-size: 0.9rem; font-weight: 700; padding-top: 0.2rem; flex-shrink: 0; width: 2rem; }
+.rest-feat h4 { font-size: 1.05rem; font-weight: 700; margin-bottom: 0.4rem; }
+.rest-feat p { font-size: 0.9rem; color: var(--ink-muted); line-height: 1.75; }
+.rest-feat p strong { color: var(--ink-soft); }
+.rest-feat .feat-tag { margin-top: 0.8rem; }
+
+/* 更多能力：可展开的次级能力清单 */
+.more-caps { margin-top: 2.6rem; border-top: 1px solid var(--hairline); }
+.more-caps > summary {
+  cursor: pointer; list-style: none;
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 1.3rem 0 0.2rem;
+  font-family: var(--font-serif); font-size: 1.1rem; font-weight: 700; color: var(--ink);
+  transition: color 0.15s;
+}
+.more-caps > summary:hover { color: var(--cinnabar); }
+.more-caps > summary::-webkit-details-marker { display: none; }
+.more-caps > summary .mc-chevron { width: 18px; height: 18px; color: var(--ink-subtle); transition: transform 0.25s var(--ease); }
+.more-caps[open] > summary .mc-chevron { transform: rotate(90deg); color: var(--cinnabar); }
+.more-caps > summary .mc-count { font-family: var(--font-sans); font-size: 0.82rem; font-weight: 500; color: var(--ink-subtle); }
+.more-caps > summary:focus-visible { outline: 2px solid var(--cinnabar); outline-offset: 3px; border-radius: var(--r-sm); }
+.more-caps .rest-feats { margin-top: 0.6rem; }
+.more-caps .rest-feat:first-child { border-top: none; }
+
+/* ============ 工作流：四步闭环 ============ */
+.workflow-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.2rem; list-style: none; counter-reset: step; }
+@media (max-width: 900px) { .workflow-steps { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .workflow-steps { grid-template-columns: 1fr; } }
+.workflow-step { border-top: 2px solid var(--ink); padding-top: 1.3rem; }
+.workflow-step .step-no { font-family: var(--font-serif); font-size: 2rem; color: var(--cinnabar); font-weight: 700; line-height: 1; margin-bottom: 0.8rem; display: block; }
+.workflow-step h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+.workflow-step p { font-size: 0.9rem; color: var(--ink-muted); line-height: 1.75; }
+.workflow-more { margin-top: 2.6rem; }
+
+/* ============ Pricing ============ */
+.pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.1rem; align-items: stretch; }
+@media (max-width: 920px) { .pricing-grid { grid-template-columns: 1fr; max-width: 520px; } }
+.pricing-card {
+  background: var(--paper-elev); border: 1px solid var(--hairline); border-radius: var(--r-lg);
+  padding: 1.9rem 1.7rem; display: flex; flex-direction: column; position: relative;
+}
+.pricing-card.highlighted { border: 1.5px solid var(--cinnabar); box-shadow: 0 12px 36px -12px rgba(161,59,50,0.22); }
+.pricing-card.coming { background: var(--paper-card); }
+.pricing-card.highlighted.coming { background: var(--paper-elev); }
+.pricing-soon {
+  position: absolute; top: -11px; right: 1.4rem;
+  background: var(--paper-deep); color: var(--ink-muted);
+  border: 1px solid var(--hairline);
+  font-size: 0.72rem; font-weight: 700; padding: 0.2rem 0.7rem; border-radius: 100px; letter-spacing: 0.04em;
+}
+.pricing-card.highlighted .pricing-soon { background: var(--cinnabar); color: #fdf9f0; border-color: var(--cinnabar); }
+.pricing-name { font-family: var(--font-serif); font-size: 1.25rem; font-weight: 700; margin-bottom: 0.3rem; }
+.pricing-blurb { color: var(--ink-muted); font-size: 0.88rem; margin-bottom: 1.4rem; min-height: 3.2em; line-height: 1.65; }
+.pricing-price { font-family: var(--font-serif); font-size: 2.4rem; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 0.2rem; }
+.pricing-price small { font-family: var(--font-sans); font-size: 0.95rem; font-weight: 500; color: var(--ink-muted); }
+.pricing-period { color: var(--ink-subtle); font-size: 0.83rem; margin-bottom: 1.4rem; font-family: var(--font-mono); }
+.pricing-features { list-style: none; flex: 1; margin-bottom: 1.6rem; }
+.pricing-features li { padding: 0.42rem 0; font-size: 0.88rem; color: var(--ink-soft); display: flex; gap: 0.55rem; line-height: 1.6; align-items: flex-start; }
+.pricing-features li svg { width: 15px; height: 15px; color: var(--moss); flex-shrink: 0; margin-top: 0.28em; }
+.pricing-features li strong { color: var(--ink); }
+.pricing-features li.dim { color: var(--ink-subtle); font-size: 0.82rem; }
+.pricing-features li.p-divider { border-top: 1px dashed var(--hairline-strong); margin-top: 0.5rem; padding-top: 0.8rem; justify-content: center; letter-spacing: 0.04em; }
+.pricing-cta {
+  display: block; text-align: center; padding: 0.8rem 1rem; border-radius: var(--r-md);
+  font-weight: 600; font-size: 0.95rem; text-decoration: none; transition: all 0.15s;
+}
+.pricing-cta-primary { background: var(--cinnabar); color: #fdf9f0; }
+.pricing-cta-primary:hover { background: var(--cinnabar-deep); }
+.pricing-cta-secondary { background: transparent; color: var(--ink); border: 1px solid var(--hairline-strong); }
+.pricing-cta-secondary:hover { border-color: var(--ink); }
+
+/* 早鸟 */
+.early-bird {
+  margin-top: 3.2rem; position: relative;
+  background: linear-gradient(160deg, #f6ead2 0%, #f0e2c6 100%);
+  border: 1px solid rgba(163, 94, 7, 0.35);
+  border-radius: var(--r-lg);
+  padding: 2.6rem 2.4rem 2.2rem;
+}
+@media (max-width: 640px) { .early-bird { padding: 2.2rem 1.3rem 1.8rem; } }
+.eb-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 2.4rem; align-items: start; }
+@media (max-width: 820px) { .eb-grid { grid-template-columns: 1fr; gap: 1.6rem; } }
+.eb-side { display: flex; flex-direction: column; align-items: flex-start; }
+.early-bird-seal {
+  position: absolute; top: -16px; left: 2.4rem;
+  background: var(--cinnabar); color: #fdf9f0;
+  font-family: var(--font-serif); font-weight: 700; font-size: 0.85rem;
+  padding: 0.35rem 0.95rem; border-radius: 5px; letter-spacing: 0.06em;
+  box-shadow: 0 2px 6px rgba(134,48,38,0.35);
+}
+.early-bird h3 { font-family: var(--font-serif); font-size: 1.6rem; font-weight: 700; color: #5b3a06; margin-bottom: 0.4rem; }
+.early-bird-price { font-family: var(--font-serif); font-size: 2.2rem; font-weight: 700; color: #5b3a06; margin-bottom: 0.9rem; }
+.early-bird-price small { font-family: var(--font-sans); font-size: 1rem; font-weight: 500; color: var(--amber-deep); }
+.early-bird p { color: #6b4a10; font-size: 0.93rem; line-height: 1.8; max-width: 640px; margin-bottom: 1.2rem; }
+.early-bird p strong { color: #4a3206; }
+.eb-counter {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: rgba(255,255,255,0.55); border: 1px solid rgba(163,94,7,0.25);
+  padding: 0.45rem 1rem; border-radius: 100px;
+  font-size: 0.85rem; color: #5b3a06; font-weight: 600; margin-bottom: 1.1rem;
+}
+.eb-status {
+  display: flex; align-items: center; gap: 0.55rem;
+  background: rgba(255,255,255,0.5); border: 1px solid rgba(163,94,7,0.2);
+  border-radius: var(--r-md); padding: 0.65rem 1rem;
+  font-size: 0.85rem; color: #5b3a06; margin-bottom: 1.3rem; max-width: 560px;
+}
+.eb-status .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--amber); box-shadow: 0 0 0 3px var(--amber-glow); animation: pulse 2s infinite; flex-shrink: 0; }
+.eb-actions { display: flex; gap: 0.9rem; flex-wrap: wrap; margin-bottom: 0; }
+.eb-cta-primary {
+  display: inline-flex; align-items: center; gap: 0.45rem;
+  background: #5b3a06; color: #fdf9f0; text-decoration: none;
+  padding: 0.9rem 1.7rem; border-radius: var(--r-md); font-weight: 700; font-size: 0.98rem;
+  transition: all 0.15s; box-shadow: 0 4px 14px -4px rgba(91,58,6,0.4);
+}
+.eb-cta-primary:hover { background: #3f2903; transform: translateY(-1px); }
+.eb-cta-primary svg { width: 16px; height: 16px; }
+.eb-cta-secondary {
+  display: inline-flex; align-items: center;
+  background: transparent; color: #5b3a06; text-decoration: none;
+  padding: 0.9rem 1.3rem; border-radius: var(--r-md); font-weight: 600; font-size: 0.92rem;
+  border: 1px solid rgba(91,58,6,0.3); transition: all 0.15s;
+}
+.eb-cta-secondary:hover { background: rgba(255,255,255,0.45); }
+.eb-howto { border-top: 1px solid rgba(91,58,6,0.18); padding-top: 1.1rem; font-size: 0.82rem; color: #6b4a10; line-height: 1.8; max-width: 640px; margin-bottom: 0; }
+.eb-howto strong { color: #4a3206; }
+
+/* ============ Promises ============ */
+.promises-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 2.5rem; }
+@media (max-width: 900px) { .promises-grid { grid-template-columns: 1fr; } }
+.promise { display: flex; gap: 0.9rem; padding: 1.4rem 0; border-top: 1px solid var(--hairline); align-items: flex-start; }
+.promise-icon {
+  width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0;
+  background: var(--moss-soft); color: var(--moss);
+  display: flex; align-items: center; justify-content: center;
+}
+.promise-icon svg { width: 15px; height: 15px; }
+.promise h4 { font-size: 1rem; font-weight: 700; margin-bottom: 0.3rem; }
+.promise p { font-size: 0.87rem; color: var(--ink-muted); line-height: 1.7; }
+.promise p strong { color: var(--ink-soft); }
+
+/* 本地信任凭证：本机路径 + 无网络请求声明 */
+.trust-proof {
+  margin-top: 2.8rem;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+}
+@media (max-width: 760px) { .trust-proof { grid-template-columns: 1fr; } }
+.trust-proof-card {
+  display: flex; align-items: flex-start; gap: 0.85rem;
+  padding: 1.2rem 1.4rem;
+  background: var(--paper-elev); border: 1px solid var(--hairline);
+  border-left: 3px solid var(--moss); border-radius: var(--r-md);
+}
+.trust-proof-icon {
+  width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0;
+  background: var(--moss-soft); color: var(--moss);
+  display: flex; align-items: center; justify-content: center;
+}
+.trust-proof-icon svg { width: 15px; height: 15px; }
+.trust-proof-body { line-height: 1.65; }
+.trust-proof-label { font-size: 0.78rem; letter-spacing: 0.08em; color: var(--ink-subtle); text-transform: uppercase; font-weight: 600; margin-bottom: 0.3rem; }
+.trust-proof-value { font-family: var(--font-mono); font-size: 0.92rem; color: var(--ink); font-weight: 600; }
+.trust-proof-value.text { font-family: var(--font-sans); font-weight: 500; font-size: 0.88rem; color: var(--ink-soft); }
+
+/* ============ Sponsor ============ */
+.sponsor-section { background: var(--paper-deep); }
+.sponsor-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; max-width: 860px; }
+@media (max-width: 768px) { .sponsor-grid { grid-template-columns: 1fr; } }
+.sponsor-card {
+  background: var(--paper-elev); border: 1px solid var(--hairline); border-radius: var(--r-lg);
+  padding: 2rem; text-align: center;
+}
+.sponsor-card h3 { font-family: var(--font-serif); font-size: 1.2rem; font-weight: 700; margin-bottom: 0.5rem; }
+.sponsor-card > p { color: var(--ink-muted); font-size: 0.88rem; line-height: 1.7; margin-bottom: 1.4rem; }
+.qr-frame {
+  width: 196px; margin: 0 auto 0.8rem; padding: 10px;
+  background: #fff; border: 1px solid var(--hairline); border-radius: var(--r-md);
+}
+.qr-frame img { display: block; width: 100%; border-radius: 4px; }
+.qr-cap { font-size: 0.82rem; color: var(--ink-subtle); display: block; margin-bottom: 1.2rem; }
+.sponsor-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  width: 100%; padding: 0.75rem 1.2rem; margin-bottom: 0.55rem;
+  border: 1px solid var(--hairline-strong); border-radius: var(--r-md);
+  background: var(--paper-elev); color: var(--ink);
+  text-decoration: none; font-weight: 600; font-size: 0.92rem; transition: all 0.15s;
+}
+.sponsor-btn:hover { border-color: var(--ink); transform: translateY(-1px); }
+.sponsor-btn svg { width: 16px; height: 16px; }
+.sponsor-note { margin-top: 1.1rem; font-size: 0.82rem; color: var(--ink-muted); line-height: 1.7; }
+.sponsor-note a { color: var(--amber-deep); font-weight: 600; text-decoration: none; }
+.sponsor-disclaimer { max-width: 620px; margin: 2.2rem auto 0; text-align: center; color: var(--ink-muted); font-size: 0.86rem; line-height: 1.75; }
+.sponsor-disclaimer strong { color: var(--ink); }
+
+/* ============ FAQ ============ */
+.faq-list { max-width: var(--reading); }
+details.faq-item { border-top: 1px solid var(--hairline); padding: 1.3rem 0; }
+details.faq-item:last-child { border-bottom: 1px solid var(--hairline); }
+details.faq-item summary {
+  cursor: pointer; font-weight: 600; font-size: 1.05rem; list-style: none;
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  transition: color 0.15s;
+}
+details.faq-item summary:hover { color: var(--cinnabar); }
+details.faq-item summary::-webkit-details-marker { display: none; }
+.faq-plus { width: 22px; height: 22px; flex-shrink: 0; color: var(--ink-subtle); transition: transform 0.25s var(--ease); }
+details.faq-item[open] .faq-plus { transform: rotate(45deg); color: var(--cinnabar); }
+details.faq-item > p, details.faq-item > div { margin-top: 0.9rem; color: var(--ink-muted); line-height: 1.75; font-size: 0.95rem; }
+details.faq-item strong { color: var(--ink-soft); }
+details.faq-item a { color: var(--amber-deep); font-weight: 600; text-decoration: none; }
+details.faq-item h5 { margin: 1.2rem 0 0.4rem; font-size: 0.95rem; font-weight: 700; color: var(--ink); }
+details.faq-item ol { margin: 0.4rem 0 0; padding-left: 1.3rem; color: var(--ink-muted); line-height: 1.8; }
+details.faq-item ol li { margin-bottom: 0.4rem; }
+details.faq-item code { font-family: var(--font-mono); font-size: 0.85em; background: var(--paper-deep); padding: 2px 6px; border-radius: 4px; }
+.install-callout {
+  margin-top: 0.9rem; padding: 0.8rem 1rem;
+  background: var(--amber-soft); border-left: 3px solid var(--amber); border-radius: var(--r-sm);
+  color: var(--ink-soft); line-height: 1.7; font-size: 0.92rem;
+}
+.install-cmd {
+  display: block; margin: 0.55rem 0; padding: 0.7rem 0.95rem;
+  background: var(--ink); color: #e8e2d4;
+  border-radius: var(--r-sm);
+  font-family: var(--font-mono); font-size: 0.88rem;
+  overflow-x: auto; white-space: pre; user-select: all; -webkit-user-select: all;
+}
+.install-note { margin-top: 0.6rem; font-size: 0.86rem; color: var(--ink-subtle); line-height: 1.7; }
+
+/* ============ Footer ============ */
+footer { border-top: 1px solid var(--hairline); background: var(--paper-deep); padding: 3.2rem 0 1.8rem; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 2rem; margin-bottom: 2.2rem; }
+@media (max-width: 640px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+.footer-brand h4 { display: flex; align-items: center; gap: 0.55rem; font-family: var(--font-serif); font-weight: 700; font-size: 1.05rem; margin-bottom: 0.6rem; }
+.footer-brand .seal { width: 24px; height: 24px; font-size: 11px; }
+.footer-brand p { color: var(--ink-muted); font-size: 0.86rem; line-height: 1.75; }
+.footer-poem { font-family: var(--font-serif); color: var(--ink-subtle); font-size: 0.88rem; margin-top: 0.9rem; letter-spacing: 0.04em; }
+.footer-col h5 { font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em; color: var(--ink-subtle); margin-bottom: 0.9rem; }
+.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+.footer-col a { color: var(--ink-muted); text-decoration: none; font-size: 0.88rem; transition: color 0.15s; }
+.footer-col a:hover { color: var(--ink); }
+.footer-bottom {
+  border-top: 1px solid var(--hairline); padding-top: 1.6rem;
+  display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.8rem;
+  color: var(--ink-subtle); font-size: 0.82rem;
+}
+</style>
+<noscript><style>
+  .download-strip { display: none; }
+  .download-body { grid-template-rows: 1fr; }
+  .download-pad { opacity: 1; }
+</style></noscript>
 </head>
 <body>
+<a class="skip-link" href="#hero">跳到主要内容</a>
 
-  <!-- ========== NAV ========== -->
-  <nav>
-    <div class="container">
-      <a href="#" class="nav-brand">
-        <img class="nav-brand-icon" src="assets/favicon.png" alt="KnowMe Logo">
-        知我 KnowMe
-      </a>
-      <ul class="nav-links">
-        <li><a href="#features">特性</a></li>
-        <li><a href="#ai">AI 能力</a></li>
-        <li><a href="#pricing">定价</a></li>
-        <li><a href="https://docs.useknowme.com">文档</a></li>
-        <li><a href="https://github.com/Timeflys2018/KnowMe">GitHub</a></li>
-        <li><a href="#download" class="nav-cta">下载</a></li>
-      </ul>
-    </div>
-  </nav>
+<!-- ========== NAV ========== -->
+<nav aria-label="主导航">
+  <div class="container">
+    <a href="#" class="nav-brand" aria-label="知我 KnowMe 首页">
+      <img class="brand-logo" src="assets/icon-256.png" alt="知我 KnowMe Logo" width="30" height="30">
+      <span class="nav-brand-name">知我<span>KnowMe</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#workflow">工作流</a></li>
+      <li><a href="#features">产品</a></li>
+      <li><a href="#promises">本地优先</a></li>
+      <li><a href="#pricing">定价</a></li>
+      <li><a href="https://docs.useknowme.com" target="_blank" rel="noreferrer noopener">文档</a></li>
+      <li><a href="https://github.com/Timeflys2018/KnowMe" target="_blank" rel="noreferrer noopener">GitHub</a></li>
+      <li><a href="#download" class="nav-cta">下载</a></li>
+    </ul>
+    <button type="button" class="nav-toggle" data-nav-toggle aria-expanded="false" aria-controls="mobile-nav" aria-label="打开菜单">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+    </button>
+  </div>
+  <div class="mobile-nav" id="mobile-nav" data-mobile-nav hidden>
+    <ul>
+      <li><a href="#workflow">工作流</a></li>
+      <li><a href="#features">产品</a></li>
+      <li><a href="#promises">本地优先</a></li>
+      <li><a href="#pricing">定价</a></li>
+      <li><a href="https://docs.useknowme.com" target="_blank" rel="noreferrer noopener">文档</a></li>
+      <li><a href="https://github.com/Timeflys2018/KnowMe" target="_blank" rel="noreferrer noopener">GitHub</a></li>
+      <li><a href="#download">下载</a></li>
+    </ul>
+  </div>
+</nav>
 
-  <!-- ========== HERO ========== -->
-  <header class="hero">
-    <div class="container">
-      <div class="hero-badge">
-        <span class="dot"></span>
-        公测期 · 2026-06-06 → 2027-07-06 完全免费
+<!-- ========== HERO ========== -->
+<header class="hero" id="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-badge rise rise-1"><span class="dot"></span>公测期 · 2026-06-06 → 2027-07-06 完全免费</div>
+        <h1 class="hero-title rise rise-2" id="hero-title"><span class="nb">写下此刻，</span><span class="nb">知识<em>会自己长出来</em>。</span></h1>
+        <p class="hero-tagline rise rise-3">本地优先的第二大脑 · 一支懂你的 AI 舰队，<span class="nb">随时调用你的全部知识。</span></p>
+        <div class="button-group rise rise-3">
+          <a class="btn btn-primary" href="#download" id="hero-download">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+            <span class="hero-download-label" id="hero-download-label">下载 0.10.2</span>
+          </a>
+          <a class="btn btn-secondary" href="#workflow">看看它怎么工作
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+          </a>
+        </div>
+        <p class="platform-meta rise rise-4">
+          <strong>macOS · Windows</strong><span class="sep">·</span>本地 SQLite<span class="sep">·</span>数据留在本机<span class="sep">·</span><span class="nb">随时完整导出</span>
+        </p>
       </div>
 
-      <h1 class="hero-title"><span class="nowrap">随心记录，</span><span class="nowrap">知识自然生长，</span><br><span class="nowrap">AI 一路同行。</span></h1>
-
-      <p class="hero-tagline">
-        本地优先的第二大脑 · 一支懂你的 AI 舰队<br>
-        随时调用你的全部知识。
-      </p>
-
-      <div class="button-group">
-        <a class="btn btn-primary" href="#download" id="hero-download">
-          ↓ 下载 0.10.2
-        </a>
-        <a class="btn btn-secondary" href="#features">
-          看看能做什么 →
-        </a>
-      </div>
-
-      <p class="platform-meta">
-        <strong>macOS · Windows</strong> · Linux 即将支持 · 本地 SQLite · 数据归你
-      </p>
-
-      <!-- Beta Banner -->
-      <div class="beta-banner">
-        <div class="beta-banner-icon">⏰</div>
-        <div class="beta-banner-content">
-          <strong class="beta-banner-title">公测路线图（已公开）</strong>
-          现在 → <strong>2027-07-07</strong> Pro 订阅正式上线 · Team 即将推出。
-          <strong>公测期注册用户享早期用户优惠</strong>，
-          <a href="#early-bird" class="beta-banner-cta">早鸟 Pro 三年版</a>（前 100 名 · 价格待公布）。
+      <div class="demo-card rise rise-3" aria-label="知我工作方式演示">
+        <div class="demo-tabs" role="tablist" aria-label="知我演示">
+          <button type="button" class="demo-tab" role="tab" id="demo-tab-write" data-demo-tab="write" aria-selected="true" aria-controls="demo-panel-write" tabindex="0">一段随手记</button>
+          <button type="button" class="demo-tab" role="tab" id="demo-tab-compile" data-demo-tab="compile" aria-selected="false" aria-controls="demo-panel-compile" tabindex="-1">AI 编译</button>
+          <button type="button" class="demo-tab" role="tab" id="demo-tab-ask" data-demo-tab="ask" aria-selected="false" aria-controls="demo-panel-ask" tabindex="-1">随时问</button>
+        </div>
+        <div class="demo-panel is-active" role="tabpanel" id="demo-panel-write" data-demo-panel="write" aria-labelledby="demo-tab-write" tabindex="0">
+          <p class="demo-note">今天和林工聊了向量检索的召回问题，他建议先做 rerank。</p>
+          <p class="demo-hint">随手一行草稿，不用整理格式，知我照单全收。</p>
+        </div>
+        <div class="demo-panel" role="tabpanel" id="demo-panel-compile" data-demo-panel="compile" aria-labelledby="demo-tab-compile" tabindex="0" hidden>
+          <ul class="demo-entities">
+            <li><span class="entity-kind">人物</span>林工 · 检索方向的同事</li>
+            <li><span class="entity-kind concept">概念</span>rerank · 召回后的重排序</li>
+            <li><span class="entity-kind concept">概念</span>向量检索 · 语义相似度召回</li>
+          </ul>
+          <p class="demo-hint">知我自动抽出实体与概念，编织成可追溯的 Wiki 条目 —— 每次写入都进 Review queue 等你确认。</p>
+        </div>
+        <div class="demo-panel" role="tabpanel" id="demo-panel-ask" data-demo-panel="ask" aria-labelledby="demo-tab-ask" tabindex="0" hidden>
+          <p class="demo-q">问：林工上次建议怎么改召回？</p>
+          <p class="demo-a">答：先做 rerank —— 在向量召回结果之上加一层重排序。<span class="src">来源 · 8 月 3 日笔记</span></p>
+          <p class="demo-hint">答案带来源，可一键跳回原始笔记核对。</p>
         </div>
       </div>
     </div>
-  </header>
+  </div>
+</header>
 
-  <!-- ========== Download (版本号由 VERSION 注入) ========== -->
-  <section id="download" class="download-section">
-    <div class="container">
-      <span class="section-eyebrow">下载</span>
-      <h2 class="section-title" id="download-title">立即下载 知我 KnowMe 0.10.2 公测版</h2>
-      <p class="download-intro" id="download-intro">
-        macOS / Windows 安装包已就绪，Linux 即将支持。<br>
-        想要第一时间拿到？选下面任意一个通道，发版当天通知你。
-      </p>
-
-      <!-- Pre-release 占位状态（安装包未上线时显示） -->
-      <div id="download-pre" class="download-pre">
-        <span class="download-pre-dot" aria-hidden="true"></span>
-        <span class="download-pre-text">
-          <strong id="download-pre-version">0.10.2 已发布</strong> ·
-          <a href="https://github.com/Timeflys2018/KnowMe/releases" target="_blank" rel="noopener">前往 GitHub Releases 看进度 →</a>
-        </span>
+<!-- ========== 产品窗口 Mock（同一场景贯穿） ========== -->
+<div class="stage">
+  <div class="container">
+    <div class="window rise rise-4" aria-label="知我 KnowMe 应用界面示意">
+      <div class="window-bar">
+        <span class="tl tl-r"></span><span class="tl tl-y"></span><span class="tl tl-g"></span>
+        <span class="window-title">知我 KnowMe — 向量检索复盘</span>
       </div>
-
-      <div class="download-prep-grid" id="download-prep-grid">
-        <a class="download-prep-card" id="download-prep-mail" href="mailto:timeflying2026@163.com?subject=KnowMe%200.10.2%20%E4%B8%8A%E7%BA%BF%E9%80%9A%E7%9F%A5&body=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E6%83%B3%E6%88%90%E4%B8%BA%E7%9F%A5%E6%88%91%20KnowMe%200.10.2%20%E5%85%AC%E6%B5%8B%E7%89%88%E7%9A%84%E7%AC%AC%E4%B8%80%E6%89%B9%E7%94%A8%E6%88%B7%EF%BC%8C%E8%AF%B7%E5%9C%A8%E4%B8%8A%E7%BA%BF%E5%90%8E%E9%80%9A%E7%9F%A5%E6%88%91%E3%80%82">
-          <div class="prep-icon">📧</div>
-          <h4>邮件通知</h4>
-          <p id="download-prep-mail-text">给开发者发一封"我想要 0.10.2"，上线当天回信。<strong>最直接</strong>，也可用于登记早鸟购买意向。</p>
-          <span class="prep-cta">写邮件 →</span>
-        </a>
-
-        <a class="download-prep-card" href="https://github.com/Timeflys2018/KnowMe" target="_blank" rel="noopener">
-          <div class="prep-icon">⭐</div>
-          <h4>关注 GitHub</h4>
-          <p>Watch Releases → GitHub 自动给你发邮件。同时 Star 一下让开发者知道。</p>
-          <span class="prep-cta">前往仓库 →</span>
-        </a>
-
-        <a class="download-prep-card" href="https://useknowme.com/sponsor">
-          <div class="prep-icon">💗</div>
-          <h4>自愿赞助</h4>
-          <p>赞助是单向感谢，不解锁功能、不绑定早鸟或 Pro 权益。想购买早鸟请走邮件登记。</p>
-          <span class="prep-cta">了解赞助 →</span>
-        </a>
-      </div>
-
-      <p class="download-prep-meta">
-        公测期 <strong>完全免费</strong> · 数据 100% 本地 SQLite · 无需注册即可使用 ·
-        <a href="https://docs.useknowme.com/start/quickstart">文档已就绪 →</a>
-      </p>
-
-      <!-- Released 正式下载状态（安装包上线后显示，目前 hidden） -->
-      <div id="download-live" class="download-live" hidden>
-        <a class="btn-download-primary" id="download-primary" href="#">
-          <span class="download-primary-icon">↓</span>
-          <span class="download-primary-text">检测中…</span>
-          <span class="download-primary-meta" id="download-primary-meta">0.10.2</span>
-        </a>
-
-        <div class="download-source" id="download-source" hidden>
-          <div class="download-source-row" id="download-source-row" role="group" aria-label="下载源"></div>
-          <p class="download-source-note">
-            默认走「官方源」（自建 Cloudflare 加速、稳定可靠）。如需可切换 GitHub 直连或第三方公益镜像；公益镜像偶有不稳定，失败可换其他源。
-          </p>
-        </div>
-
-        <details class="download-platforms">
-          <summary>其他平台 / 不同架构</summary>
-          <div class="download-platform-grid">
-            <a class="download-platform-card" data-os="mac-arm" href="#">
-              <span class="platform-icon">🍎</span>
-              <span class="platform-name">macOS · Apple Silicon</span>
-              <span class="platform-arch">arm64 · M1 / M2 / M3 / M4</span>
-            </a>
-            <a class="download-platform-card" data-os="mac-intel" href="#">
-              <span class="platform-icon">🍎</span>
-              <span class="platform-name">macOS · Intel</span>
-              <span class="platform-arch">x64</span>
-            </a>
-            <a class="download-platform-card" data-os="win" href="#">
-              <span class="platform-icon">🪟</span>
-              <span class="platform-name">Windows</span>
-              <span class="platform-arch">x64 · Win 10/11</span>
-            </a>
+      <div class="window-body">
+        <aside class="pane pane-tree">
+          <div class="pane-head">知识空间</div>
+          <div class="tree-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>raw</div>
+          <div class="tree-row indent active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3v5h5"/><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/></svg>向量检索复盘.md</div>
+          <div class="tree-row indent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3v5h5"/><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/></svg>周会纪要.md</div>
+          <div class="tree-row" style="margin-top:0.5rem"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V4H6.5A2.5 2.5 0 0 0 4 6.5z"/></svg>wiki</div>
+          <div class="tree-row indent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3v5h5"/><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/></svg>rerank</div>
+          <div class="tree-row indent"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3v5h5"/><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/></svg>向量检索</div>
+        </aside>
+        <div class="pane pane-editor">
+          <div class="doc-title">向量检索复盘</div>
+          <div class="doc-meta">raw/向量检索复盘.md · 今天 14:32 更新</div>
+          <p class="doc-text">今天和 <mark>林工</mark> 聊了向量检索的召回问题，他建议先做 <mark>rerank</mark> —— 在召回结果之上加一层重排序，兼顾速度与准确。</p>
+          <p class="doc-text">下一步：整理一版对比实验的指标表，关联 <span class="wikilink-chip">[[向量检索]]</span> 词条。</p>
+          <div class="comment-card">
+            <div class="cc-hl">他建议先做 rerank。</div>
+            <div class="cc-head"><span class="cc-avatar"></span><span class="cc-name">我</span><span class="cc-time">2 小时前</span></div>
+            <p>问知我：rerank 为什么放在召回之后？</p>
           </div>
-        </details>
-
-        <p class="download-live-note">
-          公测版（beta）· 安装包未做代码签名，首次打开可能需要在系统里手动放行 ·
-          <a href="#faq-install">查看安装说明 →</a>
-        </p>
-
-        <p class="download-live-meta">
-          <a href="https://github.com/Timeflys2018/KnowMe/releases">查看所有版本与发行说明 →</a>
-        </p>
+        </div>
+        <aside class="pane pane-ai">
+          <div class="ai-head"><span class="seal">知</span><span>知我</span></div>
+          <div class="ai-q">rerank 为什么放在召回之后？</div>
+          <div class="ai-a">因为召回先拿回候选，rerank 再按语义精排，兼顾速度与准确 —— 这也是林工 8 月 3 日的建议<span class="caret"></span></div>
+          <span class="ai-tag">来源 · 向量检索复盘</span>
+        </aside>
       </div>
     </div>
-  </section>
+  </div>
+</div>
 
-  <!-- ========== 5 大独占位 ========== -->
-   <section id="features">
-    <div class="container">
-      <span class="section-eyebrow">为什么是知我</span>
-      <h2 class="section-title section-title-hero">
-        不是又一个 Obsidian——<br>
-        <span class="title-accent">AI 时代的知识引擎</span>
-      </h2>
+<!-- ========== 下载（默认折叠为摘要带） ========== -->
+<section id="download" class="download-section">
+  <a class="container download-strip" href="#download" aria-label="展开下载选项">
+    <span class="strip-left">
+      <span class="strip-kicker">下载</span>
+      <span class="download-strip-title" id="download-strip-title">知我 KnowMe 0.10.2 公测版</span>
+    </span>
+    <span class="strip-cue">展开下载选项<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+  </a>
+  <div class="download-body">
+    <div class="download-body-clip">
+      <div class="download-pad">
+        <div class="container">
+    <div class="section-head">
+      <div class="section-no">下载</div>
+      <h2 class="section-title" id="download-title">立即下载 知我 KnowMe 0.10.2 公测版</h2>
+    </div>
+    <p class="download-intro" id="download-intro">
+      macOS / Windows 安装包已就绪，Linux 即将支持。<br>
+      想要第一时间拿到？选下面任意一个通道，发版当天通知你。
+    </p>
+
+    <div id="download-pre" class="download-pre">
+      <span class="download-pre-dot" aria-hidden="true"></span>
+      <span class="download-pre-text">
+        <strong id="download-pre-version">0.10.2 已发布</strong> ·
+        <a href="https://github.com/Timeflys2018/KnowMe/releases" target="_blank" rel="noreferrer noopener">前往 GitHub Releases 看进度 →</a>
+      </span>
+    </div>
+
+    <div class="download-prep-grid" id="download-prep-grid">
+      <a class="prep-card" id="download-prep-mail" href="mailto:timeflying2026@163.com">
+        <div class="prep-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg></div>
+        <h4>邮件通知</h4>
+        <p id="download-prep-mail-text">给开发者发一封"我想要 0.10.2"，上线当天回信。<strong>最直接</strong>，也可用于登记早鸟购买意向。</p>
+        <span class="prep-cta">写邮件 →</span>
+      </a>
+      <a class="prep-card" href="https://github.com/Timeflys2018/KnowMe" target="_blank" rel="noreferrer noopener">
+        <div class="prep-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.9 6.26L21.5 9.3l-4.75 4.87L17.8 21 12 17.77 6.2 21l1.05-6.83L2.5 9.3l6.6-1.04z"/></svg></div>
+        <h4>关注 GitHub</h4>
+        <p>Watch Releases → GitHub 自动给你发邮件。同时 Star 一下让开发者知道。</p>
+        <span class="prep-cta">前往仓库 →</span>
+      </a>
+      <a class="prep-card" href="https://useknowme.com/sponsor">
+        <div class="prep-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7z"/></svg></div>
+        <h4>自愿赞助</h4>
+        <p>赞助是单向感谢，不解锁功能、不绑定早鸟或 Pro 权益。想购买早鸟请走邮件登记。</p>
+        <span class="prep-cta">了解赞助 →</span>
+      </a>
+    </div>
+
+    <p class="download-prep-meta">
+      公测期 <strong>完全免费</strong> · 数据 100% 本地 SQLite · 无需注册即可使用 ·
+      <a href="https://docs.useknowme.com/start/quickstart" target="_blank" rel="noreferrer noopener">文档已就绪 →</a>
+    </p>
+
+    <div id="download-live" class="download-live" hidden>
+      <a class="btn-download-primary" id="download-primary" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+        <span class="download-primary-text">检测平台中…</span>
+        <span class="download-primary-meta" id="download-primary-meta">0.10.2</span>
+      </a>
+
+      <div class="download-source" id="download-source" hidden>
+        <div class="download-source-row" id="download-source-row" role="group" aria-label="下载源"></div>
+        <p class="download-source-note">
+          默认走「官方源」（自建 Cloudflare 加速、稳定可靠）。如需可切换 GitHub 直连或第三方公益镜像；公益镜像偶有不稳定，失败可换其他源。
+        </p>
+      </div>
+
+      <details class="download-platforms">
+        <summary>其他平台 / 不同架构</summary>
+        <div class="download-platform-grid">
+          <a class="download-platform-card" data-os="mac-arm" href="#">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.94c1.5 0 2.75 1.06 4 1.06 3 0 6-8 6-12.22A4.91 4.91 0 0 0 17 5c-2.22 0-4 1.44-5 2-1-.56-2.78-2-5-2a4.9 4.9 0 0 0-5 4.78C2 14 5 22 8 22c1.25 0 2.5-1.06 4-1.06z"/><path d="M10 2c1 .5 2 2 2 5"/></svg>
+            <span><span class="platform-name">macOS · Apple Silicon</span><span class="platform-arch">arm64 · M1 / M2 / M3 / M4</span></span>
+          </a>
+          <a class="download-platform-card" data-os="mac-intel" href="#">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.94c1.5 0 2.75 1.06 4 1.06 3 0 6-8 6-12.22A4.91 4.91 0 0 0 17 5c-2.22 0-4 1.44-5 2-1-.56-2.78-2-5-2a4.9 4.9 0 0 0-5 4.78C2 14 5 22 8 22c1.25 0 2.5-1.06 4-1.06z"/><path d="M10 2c1 .5 2 2 2 5"/></svg>
+            <span><span class="platform-name">macOS · Intel</span><span class="platform-arch">x64</span></span>
+          </a>
+          <a class="download-platform-card" data-os="win" href="#">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></svg>
+            <span><span class="platform-name">Windows</span><span class="platform-arch">x64 · Win 10/11</span></span>
+          </a>
+        </div>
+      </details>
+
+      <p class="download-live-note">
+        公测版（beta）· 安装包未做代码签名，首次打开可能需要在系统里手动放行 ·
+        <a href="#faq-install">查看安装说明 →</a>
+      </p>
+      <p class="download-live-meta">
+        <a href="https://github.com/Timeflys2018/KnowMe/releases" target="_blank" rel="noreferrer noopener">查看所有版本与发行说明 →</a>
+      </p>
+    </div>
+
+    <button type="button" class="download-collapse" data-download-collapse>
+      收起<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+    </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ========== 为什么是知我 ========== -->
+<section id="features">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-no">一 · 为什么是知我</div>
+      <h2 class="section-title">不是又一个 Obsidian ——<br><em>AI 时代的知识引擎</em></h2>
       <p class="section-intro">
         我们站在 Obsidian / Logseq / Notion 把基础笔记做完的肩膀上，
         把战场推到他们都没占的位置。
       </p>
+    </div>
 
-      <div class="differentiators">
-        <div class="diff-card">
-          <div class="diff-num">01</div>
-          <h3>MCP 原生 · agent 时代记忆/知识层</h3>
-          <p>
-            被 Claude Code / Cursor / OpenCode 当知识库消费 ——
-            一份知识空间,所有 AI agent 都能读。<strong>写路径也已 ship</strong>：
-            agent 可提交写入建议,经 Review queue 你确认后入库。
-          </p>
-          <span class="diff-tag">MCP-native · 读写双向已 ship</span>
-        </div>
-
-        <div class="diff-card">
-          <div class="diff-num">02</div>
-          <h3>多通道一键发布</h3>
-          <p>
-            微信公众号、Markdown 一键导出（小红书计划中）。
-            一份内容多平台精美渲染 —— 中文创作者的刚需。
-          </p>
-          <span class="diff-tag">已 ship · 微信 + Markdown</span>
-        </div>
-
-        <div class="diff-card">
-          <div class="diff-num">03</div>
-          <h3>LLM 编译 Wiki + 安全审核</h3>
-          <p>
-            写笔记 → AI 自动抽取 entities / concepts / sources，
-            建立结构化 Wiki。<strong>Review queue 让你审核每一次写入</strong>。
-          </p>
-          <span class="diff-tag">已 ship · safety-first</span>
-        </div>
-
-        <div class="diff-card">
-          <div class="diff-num">04</div>
-          <h3>本地优先 · Markdown + HTML 双格式</h3>
-          <p>
-            笔记就是你本地的真实文件，可用任何工具编辑 ——
-            <strong>git / Finder / vim / Obsidian 改动实时同步</strong>，
-            目录自动刷新、增量入库，无需手动 re-ingest。
-            <strong>Markdown 和 HTML 都是一等公民</strong>，退订也带走所有。
-          </p>
-          <span class="diff-tag">本地 SQLite · 实时文件监听 · Markdown · HTML</span>
-        </div>
-
-        <div class="diff-card">
-          <div class="diff-num">05</div>
-          <h3>Agent Fleet 智能舰队</h3>
-          <p>
-            在一个入口下调度本地 opencode / codex —— 派活、盯盘、续聊。
-            <strong>真逐字流式转录、斜杠命令、任务看板（四列 + 定时跨天派发）、指挥室（需处理收件箱 + 全局统揽 + 可选 LLM 凝练）</strong>，
-            看板↔会话双向跳转、任务抽屉带 token/花费面板，产出一键编回知识库。
-            <strong>已 ship 的真实工作台</strong>，非演示外壳。
-          </p>
-          <span class="diff-tag">本地已 ship · 云端编排后续推出</span>
-        </div>
-
-        <div class="diff-card">
-          <div class="diff-num">06</div>
-          <h3>三模编辑器 · 你的节奏你的方式</h3>
-          <p>
-            <strong>Live 实时渲染 / Edit 源码 / Reading 阅读</strong>
-            一键切换。Markdown 顺滑写作，HTML 精准排版 ——
-            一份内容多种姿势。
-          </p>
-          <span class="diff-tag">CodeMirror 6 · 三模自由切换</span>
-        </div>
-
-        <div class="diff-card">
-          <div class="diff-num">07</div>
-          <h3>飞书接入 · 让第二大脑对外答疑</h3>
-          <p>
-            飞书联系人手机 1:1 私聊你的知我，<strong>默认只读你编译好的 Wiki、碰不到原始笔记</strong> ——
-            能读什么由你给访客<strong>绑定的应答身份</strong>决定（源头隔离，能力集即边界）。
-            还能给访客<strong>分配一个通讯录 agent</strong>（把它的工作目录与权限一起交出），
-            并为<strong>每位访客单独选应答模型、设会话保留策略</strong>。
-            长连接接入，<strong>无需公网 / webhook / 内网穿透</strong>；陌生人先进待审批，你批准才服务。
-            <strong>已 ship</strong>。
-          </p>
-          <span class="diff-tag">已 ship · 飞书 1:1 问答 · per-访客身份/模型可控</span>
-        </div>
-
-        <div class="diff-card">
-          <div class="diff-num">08</div>
-          <h3>分屏多面板 · 一边写，一边看 AI 跑</h3>
-          <p>
-            窗口可<strong>向右分屏</strong>成并排的多个面板，每个面板都是一套<strong>完整独立的工作区</strong> ——
-            自己的标签页、文件树、AI 右栏。「笔记」和「智能」不再整窗二选一，而是可以并排摆在一起：
-            <strong>左边写调研笔记，右边开智能标签把任务派给本地 Claude Code / opencode，一屏之内看它逐字跑。</strong>
-            每个面板状态各自记忆，关闭分栏一键还原。
-            <strong>已 ship</strong>。
-          </p>
-          <span class="diff-tag">已 ship · 向右分屏 · 面板=完整工作区 · 笔记/智能并排</span>
-        </div>
+    <div class="hero-feats">
+      <div class="hero-feat">
+        <div class="hf-no">01</div>
+        <h3>MCP 原生 · agent 时代的记忆/知识层</h3>
+        <p>被 Claude Code / Cursor / OpenCode 当知识库消费 —— 一份知识空间，所有 AI agent 都能读。<strong>写路径也已 ship</strong>：agent 可提交写入建议，经 Review queue 你确认后入库。</p>
+        <span class="feat-tag">MCP-native · 读写双向已 ship</span>
+      </div>
+      <div class="hero-feat">
+        <div class="hf-no">02</div>
+        <h3>LLM 编译 Wiki + 安全审核</h3>
+        <p>写笔记 → AI 自动抽取 entities / concepts / sources，建立结构化 Wiki。<strong>Review queue 让你审核每一次写入</strong> —— AI 帮你整理，但入库权永远在你手里。</p>
+        <span class="feat-tag">已 ship · safety-first</span>
+      </div>
+      <div class="hero-feat">
+        <div class="hf-no">03</div>
+        <h3>Agent Fleet 智能舰队</h3>
+        <p>在一个入口下调度本地 opencode / codex —— 派活、盯盘、续聊。<strong>真逐字流式转录、斜杠命令、任务看板（四列 + 定时跨天派发）、指挥室（需处理收件箱 + 全局统揽 + 可选 LLM 凝练）</strong>，看板↔会话双向跳转、任务抽屉带 token/花费面板，产出一键编回知识库。<strong>已 ship 的真实工作台</strong>，非演示外壳。</p>
+        <span class="feat-tag">本地已 ship · 云端编排后续推出</span>
       </div>
     </div>
-  </section>
 
-  <!-- ========== AI 能力 ========== -->
-  <section id="ai">
-    <div class="container">
-      <span class="section-eyebrow">AI 能力</span>
-      <h2 class="section-title section-title-hero">
-        不只是存笔记——<br>
-        <span class="title-accent">写、问、答、改，AI 全程在帮你想</span>
-      </h2>
+    <details class="more-caps">
+      <summary>
+        <svg class="mc-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 6 6 6-6 6"/></svg>
+        更多能力<span class="mc-count">发布 · 双格式 · 三模编辑器 · 飞书 · 分屏（5 项）</span>
+      </summary>
+      <div class="rest-feats">
+      <div class="rest-feat">
+        <div class="rf-no">04</div>
+        <div>
+          <h4>多通道一键发布</h4>
+          <p>微信公众号、Markdown 一键导出（小红书计划中）。一份内容多平台精美渲染 —— 中文创作者的刚需。</p>
+          <span class="feat-tag">已 ship · 微信 + Markdown</span>
+        </div>
+      </div>
+      <div class="rest-feat">
+        <div class="rf-no">05</div>
+        <div>
+          <h4>本地优先 · Markdown + HTML 双格式</h4>
+          <p>笔记就是你本地的真实文件，可用任何工具编辑 —— <strong>git / Finder / vim / Obsidian 改动实时同步</strong>，目录自动刷新、增量入库，无需手动 re-ingest。<strong>Markdown 和 HTML 都是一等公民</strong>，退订也带走所有。</p>
+          <span class="feat-tag">本地 SQLite · 实时文件监听 · Markdown · HTML</span>
+        </div>
+      </div>
+      <div class="rest-feat">
+        <div class="rf-no">06</div>
+        <div>
+          <h4>三模编辑器 · 你的节奏你的方式</h4>
+          <p><strong>Live 实时渲染 / Edit 源码 / Reading 阅读</strong>一键切换。Markdown 顺滑写作，HTML 精准排版 —— 一份内容多种姿势。</p>
+          <span class="feat-tag">CodeMirror 6 · 三模自由切换</span>
+        </div>
+      </div>
+      <div class="rest-feat">
+        <div class="rf-no">07</div>
+        <div>
+          <h4>飞书接入 · 让第二大脑对外答疑</h4>
+          <p>飞书联系人手机 1:1 私聊你的知我，<strong>默认只读你编译好的 Wiki、碰不到原始笔记</strong> —— 能读什么由你给访客<strong>绑定的应答身份</strong>决定。还能给访客<strong>分配通讯录 agent</strong>、<strong>单独选应答模型、设会话保留策略</strong>。长连接接入，<strong>无需公网 / webhook / 内网穿透</strong>；陌生人先进待审批，你批准才服务。</p>
+          <span class="feat-tag">已 ship · 飞书 1:1 问答 · per-访客身份/模型可控</span>
+        </div>
+      </div>
+      <div class="rest-feat">
+        <div class="rf-no">08</div>
+        <div>
+          <h4>分屏多面板 · 一边写，一边看 AI 跑</h4>
+          <p>窗口可<strong>向右分屏</strong>成并排的多个面板，每个面板都是一套<strong>完整独立的工作区</strong> —— 自己的标签页、文件树、AI 右栏。<strong>左边写调研笔记，右边开智能标签把任务派给本地 Claude Code / opencode，一屏之内看它逐字跑。</strong>每个面板状态各自记忆，关闭分栏一键还原。</p>
+          <span class="feat-tag">已 ship · 向右分屏 · 面板=完整工作区</span>
+        </div>
+      </div>
+      </div>
+    </details>
+  </div>
+</section>
+
+<!-- ========== 工作流：四步闭环 ========== -->
+<section id="workflow">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-no">二 · 怎么工作</div>
+      <h2 class="section-title">从一行草稿，<em>到随时可问的记忆</em></h2>
       <p class="section-intro">
         Wiki、知识图谱、全局时间线是骨架，AI 是让它活起来的引擎。
         而且 <strong>local-first 不打扰</strong> —— AI 何时介入，你说了算。
       </p>
+    </div>
 
-      <div class="differentiators">
-        <div class="diff-card">
-          <div class="diff-num">①</div>
-          <h3>写，AI 整理成 Wiki</h3>
-          <p>
-            原始笔记倾倒进来 → AI 自动抽取 entities / concepts / sources，
-            编译成结构化 Wiki。<strong>每次写入都进 Review queue 等你确认</strong>。
-          </p>
-          <span class="diff-tag">已 ship · safety-first</span>
+    <ol class="workflow-steps">
+      <li class="workflow-step">
+        <span class="step-no" aria-hidden="true">01</span>
+        <h3>随手记录</h3>
+        <p>想到就写，笔记、聊天、剪藏都能丢进来，不必先整理。</p>
+      </li>
+      <li class="workflow-step">
+        <span class="step-no" aria-hidden="true">02</span>
+        <h3>自动编译</h3>
+        <p>知我抽取实体与概念，把碎片编成可追溯的 Wiki —— 每次写入都进 Review queue 等你确认。</p>
+      </li>
+      <li class="workflow-step">
+        <span class="step-no" aria-hidden="true">03</span>
+        <h3>随时提问</h3>
+        <p>圈选任意文字点「问知我」，AI 结合你的知识库流式回答，答案附带来源，回到原文核对。</p>
+      </li>
+      <li class="workflow-step">
+        <span class="step-no" aria-hidden="true">04</span>
+        <h3>连接每个 AI</h3>
+        <p>通过 MCP，Claude Code / Cursor / OpenCode 都能读取同一份记忆。</p>
+      </li>
+    </ol>
+
+    <div class="rest-feats workflow-more">
+      <div class="rest-feat">
+        <div class="rf-no">＋</div>
+        <div>
+          <h4>评论里 @知我，AI 答疑</h4>
+          <p>在评论里写 <strong>@知我 ...</strong> → AI 自动回复，无需手动按钮。<strong>全即时 / 仅 @即时 / @即时+批量</strong> 三档随你选；回复自动存成评论，不用切到别的 app。</p>
+          <span class="feat-tag">已 ship · @知我 + 三档配置</span>
         </div>
-
-        <div class="diff-card">
-          <div class="diff-num">②</div>
-          <h3>圈选，随时「问知我」</h3>
-          <p>
-            选中任意文本 → 点「问知我」→ AI 结合你的知识库流式回答，
-            <strong>回复自动存成评论</strong>，不用切到别的 app。
-          </p>
-          <span class="diff-tag">已 ship · 圈选问答</span>
-        </div>
-
-        <div class="diff-card">
-          <div class="diff-num">③</div>
-          <h3>评论里 @知我，AI 答疑</h3>
-          <p>
-            在评论里写 <code>@知我 ...</code> → AI 自动回复，无需手动按钮。
-            <strong>全即时 / 仅 @即时 / @即时+批量</strong> 三档随你选。
-          </p>
-          <span class="diff-tag">已 ship · @知我 + 三档配置</span>
-        </div>
-
-        <div class="diff-card">
-          <div class="diff-num">④</div>
-          <h3>Wiki 选词，AI 改进</h3>
-          <p>
-            词条不准？圈选 + 写一句改进意见 → AI 重新编译 entity。
-            <strong>改动同样进 Review queue</strong>，原文永远可回退。
-          </p>
-          <span class="diff-tag">已 ship · Wiki 改进</span>
+      </div>
+      <div class="rest-feat">
+        <div class="rf-no">＋</div>
+        <div>
+          <h4>Wiki 选词，AI 改进</h4>
+          <p>词条不准？圈选 + 写一句改进意见 → AI 重新编译 entity。<strong>改动同样进 Review queue</strong>，原文永远可回退。</p>
+          <span class="feat-tag">已 ship · Wiki 改进</span>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- ========== 三档版本 ========== -->
-  <section id="pricing">
-    <div class="container">
-      <span class="section-eyebrow">三档版本</span>
-      <h2 class="section-title">现在免费 · 未来明示。</h2>
+<!-- ========== 定价 ========== -->
+<section id="pricing">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-no">三 · 定价</div>
+      <h2 class="section-title">现在免费 · <em>未来明示。</em></h2>
       <p class="section-intro">
         公测期（2026-06-06 → 2027-07-06）所有功能完全免费。2027-07-07 Pro 订阅正式启动，
         但 <strong>本地核心功能将永久保留在免费档</strong>。原则很简单：本地核心免费，高级生产力能力进入 Pro，多人治理进入 Team。
       </p>
-
-      <div class="pricing-grid">
-
-        <!-- Free -->
-        <div class="pricing-card">
-          <div class="pricing-name">个人基础版</div>
-          <div class="pricing-blurb">完整本地能力，用户自备 key / 本地模型，自由使用自己的数据。</div>
-          <div class="pricing-price">¥0 <small>/ 永久免费</small></div>
-          <div class="pricing-period" id="pricing-period-version">现可用 · 0.10.2（2026-08-07）</div>
-
-          <ul class="pricing-features">
-            <li><span class="check">✓</span> <strong>三模编辑器</strong>：Live / Edit / Reading 自由切</li>
-            <li><span class="check">✓</span> Markdown + HTML 双格式一等公民</li>
-            <li><span class="check">✓</span> 双向链接 · 知识图谱 · LLM 编译 Wiki</li>
-            <li><span class="check">✓</span> Review queue 安全审核（人工把关 AI 写入）</li>
-            <li><span class="check">✓</span> 多通道导出（微信公众号 / 小红书规划中）</li>
-            <li><span class="check">✓</span> <strong>本地 MCP / localhost API</strong> · 接入 Claude Code / Cursor（本机基础能力免费）</li>
-            <li><span class="check">✓</span> <strong>Agent Fleet 本地工作台</strong>：调度本地 opencode / codex · 流式转录 · 任务看板 · 定时派发 · 指挥室（收件箱+统揽+凝练）· 产出编回知识库（本地全功能免费）</li>
-            <li><span class="check">✓</span> 接入 OpenAI / Anthropic / Gemini / Ollama / LM Studio · <strong>用户自备 API key 或本地模型</strong> · 免费 / 试用 API 预设一键接入</li>
-            <li><span class="check">✓</span> <strong>内置免费模型</strong>：无需自备 key，开箱即用体验 AI 编译（实验性 · 可能限流 · 私密内容请用本地模型）</li>
-            <li><span class="check">✓</span> 本地 SQLite · 数据导出永久可用</li>
-            <li><span class="check">✓</span> 6 种内置 Wiki Types · 已有类型数据可读取 / 导出</li>
-            <li><span class="check">✓</span> <strong>本地知识图谱</strong>（中心邻域探索 / 全局视图）· <strong>全局时间线</strong>（分支树 + 放射心智图）</li>
-            <li><span class="dim">— Pro 启动后（2027-07-07 起）：本地核心继续免费；公测期高级/预览能力可能进入 Pro</span></li>
-          </ul>
-
-          <a href="#download" class="pricing-cta pricing-cta-primary" id="pricing-cta-version">下载 0.10.2 →</a>
-        </div>
-
-        <!-- Pro 即将推出 -->
-        <div class="pricing-card highlighted coming-soon">
-          <span class="pricing-soon-tag">🔜 即将推出</span>
-          <div class="pricing-name">Pro 专业版</div>
-          <div class="pricing-blurb">托管能力 + 自动化增强。给需要跨设备、后台任务和高级工作流的重度知识工作者。</div>
-          <div class="pricing-price">¥? <small>/ 年</small></div>
-          <div class="pricing-period">2027-07-07 正式上线 · 早鸟享 3 年本地 Pro</div>
-
-          <ul class="pricing-features">
-            <li><span class="check">✓</span> 个人版全部功能 · 本地能力不因订阅状态而锁定</li>
-            <li><span class="check">✓</span> <strong>E2EE 云同步</strong> · 跨设备冲突解决 · 版本历史 / 云备份</li>
-            <li><span class="check">✓</span> <strong>KnowMe 托管 AI 配额</strong> · 不用自己配置 key</li>
-            <li><span class="check">✓</span> <strong>云端智能索引 / Embeddings / Reranker</strong>（大库检索与重建索引省心）</li>
-            <li><span class="check">✓</span> <strong>远程 API / Auth Token / Webhook</strong> · 商业自动化工作流</li>
-            <li><span class="check">✓</span> <strong>Agent Fleet 云端编排</strong> · 后台任务 / 定时 Dream-cycle（<strong>本地工作台永久免费</strong>，此为云端托管增量）</li>
-            <li><span class="check">✓</span> <strong>高级导出</strong>（PDF / EPUB / Notion / Obsidian 双向）</li>
-            <li><span class="check">✓</span> <strong>自定义 Wiki Types</strong>（字段 / 提取规则 / 渲染模板 / 导入导出 / 版本历史）</li>
-            <li><span class="check">✓</span> <strong>Schema 模板市场 / 云端 Schema Registry</strong></li>
-            <li><span class="check">✓</span> <strong>云端图谱 / 跨设备索引计算</strong>（本地知识图谱免费）</li>
-          </ul>
-
-          <a href="mailto:contact@useknowme.com?subject=KnowMe%20Pro%20%E7%AD%89%E5%BE%85%E5%90%8D%E5%8D%95&body=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E6%88%91%E5%B8%8C%E6%9C%9B%20Pro%20%E5%8F%91%E7%89%88%E6%97%B6%E5%BE%97%E5%88%B0%E9%80%9A%E7%9F%A5%E3%80%82" class="pricing-cta pricing-cta-secondary">加入等待名单</a>
-        </div>
-
-        <!-- Team 即将推出 -->
-        <div class="pricing-card coming-soon">
-          <span class="pricing-soon-tag">🔜 即将推出</span>
-          <div class="pricing-name">团队版</div>
-          <div class="pricing-blurb">为知识团队设计。共享知识空间 + SSO。</div>
-          <div class="pricing-price">¥? <small>/ 席位 / 年</small></div>
-          <div class="pricing-period">5 席起订 · 2027-12 后开放</div>
-
-          <ul class="pricing-features">
-            <li><span class="check">✓</span> Pro 专业版全部功能</li>
-            <li><span class="check">✓</span> <strong>共享知识空间 · 多人协作</strong>（成员 / 权限 / 角色）</li>
-            <li><span class="check">✓</span> <strong>团队 Schema 共享</strong> · 版本历史 · 模板治理</li>
-            <li><span class="check">✓</span> 超大知识图谱（50K+ 节点）</li>
-            <li><span class="check">✓</span> 远程 API / Webhook 团队配额 · 多客户端 Token 管理</li>
-            <li><span class="check">✓</span> SSO（飞书/钉钉/企业微信/Google）</li>
-            <li><span class="check">✓</span> 集中账单 · 增值税普票</li>
-            <li><span class="check">✓</span> 审计日志 · 数据合规导出</li>
-            <li><span class="check">✓</span> 优先客服 · 专属群</li>
-          </ul>
-
-          <a href="mailto:license@useknowme.com" class="pricing-cta pricing-cta-secondary">联系销售</a>
-        </div>
-
-      </div>
-
-      <!-- 早鸟 -->
-      <div class="early-bird" id="early-bird">
-        <div class="early-bird-badge">🎁 公测期独享 · 限前 100 名</div>
-        <h3>Pro 三年版（早鸟）</h3>
-        <div class="early-bird-price">价格待公布 <small>· 一次付费 · 享 3 年</small></div>
-        <p>
-          公测期内一次付费，<strong>未来启动后享 3 年本地 Pro 能力</strong>，
-          这 3 年所有更新免费，<strong>早鸟价永远锁定</strong>。
-          3 年后与普通用户一致（本地功能始终免费）。<br>
-          云同步、云端 AI、云端索引、远程 API 等托管服务有持续成本，按订阅另付（早鸟同样适用）。
-        </p>
-        <div class="early-bird-counter">
-          <span>📊</span> 还剩 <strong>100</strong> 个名额 · 公测期招募中
-        </div>
-
-        <div class="early-bird-status-banner">
-          <span class="status-dot"></span>
-          <span><strong>早鸟购买通道准备中</strong> · 现在可先邮件登记购买意向</span>
-        </div>
-
-        <div class="early-bird-actions">
-          <a href="mailto:contact@useknowme.com?subject=KnowMe%20%E6%97%A9%E9%B8%9F%20Pro%20%E4%B8%89%E5%B9%B4%E7%89%88%20%E9%A2%84%E8%AE%A2&body=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E6%88%91%E6%83%B3%E9%A2%84%E8%AE%A2%E7%9F%A5%E6%88%91%20Pro%20%E4%B8%89%E5%B9%B4%E7%89%88%EF%BC%88%E6%97%A9%E9%B8%9F%E3%80%81%E5%89%8D%20100%20%E5%90%8D%EF%BC%89%E3%80%82%0A%0A%E7%A7%B0%E5%91%BC%EF%BC%9A%0AGitHub%20%E7%94%A8%E6%88%B7%E5%90%8D%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89%EF%BC%9A%0A%E6%9C%80%E6%9C%9F%E5%BE%85%E7%9A%84%E5%8A%9F%E8%83%BD%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89%EF%BC%9A%0A%0A%E5%9C%A8%E6%94%AF%E4%BB%98%E9%80%9A%E9%81%93%E5%BC%80%E9%80%9A%E5%90%8E%EF%BC%8C%E8%AF%B7%E5%8F%91%E4%BB%98%E6%AC%BE%E9%93%BE%E6%8E%A5%E7%BB%99%E6%88%91%E3%80%82%E8%B0%A2%E8%B0%A2%EF%BC%81" class="early-bird-cta-primary">
-            ✉️ 预订早鸟名额 →
-          </a>
-          <a href="#faq-early-bird" class="early-bird-cta-secondary">
-            了解早鸟权益
-          </a>
-        </div>
-
-        <p class="early-bird-howto">
-          <strong>登记流程</strong>：点击「预订早鸟」→ 发邮件给开发者（已自动填好正文，你可补充称呼/期待功能）→
-          正式购买通道开通后我会发付款链接给你 → 完成支付即获早鸟身份，锁定早鸟价。<br>
-          <strong>预订也算早鸟 100 名额</strong>，按邮件时间排序，先到先得。
-        </p>
-      </div>
-
     </div>
-  </section>
 
-  <!-- ========== 我们的承诺 ========== -->
-  <section id="promises">
-    <div class="container">
-      <span class="section-eyebrow">承诺</span>
-      <h2 class="section-title">透明 · 不锁定 · 不突袭。</h2>
-      <p class="section-intro">
-        从 Day 1 就把所有未来的可能性写下来。这是我们和你之间的契约。
-      </p>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="pricing-name">个人基础版</div>
+        <div class="pricing-blurb">完整本地能力，用户自备 key / 本地模型，自由使用自己的数据。</div>
+        <div class="pricing-price">¥0 <small>/ 永久免费</small></div>
+        <div class="pricing-period" id="pricing-period-version">现可用 · 0.10.2（2026-08-07）</div>
+        <ul class="pricing-features">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><strong>三模编辑器</strong>：Live / Edit / Reading 自由切</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Markdown + HTML 双格式一等公民</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>双向链接 · 知识图谱 · LLM 编译 Wiki</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Review queue 安全审核（人工把关 AI 写入）</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>多通道导出（微信公众号 / 小红书规划中）</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><strong>本地 MCP / localhost API</strong> · 接入 Claude Code / Cursor（本机基础能力免费）</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Agent Fleet 本地工作台</strong>：调度本地 opencode / codex · 流式转录 · 任务看板 · 定时派发 · 指挥室 · 产出编回知识库（本地全功能免费）</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>接入 OpenAI / Anthropic / Gemini / Ollama / LM Studio · <strong>用户自备 API key 或本地模型</strong> · 免费 / 试用 API 预设一键接入</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><strong>内置免费模型</strong>：无需自备 key，开箱即用体验 AI 编译（实验性 · 可能限流 · 私密内容请用本地模型）</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>本地 SQLite · 数据导出永久可用</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>6 种内置 Wiki Types · 已有类型数据可读取 / 导出</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><strong>本地知识图谱</strong>（中心邻域探索 / 全局视图）· <strong>全局时间线</strong>（分支树 + 放射心智图）</span></li>
+          <li class="p-divider dim">— Pro 启动后（2027-07-07 起）：本地核心继续免费；公测期高级/预览能力可能进入 Pro</li>
+        </ul>
+        <a href="#download" class="pricing-cta pricing-cta-primary" id="pricing-cta-version">下载 0.10.2 →</a>
+      </div>
 
-      <div class="promises-grid">
-        <div class="promise">
-          <div class="promise-icon">✓</div>
-          <div>
-            <h4>本地核心功能永久免费</h4>
-            <p>编辑器、Markdown/JSON 导出、本地知识库、BYOK、本地 LLM、基础图谱、基础 MCP —— 这些核心能力任何时候都保持免费。</p>
-          </div>
+      <div class="pricing-card highlighted coming">
+        <span class="pricing-soon">即将推出</span>
+        <div class="pricing-name">Pro 专业版</div>
+        <div class="pricing-blurb">托管能力 + 自动化增强。给需要跨设备、后台任务和高级工作流的重度知识工作者。</div>
+        <div class="pricing-price">¥? <small>/ 年</small></div>
+        <div class="pricing-period">2027-07-07 正式上线 · 早鸟享 3 年本地 Pro</div>
+        <ul class="pricing-features">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>个人版全部功能 · 本地能力不因订阅状态而锁定</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><strong>E2EE 云同步</strong> · 跨设备冲突解决 · 版本历史 / 云备份</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><strong>KnowMe 托管 AI 配额</strong> · 不用自己配置 key</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><strong>云端智能索引 / Embeddings / Reranker</strong>（大库检索与重建索引省心）</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><strong>远程 API / Auth Token / Webhook</strong> · 商业自动化工作流</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Agent Fleet 云端编排</strong> · 后台任务 / 定时 Dream-cycle（<strong>本地工作台永久免费</strong>，此为云端托管增量）</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><strong>高级导出</strong>（PDF / EPUB / Notion / Obsidian 双向）</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><strong>自定义 Wiki Types</strong>（字段 / 提取规则 / 渲染模板 / 导入导出 / 版本历史）</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Schema 模板市场 / 云端 Schema Registry</strong></span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><strong>云端图谱 / 跨设备索引计算</strong>（本地知识图谱免费）</span></li>
+        </ul>
+        <a href="mailto:contact@useknowme.com?subject=KnowMe%20Pro%20%E7%AD%89%E5%BE%85%E5%90%8D%E5%8D%95&body=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E6%88%91%E5%B8%8C%E6%9C%9B%20Pro%20%E5%8F%91%E7%89%88%E6%97%B6%E5%BE%97%E5%88%B0%E9%80%9A%E7%9F%A5%E3%80%82" class="pricing-cta pricing-cta-secondary">加入等待名单</a>
+      </div>
+
+      <div class="pricing-card coming">
+        <span class="pricing-soon">即将推出</span>
+        <div class="pricing-name">团队版</div>
+        <div class="pricing-blurb">为知识团队设计。共享知识空间 + SSO。</div>
+        <div class="pricing-price">¥? <small>/ 席位 / 年</small></div>
+        <div class="pricing-period">5 席起订 · 2027-12 后开放</div>
+        <ul class="pricing-features">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>Pro 专业版全部功能</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><strong>共享知识空间 · 多人协作</strong>（成员 / 权限 / 角色）</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><strong>团队 Schema 共享</strong> · 版本历史 · 模板治理</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>超大知识图谱（50K+ 节点）</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>远程 API / Webhook 团队配额 · 多客户端 Token 管理</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>SSO（飞书/钉钉/企业微信/Google）</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>集中账单 · 增值税普票</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>审计日志 · 数据合规导出</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>优先客服 · 专属群</span></li>
+        </ul>
+        <a href="mailto:license@useknowme.com" class="pricing-cta pricing-cta-secondary">联系销售</a>
+      </div>
+    </div>
+
+    <div class="early-bird" id="early-bird">
+      <div class="early-bird-seal">公测期独享 · 限前 100 名</div>
+      <div class="eb-grid">
+        <div>
+          <h3>Pro 三年版（早鸟）</h3>
+          <div class="early-bird-price">价格待公布 <small>· 一次付费 · 享 3 年</small></div>
+          <p>
+            公测期内一次付费，<strong>未来启动后享 3 年本地 Pro 能力</strong>，
+            这 3 年所有更新免费，<strong>早鸟价永远锁定</strong>。
+            3 年后与普通用户一致（本地功能始终免费）。<br>
+            云同步、云端 AI、云端索引、远程 API 等托管服务有持续成本，按订阅另付（早鸟同样适用）。
+          </p>
+          <p class="eb-howto">
+            <strong>登记流程</strong>：点击「预订早鸟」→ 发邮件给开发者（已自动填好正文，你可补充称呼/期待功能）→
+            正式购买通道开通后我会发付款链接给你 → 完成支付即获早鸟身份，锁定早鸟价。<br>
+            <strong>预订也算早鸟 100 名额</strong>，按邮件时间排序，先到先得。
+          </p>
         </div>
-
-        <div class="promise">
-          <div class="promise-icon">✓</div>
-          <div>
-            <h4>数据永远归你</h4>
-            <p>所有笔记永远存储在你本地的 SQLite。支持完整导出，无云锁定。</p>
-          </div>
-        </div>
-
-        <div class="promise">
-          <div class="promise-icon">✓</div>
-          <div>
-            <h4>Pro 只卖托管能力</h4>
-            <p>云同步、托管 AI、云端索引、远程 API、后台 Agent Fleet、自定义 Wiki Types 等进入 Pro。<strong>本地 LLM、本地知识空间、本地挂载、本地图谱、已创建数据的读取与导出永远不变成付费</strong>。</p>
-          </div>
-        </div>
-
-        <div class="promise">
-          <div class="promise-icon">✓</div>
-          <div>
-            <h4>提前 90 天公告</h4>
-            <p>任何重大变化都会提前 90 天公告，绝不突袭。</p>
-          </div>
-        </div>
-
-        <div class="promise">
-          <div class="promise-icon">✓</div>
-          <div>
-            <h4>赞助不解锁任何功能</h4>
-            <p>所有用户享有完整体验。赞助是单向感谢，不绑定权益。</p>
-          </div>
-        </div>
-
-        <div class="promise">
-          <div class="promise-icon">✓</div>
-          <div>
-            <h4>极端情况兜底</h4>
-            <p>即使项目终止，发布最后稳定版的离线 build。你的数据永远可以导出。</p>
+        <div class="eb-side">
+          <div class="eb-counter">还剩 <strong>100</strong> 个名额 · 公测期招募中</div>
+          <div class="eb-status"><span class="dot"></span><span><strong>早鸟购买通道准备中</strong> · 现在可先邮件登记购买意向</span></div>
+          <div class="eb-actions">
+            <a href="mailto:contact@useknowme.com?subject=KnowMe%20%E6%97%A9%E9%B8%9F%20Pro%20%E4%B8%89%E5%B9%B4%E7%89%88%20%E9%A2%84%E8%AE%A2&body=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E6%88%91%E6%83%B3%E9%A2%84%E8%AE%A2%E7%9F%A5%E6%88%91%20Pro%20%E4%B8%89%E5%B9%B4%E7%89%88%EF%BC%88%E6%97%A9%E9%B8%9F%E3%80%81%E5%89%8D%20100%20%E5%90%8D%EF%BC%89%E3%80%82%0A%0A%E7%A7%B0%E5%91%BC%EF%BC%9A%0AGitHub%20%E7%94%A8%E6%88%B7%E5%90%8D%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89%EF%BC%9A%0A%E6%9C%80%E6%9C%9F%E5%BE%85%E7%9A%84%E5%8A%9F%E8%83%BD%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89%EF%BC%9A%0A%0A%E5%9C%A8%E6%94%AF%E4%BB%98%E9%80%9A%E9%81%93%E5%BC%80%E9%80%9A%E5%90%8E%EF%BC%8C%E8%AF%B7%E5%8F%91%E4%BB%98%E6%AC%BE%E9%93%BE%E6%8E%A5%E7%BB%99%E6%88%91%E3%80%82%E8%B0%A2%E8%B0%A2%EF%BC%81" class="eb-cta-primary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+              预订早鸟名额 →
+            </a>
+            <a href="#faq-early-bird" class="eb-cta-secondary">了解早鸟权益</a>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
+<!-- ========== 承诺 ========== -->
+<section id="promises">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-no">四 · 承诺</div>
+      <h2 class="section-title">透明 · 不锁定 · <em>不突袭。</em></h2>
+      <p class="section-intro">从 Day 1 就把所有未来的可能性写下来。这是我们和你之间的契约。</p>
+    </div>
 
-  <!-- ========== Sponsor 支持开发者 ========== -->
-  <section id="sponsor" class="sponsor-section">
-    <div class="container">
-      <span class="section-eyebrow">支持开发者</span>
-      <h2 class="section-title">让独立开发者继续战斗 ☕</h2>
+    <div class="promises-grid">
+      <div class="promise">
+        <div class="promise-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <div><h4>本地核心功能永久免费</h4><p>编辑器、Markdown/JSON 导出、本地知识库、BYOK、本地 LLM、基础图谱、基础 MCP —— 这些核心能力任何时候都保持免费。</p></div>
+      </div>
+      <div class="promise">
+        <div class="promise-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <div><h4>数据永远归你</h4><p>所有笔记永远存储在你本地的 SQLite。支持完整导出，无云锁定。</p></div>
+      </div>
+      <div class="promise">
+        <div class="promise-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <div><h4>Pro 只卖托管能力</h4><p>云同步、托管 AI、云端索引、远程 API、后台 Agent Fleet、自定义 Wiki Types 等进入 Pro。<strong>本地 LLM、本地知识空间、本地挂载、本地图谱、已创建数据的读取与导出永远不变成付费</strong>。</p></div>
+      </div>
+      <div class="promise">
+        <div class="promise-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <div><h4>提前 90 天公告</h4><p>任何重大变化都会提前 90 天公告，绝不突袭。</p></div>
+      </div>
+      <div class="promise">
+        <div class="promise-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <div><h4>赞助不解锁任何功能</h4><p>所有用户享有完整体验。赞助是单向感谢，不绑定权益。</p></div>
+      </div>
+      <div class="promise">
+        <div class="promise-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <div><h4>极端情况兜底</h4><p>即使项目终止，发布最后稳定版的离线 build。你的数据永远可以导出。</p></div>
+      </div>
+    </div>
+
+    <div class="trust-proof">
+      <div class="trust-proof-card">
+        <div class="trust-proof-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg></div>
+        <div class="trust-proof-body">
+          <div class="trust-proof-label">默认数据目录</div>
+          <div class="trust-proof-value">本机路径 · ~/KnowMe</div>
+        </div>
+      </div>
+      <div class="trust-proof-card">
+        <div class="trust-proof-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <div class="trust-proof-body">
+          <div class="trust-proof-label">网络行为</div>
+          <div class="trust-proof-value text">默认不联网 · 只调用你配置的模型 / API，检查更新与可选云同步除外</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 支持开发者 ========== -->
+<section id="sponsor" class="sponsor-section">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-no">五 · 支持开发者</div>
+      <h2 class="section-title">让独立开发者<em>继续战斗。</em></h2>
       <p class="section-intro">
-        知我是独立开发者的成果。如果它给你带来了价值，欢迎赞助 ❤️<br>
+        知我是独立开发者的成果。如果它给你带来了价值，欢迎赞助。
         你的支持是开发者持续打磨产品、提供更好服务的有力后盾，每一份心意我都心存感激。
       </p>
       <p class="section-intro" style="margin-top: 0.75rem;">
         <strong>赞助用户也是产品共建者</strong>：你的反馈、想法、抱怨我都会优先看，
         欢迎一起讨论产品方向、提需求、参与功能优先级投票。
-        发邮件到 <a href="mailto:contact@useknowme.com" style="color: var(--primary-dark);">contact@useknowme.com</a>
+        发邮件到 <a href="mailto:contact@useknowme.com" style="color: var(--amber-deep); font-weight: 600; text-decoration: none;">contact@useknowme.com</a>
         告诉我你的故事，我会一一回信。
       </p>
+    </div>
 
-      <div class="sponsor-grid">
-
-        <!-- 爱发电赞助 -->
-        <div class="sponsor-card">
-          <h3>☕ 通过爱发电赞助</h3>
-          <p>微信扫码 → 自动跳转爱发电创作者主页 → 选档位用支付宝 / 微信付款，可一次性或包月赞助。</p>
-
-          <div class="qr-real">
-            <img src="assets/afdian-qr.png" alt="知我 KnowMe 爱发电赞助二维码" width="180" height="180">
-            <span style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem; display: block;">扫码前往爱发电主页</span>
-          </div>
-
-          <div class="sponsor-buttons">
-            <a class="sponsor-btn" href="https://afdian.com/a/knowme" target="_blank" rel="noopener">
-              💗 在爱发电支持
-            </a>
-          </div>
-
-          <p style="margin-top: 1.25rem; font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
-            🌍 <strong>Global users</strong>: 爱发电支持 Visa / Mastercard / PayPal，海外用户也可使用。
-          </p>
-        </div>
-
-        <!-- 公众号赞赏 / 邮件联系 -->
-        <div class="sponsor-card">
-          <h3>🇨🇳 通过公众号赞赏支持</h3>
-          <p>扫码关注公众号「Time留痕」。支持文章发布后,可在文章文末用微信赞赏表达支持。</p>
-
-          <div class="qr-real">
-            <img src="assets/wechat-mp-qr.jpg" alt="微信公众号 Time留痕 二维码" width="180" height="180">
-            <span style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.5rem; display: block;">扫码关注公众号「Time留痕」</span>
-          </div>
-
-          <div class="sponsor-buttons">
-            <a class="sponsor-btn" href="mailto:contact@useknowme.com?subject=支持知我%20KnowMe&body=你好，我想支持知我 KnowMe 的持续开发。">
-              📬 邮件联系支持
-            </a>
-            <a class="sponsor-btn" href="mailto:contact@useknowme.com?subject=KnowMe%20Pro%20等待名单&body=你好，我希望 Pro 发布时得到通知。">
-              ⏳ 加入 Pro 等待名单
-            </a>
-          </div>
-
-          <p style="margin-top: 1.25rem; font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
-            🌍 <strong>Global users</strong>: GitHub Sponsors / Paddle 等正式通道准备中。
-            目前可邮件 <a href="mailto:contact@useknowme.com" style="color: var(--primary-dark);">contact@useknowme.com</a> 联系。
-          </p>
-        </div>
-
+    <div class="sponsor-grid">
+      <div class="sponsor-card">
+        <h3>通过爱发电赞助</h3>
+        <p>微信扫码 → 自动跳转爱发电创作者主页 → 选档位用支付宝 / 微信付款，可一次性或包月赞助。</p>
+        <div class="qr-frame"><img src="assets/afdian-qr.png" alt="知我 KnowMe 爱发电赞助二维码" width="180" height="180"></div>
+        <span class="qr-cap">扫码前往爱发电主页</span>
+        <a class="sponsor-btn" href="https://afdian.com/a/knowme" target="_blank" rel="noreferrer noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7z"/></svg>
+          在爱发电支持
+        </a>
+        <p class="sponsor-note"><strong>Global users</strong>：爱发电支持 Visa / Mastercard / PayPal，海外用户也可使用。</p>
       </div>
 
-      <p class="sponsor-disclaimer">
-        ⚠️ <strong>赞助不解锁任何功能</strong> —— 所有用户都享有完整体验。<br>
-        赞助是对独立开发者持续投入的认可与支持。
-      </p>
+      <div class="sponsor-card">
+        <h3>通过公众号赞赏支持</h3>
+        <p>扫码关注公众号「Time留痕」。支持文章发布后，可在文章文末用微信赞赏表达支持。</p>
+        <div class="qr-frame"><img src="assets/wechat-mp-qr.jpg" alt="微信公众号 Time留痕 二维码" width="180" height="180"></div>
+        <span class="qr-cap">扫码关注公众号「Time留痕」</span>
+        <a class="sponsor-btn" href="mailto:contact@useknowme.com?subject=支持知我%20KnowMe&body=你好，我想支持知我 KnowMe 的持续开发。">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+          邮件联系支持
+        </a>
+        <a class="sponsor-btn" href="mailto:contact@useknowme.com?subject=KnowMe%20Pro%20等待名单&body=你好，我希望 Pro 发布时得到通知。">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          加入 Pro 等待名单
+        </a>
+        <p class="sponsor-note"><strong>Global users</strong>：GitHub Sponsors / Paddle 等正式通道准备中。目前可邮件 <a href="mailto:contact@useknowme.com">contact@useknowme.com</a> 联系。</p>
+      </div>
     </div>
-  </section>
 
-  <!-- ========== FAQ ========== -->
-  <section id="faq">
-    <div class="container">
-      <span class="section-eyebrow">常见问题</span>
+    <p class="sponsor-disclaimer">
+      <strong>赞助不解锁任何功能</strong> —— 所有用户都享有完整体验。<br>
+      赞助是对独立开发者持续投入的认可与支持。
+    </p>
+  </div>
+</section>
+
+<!-- ========== FAQ ========== -->
+<section id="faq">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-no">六 · 常见问题</div>
       <h2 class="section-title">还有疑问？</h2>
+    </div>
 
-      <div class="faq-list">
-        <details class="faq-item" id="faq-install">
-          <summary>下载后提示"已损坏"或"无法验证开发者"怎么办？</summary>
-          <p>
-            当前为公开测试版，<strong>暂未进行 Apple 代码签名 / 公证</strong>。因此 macOS 会拦截首次打开，提示
-            <strong>"KnowMe 已损坏，无法打开"</strong> 或 <strong>"无法验证开发者"</strong>。
-          </p>
-          <p class="install-callout">
-            ⚠️ 这是 macOS 对未签名 App 的标准拦截，<strong>并非 App 真的损坏，也不是病毒</strong>。按下面方法解除即可正常使用。
-          </p>
+    <div class="faq-list">
+      <details class="faq-item" id="faq-install">
+        <summary>下载后提示"已损坏"或"无法验证开发者"怎么办？<svg class="faq-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></summary>
+        <p>当前为公开测试版，<strong>暂未进行 Apple 代码签名 / 公证</strong>。因此 macOS 会拦截首次打开，提示 <strong>"KnowMe 已损坏，无法打开"</strong> 或 <strong>"无法验证开发者"</strong>。</p>
+        <p class="install-callout">这是 macOS 对未签名 App 的标准拦截，<strong>并非 App 真的损坏，也不是病毒</strong>。按下面方法解除即可正常使用。</p>
+        <h5>macOS（Apple 芯片与 Intel 通用）</h5>
+        <ol>
+          <li>双击 dmg，把 <strong>KnowMe 拖入"应用程序"文件夹</strong>。</li>
+          <li>打开"终端"（聚焦搜索 <code>终端</code> 或 <code>Terminal</code>），粘贴下面这行后回车：<code class="install-cmd">xattr -cr /Applications/KnowMe.app</code></li>
+          <li>然后到"应用程序"里<strong>双击 KnowMe</strong> 即可正常打开。</li>
+        </ol>
+        <p class="install-note">如果弹窗只给了"取消 / 移到废纸篓"，请点<strong>"取消"</strong>（不要点"移到废纸篓"，那会删掉 App），再执行上面第 2 步。<code>xattr -cr</code> 清除系统给下载文件打的"隔离"标记，不修改 App 本身，安全无副作用。</p>
+        <h5>Windows</h5>
+        <ol>
+          <li>双击 <code id="install-win-filename">KnowMe-Setup-0.10.2.exe</code> 安装。</li>
+          <li>若出现蓝色 <strong>"Windows 已保护你的电脑"（SmartScreen）</strong> 提示，点击 <strong>"更多信息" → "仍要运行"</strong>。</li>
+        </ol>
+      </details>
 
-          <h5>macOS（Apple 芯片与 Intel 通用）</h5>
-          <ol>
-            <li>双击 dmg，把 <strong>KnowMe 拖入"应用程序"文件夹</strong>。</li>
-            <li>
-              打开"终端"（聚焦搜索 <code>终端</code> 或 <code>Terminal</code>），粘贴下面这行后回车：
-              <code class="install-cmd">xattr -cr /Applications/KnowMe.app</code>
-            </li>
-            <li>然后到"应用程序"里<strong>双击 KnowMe</strong> 即可正常打开。</li>
-          </ol>
-          <p class="install-note">
-            如果弹窗只给了"取消 / 移到废纸篓"，请点<strong>"取消"</strong>（不要点"移到废纸篓"，那会删掉 App），再执行上面第 2 步。
-            <code>xattr -cr</code> 清除系统给下载文件打的"隔离"标记，不修改 App 本身，安全无副作用。
-          </p>
+      <details class="faq-item">
+        <summary>知我和 Obsidian / Notion / Logseq 的区别？<svg class="faq-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></summary>
+        <p>Obsidian / Logseq 把"本地 markdown"做完了，但 AI 时代缺位。Notion 是云端协作工具，本地优先用户不喜欢。知我的差异化在 <strong>MCP 原生 + LLM 编译 Wiki + 多通道发布 + agent fleet</strong>。5 大独占位详见上方特性区。</p>
+      </details>
 
-          <h5>Windows</h5>
-          <ol>
-            <li>双击 <code id="install-win-filename">KnowMe-Setup-0.10.2.exe</code> 安装。</li>
-            <li>若出现蓝色 <strong>"Windows 已保护你的电脑"（SmartScreen）</strong> 提示，点击 <strong>"更多信息" → "仍要运行"</strong>。</li>
-          </ol>
-        </details>
+      <details class="faq-item">
+        <summary>数据真的存在我电脑上吗？联网做什么？<svg class="faq-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></summary>
+        <p>是的。所有笔记永远在你本地的 SQLite。联网仅在以下场景：(1) 调用 LLM 写 Wiki 编译（你的 OpenAI / Anthropic / 智谱 key）(2) 检查更新 (3) 未来可选的云同步（端到端加密，我们看不到）。</p>
+      </details>
 
-        <details class="faq-item">
-          <summary>知我和 Obsidian / Notion / Logseq 的区别？</summary>
-          <p>
-            Obsidian / Logseq 把"本地 markdown"做完了，但 AI 时代缺位。
-            Notion 是云端协作工具，本地优先用户不喜欢。
-            知我的差异化在 <strong>MCP 原生 + LLM 编译 Wiki + 多通道发布 + agent fleet</strong>。
-            5 大独占位详见上方 features 区。
-          </p>
-        </details>
+      <details class="faq-item">
+        <summary>用哪个模型？会不会拿我的数据去训练？<svg class="faq-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></summary>
+        <p>模型由你自己配置 —— 可以接入你自己的 OpenAI / Anthropic / Gemini / Ollama / LM Studio key，也可以用本地模型完全离线。<strong>知我没有任何自己的模型，也就谈不上拿你的数据训练</strong>；调用哪个模型、发送什么内容，都由你掌控。</p>
+      </details>
 
-        <details class="faq-item">
-          <summary>数据真的存在我电脑上吗？联网做什么？</summary>
-          <p>
-            是的。所有笔记永远在你本地的 SQLite。联网仅在以下场景：
-            (1) 调用 LLM 写 Wiki 编译（你的 OpenAI / Anthropic / 智谱 key）
-            (2) 检查更新
-            (3) 未来可选的云同步（端到端加密，我们看不到）。
-          </p>
-        </details>
+      <details class="faq-item">
+        <summary>公测期具体是什么时间？未来会怎样？<svg class="faq-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></summary>
+        <p>公测期：<strong>2026-06-06 → 2027-07-06</strong>（共 13 个月），所有功能完全免费。<strong>2027-07-07</strong> Pro 订阅正式上线，但 <strong>本地核心功能继续保留在免费档</strong>。公测期开放的高级/预览能力可能进入 Pro，Pro 主要包含自定义 Wiki Types、云同步、托管 AI、云端索引、远程 API、后台 Agent Fleet、高级导出等。</p>
+      </details>
 
-        <details class="faq-item">
-          <summary>公测期具体是什么时间？未来会怎样？</summary>
-          <p>
-            公测期：<strong>2026-06-06 → 2027-07-06</strong>（共 13 个月），所有功能完全免费。
-            <strong>2027-07-07</strong> Pro 订阅正式上线，但 <strong>本地核心功能继续保留在免费档</strong>。
-            公测期开放的高级/预览能力可能进入 Pro，Pro 主要包含自定义 Wiki Types、云同步、托管 AI、云端索引、远程 API、后台 Agent Fleet、高级导出等。
-          </p>
-        </details>
+      <details class="faq-item" id="faq-early-bird">
+        <summary>早鸟 Pro 三年版和 Pro 订阅有什么区别？<svg class="faq-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></summary>
+        <div>
+          <p><strong>早鸟三年版</strong>：一次性付费（价格待公布），<strong>未来启动后享 3 年本地 Pro 能力</strong>，这 3 年所有重大版本免费升级，<strong>早鸟价永远锁定</strong>。3 年后与普通用户一致（本地功能始终免费，Pro 新功能按需订阅）。<br><strong>Pro 订阅</strong>：2027-07-07 正式上线时公布具体价格（年付 ¥?），含云服务持续运维。</p>
+          <p style="margin-top: 0.65rem;"><strong>关于云服务</strong>：云同步、云端 AI（Dream-cycle）等有持续服务器/算力成本，<strong>不包含在早鸟三年版内</strong>，对所有用户（含早鸟）都按订阅另付。</p>
+          <p style="margin-top: 0.65rem;"><strong>为什么早鸟划算</strong>：一次付费锁定 3 年本地 Pro 能力，比逐年订阅省心省钱，且早鸟价永远锁定。<strong>仅前 100 名独享</strong>，售完即止。</p>
+          <p style="margin-top: 0.65rem;"><strong>现在怎么购买？</strong>正式早鸟购买通道准备中。点 <a href="mailto:contact@useknowme.com?subject=KnowMe%20%E6%97%A9%E9%B8%9F%20Pro%20%E4%B8%89%E5%B9%B4%E7%89%88%20%E9%A2%84%E8%AE%A2&amp;body=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E6%88%91%E6%83%B3%E9%A2%84%E8%AE%A2%E7%9F%A5%E6%88%91%20Pro%20%E4%B8%89%E5%B9%B4%E7%89%88%EF%BC%88%E6%97%A9%E9%B8%9F%E3%80%81%E5%89%8D%20100%20%E5%90%8D%EF%BC%89%E3%80%82">邮件预订</a> 锁定一个早鸟名额（按邮件时间排序）；通道开通后我会发付款链接给你完成支付。</p>
+        </div>
+      </details>
 
-        <details class="faq-item" id="faq-early-bird">
-          <summary>早鸟 Pro 三年版和 Pro 订阅有什么区别？</summary>
-          <p>
-            <strong>早鸟三年版</strong>：一次性付费（价格待公布），<strong>未来启动后享 3 年本地 Pro 能力</strong>，
-            这 3 年所有重大版本免费升级，<strong>早鸟价永远锁定</strong>。
-            3 年后与普通用户一致（本地功能始终免费，Pro 新功能按需订阅）。<br>
-            <strong>Pro 订阅</strong>：2027-07-07 正式上线时公布具体价格（年付 ¥?），
-            含云服务持续运维。
-          </p>
-          <p style="margin-top: 0.65rem;">
-            <strong>关于云服务</strong>：云同步、云端 AI（Dream-cycle）等有持续服务器/算力成本，
-            <strong>不包含在早鸟三年版内</strong>，对所有用户（含早鸟）都按订阅另付。
-          </p>
-          <p style="margin-top: 0.65rem;">
-            <strong>为什么早鸟划算</strong>：一次付费锁定 3 年本地 Pro 能力，
-            比逐年订阅省心省钱，且早鸟价永远锁定。
-            <strong>仅前 100 名独享</strong>，售完即止。
-          </p>
-          <p style="margin-top: 0.65rem;">
-            <strong>现在怎么购买？</strong>
-            正式早鸟购买通道准备中。
-            点 <a href="mailto:contact@useknowme.com?subject=KnowMe%20%E6%97%A9%E9%B8%9F%20Pro%20%E4%B8%89%E5%B9%B4%E7%89%88%20%E9%A2%84%E8%AE%A2&amp;body=%E4%BD%A0%E5%A5%BD%EF%BC%8C%E6%88%91%E6%83%B3%E9%A2%84%E8%AE%A2%E7%9F%A5%E6%88%91%20Pro%20%E4%B8%89%E5%B9%B4%E7%89%88%EF%BC%88%E6%97%A9%E9%B8%9F%E3%80%81%E5%89%8D%20100%20%E5%90%8D%EF%BC%89%E3%80%82" style="color: var(--primary-dark); font-weight: 600;">📧 邮件预订</a>
-            锁定一个早鸟名额（按邮件时间排序）；
-            通道开通后我会发付款链接给你完成支付。
-          </p>
-        </details>
+      <details class="faq-item">
+        <summary>赞助和 Pro 订阅是同一回事吗？<svg class="faq-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></summary>
+        <p><strong>不是</strong>。赞助是单向感谢 —— 你给开发者钱，<strong>不解锁任何功能</strong>。Pro 订阅是商业销售 —— 你付钱获得云服务（同步、Agent Fleet 等）。公测期内还没有 Pro，所以现在只能赞助（自愿，无对价）。</p>
+      </details>
 
-        <details class="faq-item">
-          <summary>赞助和 Pro 订阅是同一回事吗？</summary>
-          <p>
-            <strong>不是</strong>。赞助是单向感谢 —— 你给开发者钱，<strong>不解锁任何功能</strong>。
-            Pro 订阅是商业销售 —— 你付钱获得云服务（同步、Agent Fleet 等）。
-            公测期内还没有 Pro，所以现在只能赞助（自愿，无对价）。
-          </p>
-        </details>
+      <details class="faq-item">
+        <summary>我可以从 Obsidian 迁移过来吗？<svg class="faq-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></summary>
+        <p>可以。知我支持<strong>多挂载目录</strong>，可以直接把 Obsidian 仓库挂载进来作为外部目录，零迁移。自带 wikilink 兼容渲染。详见 <a href="https://docs.useknowme.com/core/knowledge-engine#外部挂载-迁移与外部目录" target="_blank" rel="noreferrer noopener">使用文档 § 外部挂载</a>。</p>
+      </details>
 
-        <details class="faq-item">
-          <summary>我可以从 Obsidian 迁移过来吗？</summary>
-          <p>
-            可以。知我支持<strong>多挂载目录</strong>，
-            可以直接把 Obsidian 仓库挂载进来作为外部目录，零迁移。
-            自带 wikilink 兼容渲染。详见
-            <a href="https://docs.useknowme.com/core/knowledge-engine#外部挂载-迁移与外部目录" style="color: var(--primary-dark);">使用文档 § 外部挂载</a>。
-          </p>
-        </details>
+      <details class="faq-item">
+        <summary>如何申请商业 License？<svg class="faq-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></summary>
+        <p>个人 / 学习用途：永久免费。<br>商业用途（公司 ≥ 2 人）：按席位年付，价格待公布，公测期内全部免费。<br>如有商业合作或定制需求，欢迎联系：<br><strong>邮箱</strong>：<a href="mailto:license@useknowme.com">license@useknowme.com</a><br><strong>微信</strong>：<code>pursue_123</code></p>
+      </details>
+    </div>
+  </div>
+</section>
 
-        <details class="faq-item">
-          <summary>如何申请商业 License？</summary>
-          <p>
-            个人 / 学习用途：永久免费。<br>
-            商业用途（公司 ≥ 2 人）：按席位年付，价格待公布，公测期内全部免费。<br>
-            如有商业合作或定制需求，欢迎联系：<br>
-            <strong>📧 邮箱</strong>: <a href="mailto:license@useknowme.com" style="color: var(--primary-dark);">license@useknowme.com</a><br>
-            <strong>💬 微信</strong>: <code style="background: var(--bg-soft); padding: 2px 6px; border-radius: 4px;">pursue_123</code>
-          </p>
-        </details>
-
+<!-- ========== Footer ========== -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h4><img class="brand-logo" src="assets/icon-256.png" alt="知我 KnowMe Logo" width="24" height="24">知我 KnowMe</h4>
+        <p>本地优先的 AI 第二大脑。<br>写过的、想过的、看过的，都还在。</p>
+        <p class="footer-poem">知我者，谓我心忧；不知我者，谓我何求。</p>
+        <p style="margin-top: 0.8rem;">© 2026 KnowMe · 独立开发，用心打磨</p>
+      </div>
+      <div class="footer-col">
+        <h5>产品</h5>
+        <ul>
+          <li><a href="#workflow">工作流</a></li>
+          <li><a href="#features">产品能力</a></li>
+          <li><a href="#pricing">定价</a></li>
+          <li><a href="#download">下载</a></li>
+          <li><a href="#sponsor">支持开发者</a></li>
+          <li><a href="https://docs.useknowme.com" target="_blank" rel="noreferrer noopener">使用文档</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>开发者</h5>
+        <ul>
+          <li><a href="https://github.com/Timeflys2018/KnowMe" target="_blank" rel="noreferrer noopener">GitHub</a></li>
+          <li><a href="https://github.com/Timeflys2018/KnowMe/releases" target="_blank" rel="noreferrer noopener">GitHub Releases</a></li>
+          <li><a href="https://docs.useknowme.com/integrate/mcp" target="_blank" rel="noreferrer noopener">MCP 集成</a></li>
+          <li><a href="https://github.com/Timeflys2018/KnowMe/issues" target="_blank" rel="noreferrer noopener">报告 Bug · 路线图</a></li>
+          <li><a href="https://docs.useknowme.com/reference/faq" target="_blank" rel="noreferrer noopener">FAQ · 排错</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>合规</h5>
+        <ul>
+          <li><a href="/legal/privacy">隐私政策</a></li>
+          <li><a href="/legal/terms">服务条款</a></li>
+          <li><a href="/legal/eula">EULA</a></li>
+          <li><a href="mailto:contact@useknowme.com">联系我们</a></li>
+        </ul>
       </div>
     </div>
-  </section>
-
-  <!-- ========== Footer ========== -->
-  <footer>
-    <div class="container">
-      <div class="footer-content">
-        <div class="footer-brand">
-          <h4>
-            <img src="assets/favicon.png" alt="KnowMe" width="20" height="20" style="vertical-align: middle; border-radius: 4px; margin-right: 4px;">
-            知我 KnowMe
-          </h4>
-          <p>
-            本地优先的 AI 第二大脑。<br>
-            写过的、想过的、看过的，都还在。<br><br>
-            © 2026 KnowMe · Made with ☕️ in 🇨🇳
-          </p>
-        </div>
-
-        <div class="footer-col">
-          <h5>产品</h5>
-          <ul>
-            <li><a href="#features">特性</a></li>
-            <li><a href="#pricing">定价</a></li>
-            <li><a href="#download">下载</a></li>
-            <li><a href="https://docs.useknowme.com">使用文档</a></li>
-          </ul>
-        </div>
-
-        <div class="footer-col">
-          <h5>开发者</h5>
-          <ul>
-            <li><a href="https://github.com/Timeflys2018/KnowMe">GitHub</a></li>
-            <li><a href="https://docs.useknowme.com/integrate/mcp">MCP 集成</a></li>
-            <li><a href="https://github.com/Timeflys2018/KnowMe/issues">报告 Bug</a></li>
-            <li><a href="https://docs.useknowme.com/reference/faq">FAQ · 排错</a></li>
-          </ul>
-        </div>
-
-        <div class="footer-col">
-          <h5>合规</h5>
-          <ul>
-            <li><a href="/legal/privacy">隐私政策</a></li>
-            <li><a href="/legal/terms">服务条款</a></li>
-            <li><a href="/legal/eula">EULA</a></li>
-            <li><a href="mailto:contact@useknowme.com">联系我们</a></li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="footer-bottom">
-        <span>公测期 · 2026-06-06 → 2027-07-06 完全免费</span>
-        <span>useknowme.com</span>
-      </div>
+    <div class="footer-bottom">
+      <span>公测期 · 2026-06-06 → 2027-07-06 完全免费</span>
+      <span>useknowme.com</span>
     </div>
-  </footer>
+  </div>
+</footer>
 
-  <script>
-    (function () {
-      'use strict';
+<script>
+(function () {
+  'use strict';
 
-      // 发版配置：发新版时只改 VERSION + RELEASE_DATE 两个常量即可。
-      // 文件名内嵌 VERSION；GitHub 源走 /latest/ 自动；R2 需以新文件名重传。
-      // 页面上所有写版本号的文案（标题/按钮/价格/安装说明/邮件）都在
-      // applyVersionStrings() 里由 VERSION 统一注入，HTML 里的字面值仅作 fallback。
-      var RELEASED = true;
-      var VERSION = '0.10.2';
-      var RELEASE_DATE = '2026-08-07';
-      var REPO = 'Timeflys2018/KnowMe';
-      var FILES = {
-        'mac-arm':   'KnowMe-' + VERSION + '-arm64.dmg',
-        'mac-intel': 'KnowMe-' + VERSION + '.dmg',
-        'win':       'KnowMe-Setup-' + VERSION + '.exe'
-      };
+  // 发版配置：发新版时只改 VERSION + RELEASE_DATE 两个常量即可。
+  // 文件名内嵌 VERSION；GitHub 源走 /latest/ 自动；R2 需以新文件名重传。
+  // 页面上所有写版本号的文案（标题/按钮/价格/安装说明/邮件/摘要带）都在
+  // applyVersionStrings() 里由 VERSION 统一注入，HTML 里的字面值仅作 fallback。
+  var RELEASED = true;
+  var VERSION = '0.10.2';
+  var RELEASE_DATE = '2026-08-07';
+  var REPO = 'Timeflys2018/KnowMe';
+  var FILES = {
+    'mac-arm':   'KnowMe-' + VERSION + '-arm64.dmg',
+    'mac-intel': 'KnowMe-' + VERSION + '.dmg',
+    'win':       'KnowMe-Setup-' + VERSION + '.exe'
+  };
 
-      // 下载源，按偏好排序（R2 自有源最优先）。三种 URL 形态：
-      //   type:'direct-file' (R2) —— base + 文件名，直接命中文件（不经 github）。
-      //   base:'' (GitHub 直连)    —— github releases/latest 直链。
-      //   其余（公益代理）          —— base + 完整 github 直链（前缀代理）。
-      // R2 是我们自有的 Cloudflare 自定义域，稳定；github 代理为第三方公益、尽力而为。
-      var SOURCES = [
-        { id: 'r2',          label: '国内加速 · 官方源',   base: 'https://download.useknowme.com/', type: 'direct-file' },
-        { id: 'direct',      label: 'GitHub 直连',        base: '' },
-        { id: 'gh-proxy',    label: '镜像 · gh-proxy',    base: 'https://gh-proxy.com/' },
-        { id: 'v6',          label: '镜像 · v6.gh-proxy', base: 'https://v6.gh-proxy.org/' },
-        { id: 'ghproxy-net', label: '镜像 · ghproxy.net', base: 'https://ghproxy.net/' },
-        { id: 'ghfast',      label: '镜像 · ghfast.top',  base: 'https://ghfast.top/' }
-      ];
-      // 默认源直接用 R2（自有 Cloudflare 稳定源，国内外都快）；无需自动竞速探测，
-      // 用户可在下方手动切到 GitHub 直连或第三方镜像。
-      var DEFAULT_SOURCE = SOURCES[0]; // r2
-      // 文件名内嵌版本号：发新版时 R2 需以新名重传，且 github 走 /latest/ 自动。
-      // 两边都只由单个 VERSION 常量驱动，发版改 VERSION 一处即可。
+  // 下载源，按偏好排序（R2 自有源最优先）。三种 URL 形态：
+  //   type:'direct-file' (R2) —— base + 文件名，直接命中文件（不经 github）。
+  //   base:'' (GitHub 直连)    —— github releases/latest 直链。
+  //   其余（公益代理）          —— base + 完整 github 直链（前缀代理）。
+  var SOURCES = [
+    { id: 'r2',          label: '国内加速 · 官方源',   base: 'https://download.useknowme.com/', type: 'direct-file' },
+    { id: 'direct',      label: 'GitHub 直连',        base: '' },
+    { id: 'gh-proxy',    label: '镜像 · gh-proxy',    base: 'https://gh-proxy.com/' },
+    { id: 'v6',          label: '镜像 · v6.gh-proxy', base: 'https://v6.gh-proxy.org/' },
+    { id: 'ghproxy-net', label: '镜像 · ghproxy.net', base: 'https://ghproxy.net/' },
+    { id: 'ghfast',      label: '镜像 · ghfast.top',  base: 'https://ghfast.top/' }
+  ];
+  var DEFAULT_SOURCE = SOURCES[0]; // r2
 
-      // On new release: bump VERSION (filenames embed it). Path uses /latest/ so the tag is automatic.
-      function githubLatestUrl(platform) {
-        return 'https://github.com/' + REPO + '/releases/latest/download/' + FILES[platform];
-      }
-      function ghUrl(platform, source) {
-        var src = source || DEFAULT_SOURCE;
-        // R2：自有域直接服务文件，base + 文件名（不是 github 前缀代理）。
-        if (src.type === 'direct-file') return src.base + FILES[platform];
-        // GitHub 直连 (base 空) 或公益代理 (base + 完整 github 直链)。
-        return (src.base || '') + githubLatestUrl(platform);
-      }
+  function githubLatestUrl(platform) {
+    return 'https://github.com/' + REPO + '/releases/latest/download/' + FILES[platform];
+  }
+  function ghUrl(platform, source) {
+    var src = source || DEFAULT_SOURCE;
+    if (src.type === 'direct-file') return src.base + FILES[platform];
+    return (src.base || '') + githubLatestUrl(platform);
+  }
 
-      // 同步返回粗判平台；Mac 架构默认 arm64，再由 refineMacArch() 异步校正。
-      function detectPlatform() {
-        var ua = navigator.userAgent;
-        var p = navigator.platform || '';
-        if (/Win/i.test(p) || /Windows/i.test(ua)) return 'win';
-        if (/Mac/i.test(p) || /Mac/i.test(ua)) return 'mac-arm';
-        return 'mac-arm';
-      }
+  // 同步返回粗判平台；Mac 架构默认 arm64，再由 refineMacArch() 异步校正。
+  function detectPlatform() {
+    var ua = navigator.userAgent;
+    var p = navigator.platform || '';
+    if (/Win/i.test(p) || /Windows/i.test(ua)) return 'win';
+    if (/Mac/i.test(p) || /Mac/i.test(ua)) return 'mac-arm';
+    return 'mac-arm';
+  }
 
-      // Chromium 上用 high-entropy UA 探测 CPU 架构，区分 Intel / Apple Silicon。
-      // resolve 'mac-intel' 或 'mac-arm'；不可用时回退 null（保持默认 mac-arm）。
-      function refineMacArch() {
-        if (navigator.userAgentData && navigator.userAgentData.getHighEntropyValues) {
-          return navigator.userAgentData.getHighEntropyValues(['architecture'])
-            .then(function (hv) {
-              var arch = (hv && hv.architecture) || '';
-              if (/arm/i.test(arch)) return 'mac-arm';
-              if (/x86|x64/i.test(arch)) return 'mac-intel';
-              return null;
-            })
-            .catch(function () { return null; });
-        }
-        return Promise.resolve(null);
-      }
+  // Chromium 上用 high-entropy UA 探测 CPU 架构，区分 Intel / Apple Silicon。
+  function refineMacArch() {
+    if (navigator.userAgentData && navigator.userAgentData.getHighEntropyValues) {
+      return navigator.userAgentData.getHighEntropyValues(['architecture'])
+        .then(function (hv) {
+          var arch = (hv && hv.architecture) || '';
+          if (/arm/i.test(arch)) return 'mac-arm';
+          if (/x86|x64/i.test(arch)) return 'mac-intel';
+          return null;
+        })
+        .catch(function () { return null; });
+    }
+    return Promise.resolve(null);
+  }
 
-      var preEl = document.getElementById('download-pre');
-      var liveEl = document.getElementById('download-live');
-      var prepGrid = document.getElementById('download-prep-grid');
-      var titleEl = document.getElementById('download-title');
-      var introEl = document.getElementById('download-intro');
-      if (!preEl || !liveEl) return;
+  var preEl = document.getElementById('download-pre');
+  var liveEl = document.getElementById('download-live');
+  var prepGrid = document.getElementById('download-prep-grid');
+  var titleEl = document.getElementById('download-title');
+  var introEl = document.getElementById('download-intro');
+  if (!preEl || !liveEl) return;
 
-      // 页面上所有写版本号的文案统一由 VERSION/RELEASE_DATE 注入（含预发布态才可见的
-      // download-pre-version 与邮件卡片），发版只改这两个常量。HTML 字面值仅作 fallback。
-      // 无条件执行：放在 RELEASED 早退之前，确保预发布态的可见文案也被覆盖。
-      (function applyVersionStrings() {
-        var hero = document.getElementById('hero-download');
-        if (hero) hero.textContent = '↓ 下载 ' + VERSION;
-        if (titleEl) titleEl.textContent = '立即下载 知我 KnowMe ' + VERSION + ' 公测版';
-        var preVer = document.getElementById('download-pre-version');
-        if (preVer) preVer.textContent = VERSION + ' 已发布';
-        var pricingPeriod = document.getElementById('pricing-period-version');
-        if (pricingPeriod) pricingPeriod.textContent = '现可用 · ' + VERSION + '（' + RELEASE_DATE + '）';
-        var pricingCta = document.getElementById('pricing-cta-version');
-        if (pricingCta) pricingCta.textContent = '下载 ' + VERSION + ' →';
-        var winFile = document.getElementById('install-win-filename');
-        if (winFile) winFile.textContent = 'KnowMe-Setup-' + VERSION + '.exe';
-        // 邮件卡片：href 的 subject/body 与提示文案都嵌版本号，统一重建。
-        var mail = document.getElementById('download-prep-mail');
-        if (mail) {
-          var subject = 'KnowMe ' + VERSION + ' 上线通知';
-          var body = '你好，想成为知我 KnowMe ' + VERSION + ' 公测版的第一批用户，请在上线后通知我。';
-          mail.href = 'mailto:timeflying2026@163.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-        }
-        var mailText = document.getElementById('download-prep-mail-text');
-        if (mailText) mailText.innerHTML = '给开发者发一封"我想要 ' + VERSION + '"，上线当天回信。<strong>最直接</strong>，也可用于登记早鸟购买意向。';
-      })();
+  // 页面上所有写版本号的文案统一由 VERSION/RELEASE_DATE 注入。HTML 字面值仅作 fallback。
+  (function applyVersionStrings() {
+    var heroDownload = document.getElementById('hero-download');
+    if (heroDownload) {
+      var heroLabel = document.getElementById('hero-download-label') ||
+        heroDownload.querySelector('.hero-download-label');
+      if (heroLabel) heroLabel.textContent = '下载 ' + VERSION;
+    }
+    if (titleEl) titleEl.textContent = '立即下载 知我 KnowMe ' + VERSION + ' 公测版';
+    var stripTitle = document.getElementById('download-strip-title');
+    if (stripTitle) stripTitle.textContent = '知我 KnowMe ' + VERSION + ' 公测版';
+    var preVer = document.getElementById('download-pre-version');
+    if (preVer) preVer.textContent = VERSION + ' 已发布';
+    var pricingPeriod = document.getElementById('pricing-period-version');
+    if (pricingPeriod) pricingPeriod.textContent = '现可用 · ' + VERSION + '（' + RELEASE_DATE + '）';
+    var pricingCta = document.getElementById('pricing-cta-version');
+    if (pricingCta) pricingCta.textContent = '下载 ' + VERSION + ' →';
+    var winFile = document.getElementById('install-win-filename');
+    if (winFile) winFile.textContent = 'KnowMe-Setup-' + VERSION + '.exe';
+    var mail = document.getElementById('download-prep-mail');
+    if (mail) {
+      var subject = 'KnowMe ' + VERSION + ' 上线通知';
+      var body = '你好，想成为知我 KnowMe ' + VERSION + ' 公测版的第一批用户，请在上线后通知我。';
+      mail.href = 'mailto:timeflying2026@163.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    }
+    var mailText = document.getElementById('download-prep-mail-text');
+    if (mailText) mailText.textContent = '给开发者发一封"我想要 ' + VERSION + '"，上线当天回信。最直接，也可用于登记早鸟购买意向。';
+  })();
 
-      if (!RELEASED) {
-        return;
-      }
+  if (!RELEASED) return;
 
-      preEl.hidden = true;
-      liveEl.hidden = false;
-      if (prepGrid) prepGrid.hidden = true;
-      var prepMeta = document.querySelector('.download-prep-meta');
-      if (prepMeta) prepMeta.hidden = true;
-      if (introEl) introEl.hidden = true;
+  preEl.hidden = true;
+  liveEl.hidden = false;
+  if (prepGrid) prepGrid.hidden = true;
+  var prepMeta = document.querySelector('.download-prep-meta');
+  if (prepMeta) prepMeta.hidden = true;
+  if (introEl) introEl.hidden = true;
 
-      var labels = {
-        'mac-arm':   '下载 macOS (Apple Silicon)',
-        'mac-intel': '下载 macOS (Intel)',
-        'win':       '下载 Windows'
-      };
+  var labels = {
+    'mac-arm':   '下载 macOS (Apple Silicon)',
+    'mac-intel': '下载 macOS (Intel)',
+    'win':       '下载 Windows'
+  };
 
-      var primaryBtn = document.getElementById('download-primary');
-      var primaryText = primaryBtn.querySelector('.download-primary-text');
-      var primaryMeta = document.getElementById('download-primary-meta');
+  var primaryBtn = document.getElementById('download-primary');
+  var primaryText = primaryBtn.querySelector('.download-primary-text');
+  var primaryMeta = document.getElementById('download-primary-meta');
+  var cards = document.querySelectorAll('.download-platform-card');
 
-      var cards = document.querySelectorAll('.download-platform-card');
+  // 架构决定文件名(platform)，下载源决定前缀(activeSource)，二者正交。
+  var platform = detectPlatform();
+  var activeSource = DEFAULT_SOURCE;
 
-      // 架构决定文件名(platform)，下载源决定前缀(activeSource)，二者正交。
-      var platform = detectPlatform();
-      var activeSource = DEFAULT_SOURCE;
+  function applyLinks() {
+    primaryBtn.href = ghUrl(platform, activeSource);
+    primaryText.textContent = labels[platform] || labels['mac-arm'];
+    primaryMeta.textContent = VERSION;
+    cards.forEach(function (card) {
+      var os = card.getAttribute('data-os');
+      if (os && FILES[os]) card.href = ghUrl(os, activeSource);
+    });
+  }
 
-      // 用当前 platform + activeSource 刷新主按钮与所有平台卡片的 href。
-      function applyLinks() {
-        primaryBtn.href = ghUrl(platform, activeSource);
-        primaryText.textContent = labels[platform] || labels['mac-arm'];
-        primaryMeta.textContent = VERSION;
-        cards.forEach(function (card) {
-          var os = card.getAttribute('data-os');
-          if (os && FILES[os]) card.href = ghUrl(os, activeSource);
-        });
-      }
+  applyLinks();
 
-      // 立即用默认 R2 源渲染，主按钮/平台卡片加载即有有效下载链接。
-      applyLinks();
-
-      // Mac 设备异步校正架构；保留当前已选的源。
-      if (platform === 'mac-arm') {
-        refineMacArch().then(function (refined) {
-          if (refined && refined !== platform) {
-            platform = refined;
-            applyLinks();
-          }
-        });
-      }
-
-      // ---- 手动源切换器 ----
-      var sourceWrap = document.getElementById('download-source');
-      var sourceRow = document.getElementById('download-source-row');
-      var pillById = {};
-      function setActiveSource(src) {
-        activeSource = src;
+  if (platform === 'mac-arm') {
+    refineMacArch().then(function (refined) {
+      if (refined && refined !== platform) {
+        platform = refined;
         applyLinks();
-        SOURCES.forEach(function (s) {
-          var pill = pillById[s.id];
-          if (pill) pill.setAttribute('aria-pressed', s.id === src.id ? 'true' : 'false');
-        });
       }
-      if (sourceWrap && sourceRow) {
-        SOURCES.forEach(function (s) {
-          var pill = document.createElement('button');
-          pill.type = 'button';
-          pill.className = 'download-source-pill';
-          pill.textContent = s.label;
-          pill.setAttribute('aria-pressed', s.id === activeSource.id ? 'true' : 'false');
-          pill.addEventListener('click', function () { setActiveSource(s); });
-          pillById[s.id] = pill;
-          sourceRow.appendChild(pill);
-        });
-        sourceWrap.hidden = false;
-      }
-    })();
+    });
+  }
 
-    (function () {
-      'use strict';
+  // ---- 手动源切换器 ----
+  var sourceWrap = document.getElementById('download-source');
+  var sourceRow = document.getElementById('download-source-row');
+  var pillById = {};
+  function setActiveSource(src) {
+    activeSource = src;
+    applyLinks();
+    SOURCES.forEach(function (s) {
+      var pill = pillById[s.id];
+      if (pill) pill.setAttribute('aria-pressed', s.id === src.id ? 'true' : 'false');
+    });
+  }
+  if (sourceWrap && sourceRow) {
+    SOURCES.forEach(function (s) {
+      var pill = document.createElement('button');
+      pill.type = 'button';
+      pill.className = 'download-source-pill';
+      pill.textContent = s.label;
+      pill.setAttribute('aria-pressed', s.id === activeSource.id ? 'true' : 'false');
+      pill.addEventListener('click', function () { setActiveSource(s); });
+      pillById[s.id] = pill;
+      sourceRow.appendChild(pill);
+    });
+    sourceWrap.hidden = false;
+  }
+})();
 
-      function expandFaqAnchor() {
-        var hash = window.location.hash;
-        if (!hash || hash.indexOf('#faq-') !== 0) return;
-        var target = document.querySelector(hash);
-        if (target && target.tagName === 'DETAILS') {
-          target.open = true;
-          target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-      }
+(function () {
+  'use strict';
 
-      window.addEventListener('hashchange', expandFaqAnchor);
-      if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', expandFaqAnchor);
+  // 三态 demo：WAI-ARIA tablist 模式（点击 + 方向键/Home/End + roving tabindex）
+  var demoTabs = Array.prototype.slice.call(document.querySelectorAll('[data-demo-tab]'));
+  var demoPanels = Array.prototype.slice.call(document.querySelectorAll('[data-demo-panel]'));
+
+  function activateDemo(id) {
+    if (!id) return;
+    var matched = demoTabs.some(function (tab) { return tab.getAttribute('data-demo-tab') === id; });
+    if (!matched) return;
+    demoTabs.forEach(function (tab) {
+      var selected = tab.getAttribute('data-demo-tab') === id;
+      tab.setAttribute('aria-selected', selected ? 'true' : 'false');
+      tab.tabIndex = selected ? 0 : -1;
+    });
+    demoPanels.forEach(function (panel) {
+      var active = panel.getAttribute('data-demo-panel') === id;
+      panel.classList.remove('is-active');
+      if (active) {
+        panel.hidden = false;
+        void panel.offsetWidth;
+        panel.classList.add('is-active');
       } else {
-        expandFaqAnchor();
+        panel.hidden = true;
       }
-    })();
-  </script>
+    });
+  }
+
+  function focusTabAt(index) {
+    var count = demoTabs.length;
+    if (count === 0) return;
+    var next = ((index % count) + count) % count;
+    var tab = demoTabs[next];
+    activateDemo(tab.getAttribute('data-demo-tab'));
+    tab.focus();
+  }
+
+  demoTabs.forEach(function (tab, index) {
+    tab.addEventListener('click', function () { activateDemo(tab.getAttribute('data-demo-tab')); });
+    tab.addEventListener('keydown', function (event) {
+      switch (event.key) {
+        case 'ArrowLeft':
+        case 'ArrowUp':
+          event.preventDefault();
+          focusTabAt(index - 1);
+          break;
+        case 'ArrowRight':
+        case 'ArrowDown':
+          event.preventDefault();
+          focusTabAt(index + 1);
+          break;
+        case 'Home':
+          event.preventDefault();
+          focusTabAt(0);
+          break;
+        case 'End':
+          event.preventDefault();
+          focusTabAt(demoTabs.length - 1);
+          break;
+        default:
+          break;
+      }
+    });
+  });
+
+  // 移动端抽屉导航
+  var navToggle = document.querySelector('[data-nav-toggle]');
+  var mobileNav = document.querySelector('[data-mobile-nav]');
+  function setMobileNav(open) {
+    if (!navToggle || !mobileNav) return;
+    navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    mobileNav.hidden = !open;
+  }
+  if (navToggle && mobileNav) {
+    navToggle.addEventListener('click', function () {
+      setMobileNav(navToggle.getAttribute('aria-expanded') !== 'true');
+    });
+    mobileNav.addEventListener('click', function (event) {
+      var anchor = event.target && event.target.closest ? event.target.closest('a') : null;
+      if (anchor && mobileNav.contains(anchor)) setMobileNav(false);
+    });
+  }
+
+  // 下载带折叠：.is-open 为准；任何指向 #download 的锚点（含摘要带、hero/定价 CTA）都会展开。
+  var downloadSection = document.getElementById('download');
+  if (downloadSection) {
+    function expandDownload() { downloadSection.classList.add('is-open'); }
+    if (location.hash === '#download') expandDownload();
+    window.addEventListener('hashchange', function () {
+      if (location.hash === '#download') expandDownload();
+    });
+    document.addEventListener('click', function (event) {
+      var anchor = event.target && event.target.closest ? event.target.closest('a[href="#download"]') : null;
+      if (anchor) expandDownload();
+    });
+    var collapseBtn = downloadSection.querySelector('[data-download-collapse]');
+    if (collapseBtn) {
+      collapseBtn.addEventListener('click', function () {
+        downloadSection.classList.remove('is-open');
+        history.replaceState(null, '', location.pathname + location.search);
+      });
+    }
+  }
+
+  // FAQ 深链：#faq-* 自动展开并滚动到位
+  function expandFaqAnchor() {
+    var hash = window.location.hash;
+    if (!hash || hash.indexOf('#faq-') !== 0) return;
+    var target = document.querySelector(hash);
+    if (target && target.tagName === 'DETAILS') {
+      target.open = true;
+      target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+  window.addEventListener('hashchange', expandFaqAnchor);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', expandFaqAnchor);
+  } else {
+    expandFaqAnchor();
+  }
+})();
+</script>
 </body>
 </html>
