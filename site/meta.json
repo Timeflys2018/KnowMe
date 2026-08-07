@@ -11,7 +11,7 @@
       "level": "info",
       "carrier": "banner",
       "title": "知我 KnowMe 0.10.3 已发布",
-      "body": "修复 Windows 下已装 opencode / codex 仍被误判「未安装」的问题；智能模式配置页现直接给出安装命令（复制即用 + 文档链接），Windows 也可正常安装。建议更新到最新版本。如已更新请忽略。",
+      "body": "优化分栏体验：点击分栏时左侧知识栏不再闪烁重载，新分栏以平滑动画推开；知识↔智能模式切换也不再闪烁、保留折叠等状态。建议更新到最新版本。如已更新请忽略。",
       "cta": {
         "label": "前往下载",
         "url": "https://useknowme.com/#download"
