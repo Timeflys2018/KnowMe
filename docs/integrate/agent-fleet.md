@@ -46,8 +46,13 @@ Agent Fleet 是**已 ship 的真实工作台**，由真实的 `codex app-server`
 本地模式直接复用你真实的 `~/.codex` / `~/.config/opencode`，环境变量透传（除 `KNOWME_`/`ELECTRON_` 等内部前缀）—— 在 Fleet 里跑，和你在终端里跑同一个 CLI 效果一致。
 :::
 
-::: tip 还没装 codex / opencode？一键引导安装（v0.10.1+）
-本地模式需要机器上已安装对应 CLI。若「智能模式 → 配置 → 运行环境」里某个 CLI 显示「未安装」，可直接点其「安装」按钮：知我会先展示将执行的官方安装命令与来源，你确认后由应用在后台执行安装（无需自己开终端）。安装完成后该卡片状态自动刷新；若提示「请重启」，重启知我即可识别新装的 CLI。
+::: tip 还没装 codex / opencode？（v0.10.2+）
+本地模式需要机器上已安装对应 CLI。若「智能模式 → 配置 → 运行环境」里某个 CLI 显示「未安装」，卡片会直接给出对应平台的安装命令：点「复制命令」到终端运行即可，另有「查看文档」链接。
+
+- **macOS / Linux**：`curl -fsSL https://opencode.ai/install | bash`（opencode）或 codex 官方脚本。
+- **Windows**：`powershell -ExecutionPolicy Bypass -Command "npm install -g opencode-ai"`（codex 同理用 `@openai/codex`）。需先装 Node.js（无则 `winget install OpenJS.NodeJS`）；国内网络慢可加 `--registry=https://registry.npmmirror.com`。
+
+安装完成后**重启知我**即可识别新装的 CLI。（安装命令交由你自己的终端执行——这样 shell 权限、执行策略、编码、PATH 都由系统原生处理，比应用后台代跑更可靠。）
 :::
 
 ## 通讯录：agent 模板 + 行动履历
