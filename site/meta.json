@@ -1,22 +1,22 @@
 {
   "schemaVersion": 1,
-  "latestVersion": "0.10.4",
+  "latestVersion": "0.10.5",
   "proReleasedAt": "2027-07-07T00:00:00Z",
   "lifecycle": "active",
   "downloadUrl": "https://useknowme.com/#download",
   "releaseNotesUrl": "https://github.com/Timeflys2018/knowme/releases/latest",
   "announcements": [
     {
-      "id": "v0.10.4-update",
+      "id": "v0.10.5-update",
       "level": "info",
       "carrier": "banner",
-      "title": "知我 KnowMe 0.10.4 已发布",
-      "body": "新用户上手更顺手：还没有可对话的 Agent 时，消息页会直接引导你去通讯录创建；通讯录也新增了醒目的「创建你的第一个 Agent」入口。建议更新到最新版本。如已更新请忽略。",
+      "title": "知我 KnowMe 0.10.5 已发布",
+      "body": "稳定性修复：修复了运行内核（Codex / OpenCode）命令行工具未安装时，创建或派发 agent 会导致应用崩溃退出的问题；现在会给出友好提示，并在新建表单里对未安装的内核置灰。建议更新到最新版本。如已更新请忽略。",
       "cta": {
         "label": "前往下载",
         "url": "https://useknowme.com/#download"
       },
-      "affectedBelow": "0.10.4"
+      "affectedBelow": "0.10.5"
     }
   ],
   "riskBlock": null
