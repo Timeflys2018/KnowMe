@@ -11,7 +11,7 @@
       "level": "info",
       "carrier": "banner",
       "title": "知我 KnowMe 0.12.0 已发布",
-      "body": "体验优化：新建 Agent 时未安装的运行内核（Codex / OpenCode）在两种运行环境下都会置灰并提示先安装；通讯录「我的 Agent」新增了更醒目的「新增 Agent」入口。建议更新到最新版本。如已更新请忽略。",
+      "body": "新增：多窗口（菜单 File → New Window / ⌘N）——可在多个显示器上分布多个编辑器窗口，每个窗口拥有独立的标签页与分屏布局，共享同一知识库；⌘W 关闭标签页，最后一个标签页时关闭窗口。建议更新到最新版本。如已更新请忽略。",
       "cta": {
         "label": "前往下载",
         "url": "https://useknowme.com/#download"
