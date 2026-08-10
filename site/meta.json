@@ -1,22 +1,22 @@
 {
   "schemaVersion": 1,
-  "latestVersion": "0.13.0",
+  "latestVersion": "0.13.1",
   "proReleasedAt": "2027-07-07T00:00:00Z",
   "lifecycle": "active",
   "downloadUrl": "https://useknowme.com/#download",
   "releaseNotesUrl": "https://github.com/Timeflys2018/knowme/releases/latest",
   "announcements": [
     {
-      "id": "v0.13.0-update",
+      "id": "v0.13.1-update",
       "level": "info",
       "carrier": "banner",
-      "title": "知我 KnowMe 0.13.0 已发布",
-      "body": "新增飞书群聊协作：拉群或新建群后，群成员 @机器人 即答；可为每个群单独选应答 agent、应答模型、会话保留模式，也能以群主身份手动代发，配置与 1:1 私聊完全一致。",
+      "title": "知我 KnowMe 0.13.1 已发布",
+      "body": "修复 opencode Agent 的「提问」交互框：此前 Agent 提问只显示为灰色工具条、无法作答导致对话卡住，现在会渲染成可交互的选择框（支持单选/多选/自定义输入），作答后 Agent 继续执行；多个问题采用逐题导航更省空间。另修复多消息回合的若干稳定性问题。",
       "cta": {
         "label": "前往下载",
         "url": "https://useknowme.com/#download"
       },
-      "affectedBelow": "0.13.0"
+      "affectedBelow": "0.13.1"
     }
   ],
   "riskBlock": null
