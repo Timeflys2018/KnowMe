@@ -158,8 +158,8 @@ nav .container { display: flex; align-items: center; justify-content: space-betw
 }
 
 /* ============ Hero（上方共用主标题 + 下方知识/智能双列卡片） ============ */
-.hero { padding: 3.4rem 0 3.2rem; --accent: var(--cinnabar); --accent-deep: var(--cinnabar-deep); --accent-glow: rgba(134,48,38,0.45); }
-.hero-head { max-width: 720px; margin: 0 auto 2.6rem; text-align: center; }
+.hero { padding: 3rem 0 3.4rem; --accent: var(--cinnabar); --accent-deep: var(--cinnabar-deep); --accent-glow: rgba(134,48,38,0.45); }
+.hero-head { max-width: 680px; margin: 0 auto 2rem; text-align: center; }
 
 .hero-badge {
   display: inline-flex; align-items: center; gap: 0.55rem;
@@ -167,7 +167,7 @@ nav .container { display: flex; align-items: center; justify-content: space-betw
   border: 1px solid var(--hairline-strong); border-radius: 100px;
   background: var(--paper-elev);
   font-size: 0.85rem; color: var(--ink-muted);
-  margin-bottom: 1.8rem;
+  margin-bottom: 1.4rem;
 }
 .hero-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--moss); animation: pulse 2.2s ease-in-out infinite; }
 @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
@@ -175,19 +175,19 @@ nav .container { display: flex; align-items: center; justify-content: space-betw
 h1.hero-title {
   font-family: var(--font-serif);
   font-size: clamp(2.2rem, 4.6vw, 3.4rem);
-  font-weight: 700; letter-spacing: 0.01em; line-height: 1.32;
-  margin-bottom: 1.3rem; color: var(--ink);
+  font-weight: 700; letter-spacing: 0.01em; line-height: 1.3;
+  margin-bottom: 0.9rem; color: var(--ink);
   text-wrap: balance;
 }
 h1.hero-title em { font-style: normal; color: var(--accent); }
 .hero-tagline {
-  font-size: clamp(1rem, 1.6vw, 1.15rem);
-  color: var(--ink-muted); max-width: 620px; margin-inline: auto; line-height: 1.85;
-  margin-bottom: 2.2rem; word-break: keep-all;
+  font-size: clamp(1rem, 1.5vw, 1.12rem);
+  color: var(--ink-muted); max-width: 560px; margin-inline: auto; line-height: 1.7;
+  margin-bottom: 1.7rem; word-break: keep-all;
 }
-.hero-tagline strong { color: var(--ink-soft); }
+.hero-tagline strong { color: var(--ink-soft); font-weight: 600; }
 
-.hero-head .button-group { justify-content: center; }
+.hero-head .button-group { justify-content: center; margin-bottom: 1rem; }
 .hero-head .platform-meta { justify-content: center; }
 .button-group { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 1.3rem; }
 .btn {
@@ -215,18 +215,18 @@ h1.hero-title em { font-style: normal; color: var(--accent); }
   --mode: var(--cinnabar); --mode-soft: var(--cinnabar-soft);
   display: flex; flex-direction: column;
   padding: 1.9rem 1.8rem;
-  background: var(--paper-elev); border: 1px solid var(--hairline); border-radius: var(--r-lg);
+  background:
+    radial-gradient(120% 80% at 100% 0%, var(--mode-soft), transparent 55%),
+    var(--paper-elev);
+  border: 1px solid var(--hairline); border-top: 3px solid var(--mode);
+  border-radius: var(--r-lg);
   box-shadow: var(--shadow-card);
   text-decoration: none; color: inherit;
-  position: relative; overflow: hidden;
+  position: relative;
   transition: transform 0.2s var(--ease), box-shadow 0.2s, border-color 0.15s;
 }
-.hero-mode::before {
-  content: ''; position: absolute; inset: 0 0 auto 0; height: 3px;
-  background: var(--mode); opacity: 0.85;
-}
 .hero-mode.fleet { --mode: var(--amber); --mode-soft: var(--amber-soft); }
-.hero-mode:hover { transform: translateY(-3px); box-shadow: var(--shadow-lift); border-color: var(--hairline-strong); }
+.hero-mode:hover { transform: translateY(-3px); box-shadow: var(--shadow-lift); }
 .hero-mode:focus-visible { outline: 2px solid var(--mode); outline-offset: 3px; }
 .hm-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; }
 .hm-icon svg { width: 20px; height: 20px; }
@@ -749,7 +749,7 @@ footer { border-top: 1px solid var(--hairline); background: var(--paper-deep); p
     <div class="hero-head">
       <div class="hero-badge rise rise-1"><span class="dot"></span>公测期 · 2026-06-06 → 2027-07-06 完全免费</div>
       <h1 class="hero-title rise rise-2" id="hero-title"><span class="nb">一个产品，</span><span class="nb">两种<em>身份</em>。</span></h1>
-      <p class="hero-tagline rise rise-3">本地优先的 AI 第二大脑 × agent 指挥位 —— <span class="nb">把零散笔记编译成可追溯的 Wiki，</span><span class="nb">也把活派给本机的真实 CLI。</span><strong>知识喂饱 agent，agent 反哺知识。</strong></p>
+      <p class="hero-tagline rise rise-3">本地优先的 AI 第二大脑 × agent 指挥位。<br>把零散笔记编译成可追溯的 Wiki，也把活派给本机的真实 CLI —— <strong>知识喂饱 agent，agent 反哺知识。</strong></p>
       <div class="button-group rise rise-3">
         <a class="btn btn-primary" href="#download" id="hero-download">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
