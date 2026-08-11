@@ -92,74 +92,48 @@ for (const [name, viewport] of Object.entries(VIEWPORTS)) {
   test.describe(`landing @ ${name} ${viewport.width}x${viewport.height}`, () => {
     test.use({ viewport });
 
-    // ---- Design invariants (v3 「双定位」) ----
-    test("renders hero heading and default demo tab (knowledge mode)", async ({ page }) => {
+    // ---- Design invariants (v3 「双定位」: unified hero + 知识/智能 双列卡片) ----
+    test("renders the unified hero heading", async ({ page }) => {
       await page.goto(PAGE_URL);
-      await expect(page.locator("#hero-title").first()).toBeVisible();
-      await expect(page.locator("#hero-title").first()).toContainText("写下此刻");
-      await expect(page.locator("#hero-title").first()).toContainText("会自己长出来");
-      // knowledge mode active by default
-      const mode = page.locator('[data-mode-tab][aria-selected="true"]');
-      await expect(mode).toHaveCount(1);
-      await expect(mode).toHaveAttribute("data-mode-tab", "knowledge");
-      // knowledge-scene tri-state demo defaults to "write"
-      const selected = page.locator('[data-demo-tab][aria-selected="true"]');
-      await expect(selected).toHaveCount(1);
-      await expect(selected).toHaveAttribute("data-demo-tab", "write");
-      await expect(page.locator("#demo-panel-write")).toBeVisible();
-      await expect(page.locator("#demo-panel-compile")).toBeHidden();
-      await expect(page.locator("#demo-panel-ask")).toBeHidden();
+      const title = page.locator("#hero-title");
+      await expect(title).toHaveCount(1);
+      await expect(title).toBeVisible();
+      await expect(title).toContainText("一个产品");
+      await expect(title).toContainText("两种");
+      // exactly one H1 on the page (no dual-H1 from the old two-scene hero)
+      await expect(page.locator("h1")).toHaveCount(1);
     });
 
-    test("mode switch reveals the Fleet scene and reskins hero", async ({ page }) => {
+    test("hero shows both mode cards linking to their sections", async ({ page }) => {
       await page.goto(PAGE_URL);
-      await page.locator("#mode-tab-fleet").click();
-      await expect(page.locator("body")).toHaveAttribute("data-mode", "fleet");
-      const mode = page.locator('[data-mode-tab][aria-selected="true"]');
-      await expect(mode).toHaveCount(1);
-      await expect(mode).toHaveAttribute("data-mode-tab", "fleet");
-      await expect(page.locator("#mode-scene-fleet")).toBeVisible();
-      await expect(page.locator("#mode-scene-knowledge")).toBeHidden();
-      // fleet console defaults to the kanban tab
-      const fleetSel = page.locator('[data-fleet-tab][aria-selected="true"]');
-      await expect(fleetSel).toHaveCount(1);
-      await expect(fleetSel).toHaveAttribute("data-fleet-tab", "kanban");
+      const cards = page.locator(".hero-modes .hero-mode");
+      await expect(cards).toHaveCount(2);
+      const knowledge = page.locator(".hero-mode.knowledge");
+      const fleet = page.locator(".hero-mode.fleet");
+      await expect(knowledge).toBeVisible();
+      await expect(fleet).toBeVisible();
+      await expect(knowledge).toHaveAttribute("href", "#loop");
+      await expect(fleet).toHaveAttribute("href", "#agent-fleet");
+      await expect(knowledge.locator(".hm-kicker")).toHaveText("知识模式");
+      await expect(fleet.locator(".hm-kicker")).toHaveText("智能模式");
+      // no leftover switch/demo scaffolding from the old design
+      await expect(page.locator("[data-mode-tab]")).toHaveCount(0);
+      await expect(page.locator(".demo-card")).toHaveCount(0);
     });
 
-    test("#fleet deep-link opens directly in智能模式", async ({ page }) => {
+    test("#fleet deep-link scrolls to the Agent Fleet section", async ({ page }) => {
       await page.goto(PAGE_URL + "#fleet");
-      await expect(page.locator("body")).toHaveAttribute("data-mode", "fleet");
-      await expect(page.locator("#mode-scene-fleet")).toBeVisible();
-    });
-
-    test("switches demo state on click with single selection", async ({ page }) => {
-      await page.goto(PAGE_URL);
-      await page.locator("#demo-tab-compile").click();
-      const selected = page.locator('[data-demo-tab][aria-selected="true"]');
-      await expect(selected).toHaveCount(1);
-      await expect(selected).toHaveAttribute("data-demo-tab", "compile");
-      await expect(page.locator("#demo-panel-compile")).toBeVisible();
-      await expect(page.locator("#demo-panel-compile .demo-entities li")).toHaveCount(3);
-    });
-
-    test("supports arrow-key navigation across demo tabs", async ({ page }) => {
-      await page.goto(PAGE_URL);
-      await page.locator("#demo-tab-write").focus();
-      await page.keyboard.press("ArrowRight");
-      await expect(page.locator('[data-demo-tab][aria-selected="true"]')).toHaveAttribute(
-        "data-demo-tab",
-        "compile"
-      );
-      await page.keyboard.press("End");
-      await expect(page.locator('[data-demo-tab][aria-selected="true"]')).toHaveAttribute(
-        "data-demo-tab",
-        "ask"
-      );
-      await page.keyboard.press("Home");
-      await expect(page.locator('[data-demo-tab][aria-selected="true"]')).toHaveAttribute(
-        "data-demo-tab",
-        "write"
-      );
+      const section = page.locator("#agent-fleet");
+      await expect(section).toBeVisible();
+      // the fleet section is scrolled into the viewport (not left at the top hero)
+      await expect
+        .poll(() =>
+          section.evaluate((el) => {
+            const r = el.getBoundingClientRect();
+            return r.top < window.innerHeight && r.bottom > 0;
+          })
+        )
+        .toBe(true);
     });
 
     test("双引擎闭环 shows the five exact step labels", async ({ page }) => {
@@ -313,7 +287,6 @@ for (const [name, viewport] of Object.entries(VIEWPORTS)) {
 
     test("has no real horizontal overflow", async ({ page }) => {
       await page.goto(PAGE_URL);
-      await page.locator("#demo-tab-compile").click();
       const offenders = await overflowingElements(page);
       expect(
         offenders,
@@ -397,20 +370,12 @@ test.describe("faq deep-link @ desktop", () => {
 });
 
 // -------------------------------------------------------------
-// Screenshots: default + compile, desktop + mobile, settled.
+// Screenshots: full page, desktop + mobile, settled.
 // -------------------------------------------------------------
-async function settle(page, activePanelId) {
+async function settle(page) {
   await page.evaluate(() => document.fonts.ready);
-  const panel = page.locator(`#${activePanelId}`);
-  await expect(panel).toBeVisible();
-  await expect
-    .poll(() =>
-      page.evaluate(
-        (id) => parseFloat(getComputedStyle(document.getElementById(id)).opacity || "0"),
-        activePanelId
-      )
-    )
-    .toBeGreaterThan(0.99);
+  await expect(page.locator("#hero-title")).toBeVisible();
+  await expect(page.locator(".hero-modes .hero-mode")).toHaveCount(2);
   await page.evaluate(async () => {
     const hero = document.getElementById("hero");
     if (!hero || typeof hero.getAnimations !== "function") return;
@@ -434,21 +399,11 @@ function assertFullPagePng(filePath, expectedWidth) {
 test.describe("review screenshots", () => {
   test.use({ reducedMotion: "reduce" });
   for (const [device, viewport] of Object.entries(VIEWPORTS)) {
-    test(`captures ${device} default state`, async ({ page }) => {
+    test(`captures ${device} full page`, async ({ page }) => {
       await page.setViewportSize(viewport);
       await page.goto(PAGE_URL);
-      await settle(page, "demo-panel-write");
+      await settle(page);
       const out = join(SCREENSHOT_DIR, `landing-default-${device}.png`);
-      await page.screenshot({ path: out, fullPage: true });
-      assertFullPagePng(out, viewport.width);
-    });
-
-    test(`captures ${device} compile state`, async ({ page }) => {
-      await page.setViewportSize(viewport);
-      await page.goto(PAGE_URL);
-      await page.locator("#demo-tab-compile").click();
-      await settle(page, "demo-panel-compile");
-      const out = join(SCREENSHOT_DIR, `landing-compile-${device}.png`);
       await page.screenshot({ path: out, fullPage: true });
       assertFullPagePng(out, viewport.width);
     });

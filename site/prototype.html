@@ -157,36 +157,9 @@ nav .container { display: flex; align-items: center; justify-content: space-betw
   .nav-toggle { display: inline-flex; }
 }
 
-/* ============ Hero（双栏：copy + demo 卡） ============ */
-.hero { padding: 2.4rem 0 2.8rem; }
-.hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 3.5rem; align-items: center; }
-@media (max-width: 920px) { .hero-grid { grid-template-columns: 1fr; gap: 2.6rem; } }
-
-/* 模式 accent：知识=朱砂，智能=琥珀（hero 作用域换肤） */
-.hero { --accent: var(--cinnabar); --accent-deep: var(--cinnabar-deep); --accent-soft: var(--cinnabar-soft); --accent-glow: rgba(134,48,38,0.45); }
-body[data-mode="fleet"] .hero { --accent: var(--amber); --accent-deep: var(--amber-deep); --accent-soft: var(--amber-soft); --accent-glow: rgba(163,94,7,0.45); }
-
-/* 模式切换开关 */
-.mode-switch {
-  display: inline-flex; gap: 0.25rem; padding: 0.3rem;
-  background: var(--paper-deep); border: 1px solid var(--hairline); border-radius: 100px;
-  margin-bottom: 2.2rem;
-}
-.mode-tab {
-  font: inherit; font-size: 0.88rem; font-weight: 600;
-  padding: 0.5rem 1.15rem; border-radius: 100px; border: none;
-  background: transparent; color: var(--ink-muted); cursor: pointer;
-  display: inline-flex; align-items: center; gap: 0.45rem;
-  transition: color 0.15s, background 0.15s, box-shadow 0.15s;
-}
-.mode-tab svg { width: 15px; height: 15px; }
-.mode-tab:hover { color: var(--ink); }
-.mode-tab[aria-selected="true"] { background: var(--paper-elev); color: var(--accent); box-shadow: var(--shadow-card); }
-.mode-tab:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
-
-/* Hero 场景：两个模式各一套，交叉淡入 */
-.hero-scene { display: none; }
-.hero-scene.is-active { display: block; animation: demoIn 0.4s var(--ease) both; }
+/* ============ Hero（上方共用主标题 + 下方知识/智能双列卡片） ============ */
+.hero { padding: 3.4rem 0 3.2rem; --accent: var(--cinnabar); --accent-deep: var(--cinnabar-deep); --accent-glow: rgba(134,48,38,0.45); }
+.hero-head { max-width: 720px; margin: 0 auto 2.6rem; text-align: center; }
 
 .hero-badge {
   display: inline-flex; align-items: center; gap: 0.55rem;
@@ -197,7 +170,6 @@ body[data-mode="fleet"] .hero { --accent: var(--amber); --accent-deep: var(--amb
   margin-bottom: 1.8rem;
 }
 .hero-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--moss); animation: pulse 2.2s ease-in-out infinite; }
-.hero-badge .dot.amber { background: var(--amber); box-shadow: 0 0 0 3px var(--amber-glow); }
 @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
 
 h1.hero-title {
@@ -210,11 +182,13 @@ h1.hero-title {
 h1.hero-title em { font-style: normal; color: var(--accent); }
 .hero-tagline {
   font-size: clamp(1rem, 1.6vw, 1.15rem);
-  color: var(--ink-muted); max-width: 520px; line-height: 1.85;
+  color: var(--ink-muted); max-width: 620px; margin-inline: auto; line-height: 1.85;
   margin-bottom: 2.2rem; word-break: keep-all;
 }
 .hero-tagline strong { color: var(--ink-soft); }
 
+.hero-head .button-group { justify-content: center; }
+.hero-head .platform-meta { justify-content: center; }
 .button-group { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 1.3rem; }
 .btn {
   display: inline-flex; align-items: center; gap: 0.5rem;
@@ -234,105 +208,38 @@ h1.hero-title em { font-style: normal; color: var(--accent); }
 .platform-meta .sep { color: var(--ink-subtle); }
 .platform-meta code { font-family: var(--font-mono); font-size: 0.8rem; background: var(--paper-deep); padding: 1px 6px; border-radius: 4px; }
 
-/* ============ demo 卡（知识三态 / Fleet 控制台共用） ============ */
-.demo-card {
-  background: var(--paper-elev);
-  border: 1px solid var(--hairline); border-radius: var(--r-lg);
-  box-shadow: var(--shadow-window);
-  overflow: hidden;
+/* ============ 双列模式卡：知识 = 朱砂，智能 = 琥珀 ============ */
+.hero-modes { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; }
+@media (max-width: 760px) { .hero-modes { grid-template-columns: 1fr; } }
+.hero-mode {
+  --mode: var(--cinnabar); --mode-soft: var(--cinnabar-soft);
+  display: flex; flex-direction: column;
+  padding: 1.9rem 1.8rem;
+  background: var(--paper-elev); border: 1px solid var(--hairline); border-radius: var(--r-lg);
+  box-shadow: var(--shadow-card);
+  text-decoration: none; color: inherit;
+  position: relative; overflow: hidden;
+  transition: transform 0.2s var(--ease), box-shadow 0.2s, border-color 0.15s;
 }
-.demo-tabs {
-  display: flex; gap: 0.25rem;
-  padding: 0.6rem 0.7rem;
-  background: var(--paper-deep);
-  border-bottom: 1px solid var(--hairline);
+.hero-mode::before {
+  content: ''; position: absolute; inset: 0 0 auto 0; height: 3px;
+  background: var(--mode); opacity: 0.85;
 }
-.demo-tab {
-  font: inherit; font-size: 0.85rem; font-weight: 600;
-  padding: 0.45rem 0.95rem; border-radius: 7px;
-  background: transparent; color: var(--ink-muted);
-  border: none; cursor: pointer;
-  transition: background 0.15s, color 0.15s;
-}
-.demo-tab:hover { color: var(--ink); }
-.hero .demo-tab[aria-selected="true"] { background: var(--paper-elev); color: var(--accent); box-shadow: var(--shadow-card); }
-.demo-tab:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
-
-.demo-panel { padding: 1.5rem 1.6rem 1.4rem; min-height: 240px; }
-.demo-panel[hidden] { display: none; }
-.demo-panel.is-active { animation: demoIn 0.35s var(--ease) both; }
-@keyframes demoIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
-
-.demo-note {
-  font-family: var(--font-serif); font-size: 1.05rem; color: var(--ink); line-height: 1.9;
-  padding: 0.9rem 1.1rem; background: #fff;
-  border: 1px solid var(--hairline); border-radius: var(--r-md);
-  margin-bottom: 0.9rem;
-}
-.demo-hint { font-size: 0.82rem; color: var(--ink-subtle); line-height: 1.7; }
-.demo-entities { list-style: none; margin-bottom: 0.9rem; }
-.demo-entities li {
-  display: flex; align-items: center; gap: 0.6rem;
-  padding: 0.55rem 0.8rem; margin-bottom: 0.45rem;
-  background: #fff; border: 1px solid var(--hairline); border-radius: var(--r-sm);
-  font-size: 0.92rem; color: var(--ink-soft);
-}
-.entity-kind {
-  flex-shrink: 0; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.05em;
-  padding: 0.14rem 0.5rem; border-radius: 4px;
-  background: var(--amber-soft); color: var(--amber-deep);
-}
-.entity-kind.concept { background: var(--cinnabar-soft); color: var(--cinnabar); }
-.demo-q { font-size: 0.95rem; font-weight: 600; color: var(--ink); margin-bottom: 0.7rem; }
-.demo-a {
-  font-size: 0.92rem; color: var(--ink-soft); line-height: 1.8;
-  padding: 0.85rem 1rem; background: #fff;
-  border: 1px solid var(--hairline); border-left: 3px solid var(--cinnabar);
-  border-radius: var(--r-sm); margin-bottom: 0.9rem;
-}
-.demo-a .src { display: block; margin-top: 0.5rem; font-size: 0.78rem; color: var(--moss); font-weight: 600; }
-
-/* ============ Fleet 控制台：任务看板 ============ */
-.kb-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.55rem; margin-bottom: 0.85rem; }
-.kb-col { background: var(--paper-card); border: 1px solid var(--hairline); border-radius: var(--r-sm); padding: 0.5rem; }
-.kb-col-head { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em; color: var(--ink-subtle); margin-bottom: 0.45rem; }
-.kb-card { background: #fff; border: 1px solid var(--hairline); border-radius: 6px; padding: 0.45rem 0.55rem; margin-bottom: 0.4rem; }
-.kb-card:last-child { margin-bottom: 0; }
-.kb-card.active { border-color: var(--amber); box-shadow: 0 0 0 2px var(--amber-glow); }
-.kb-card.done { opacity: 0.6; }
-.kb-card-title { font-size: 0.78rem; font-weight: 600; color: var(--ink); line-height: 1.45; margin-bottom: 0.3rem; }
-.kb-card-meta { display: flex; align-items: center; gap: 0.35rem; flex-wrap: wrap; }
-.kb-agent { font-size: 0.64rem; font-weight: 700; font-family: var(--font-mono); padding: 0.1rem 0.4rem; border-radius: 4px; background: var(--moss-soft); color: var(--moss); }
-.kb-sched { font-size: 0.64rem; font-weight: 600; padding: 0.1rem 0.4rem; border-radius: 4px; background: var(--amber-soft); color: var(--amber-deep); }
-.kb-live { font-size: 0.64rem; font-weight: 600; color: var(--cinnabar); display: inline-flex; align-items: center; gap: 0.25rem; }
-.kb-live::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--cinnabar); animation: pulse 1.6s infinite; }
-@media (max-width: 560px) { .kb-grid { grid-template-columns: repeat(2, 1fr); } }
-/* hero 内 demo 卡较窄，看板用 2×2；Fleet 大区块保持四列 */
-.hero .kb-grid { grid-template-columns: repeat(2, 1fr); }
-
-/* ============ Fleet 控制台：会话转录 ============ */
-.term { background: var(--ink); border-radius: var(--r-md); padding: 0.9rem 1rem; margin-bottom: 0.6rem; }
-.term-line { font-family: var(--font-mono); font-size: 0.78rem; line-height: 1.9; color: #e8e2d4; word-break: break-all; }
-.term-prompt { color: #d5a94f; font-weight: 700; margin-right: 0.35rem; }
-.term-line.tool { color: #b0a794; }
-.tool-chip { display: inline-block; font-size: 0.62rem; font-weight: 700; font-family: var(--font-sans); padding: 0.05rem 0.4rem; border-radius: 4px; background: rgba(126,168,126,0.22); color: #a9c9a9; margin-right: 0.4rem; }
-.tool-chip.write { background: rgba(213,169,79,0.22); color: #e3c07f; }
-.diff-chip { font-size: 0.66rem; color: #a9c9a9; margin-left: 0.35rem; }
-.term .caret { display: inline-block; width: 7px; height: 13px; background: var(--amber); vertical-align: -2px; margin-left: 2px; animation: caret 1s steps(2) infinite; }
+.hero-mode.fleet { --mode: var(--amber); --mode-soft: var(--amber-soft); }
+.hero-mode:hover { transform: translateY(-3px); box-shadow: var(--shadow-lift); border-color: var(--hairline-strong); }
+.hero-mode:focus-visible { outline: 2px solid var(--mode); outline-offset: 3px; }
+.hm-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; }
+.hm-icon svg { width: 20px; height: 20px; }
+.hm-icon.cinnabar { background: var(--cinnabar-soft); color: var(--cinnabar); }
+.hm-icon.amber { background: var(--amber-soft); color: var(--amber-deep); }
+.hm-kicker { font-family: var(--font-serif); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; color: var(--mode); margin-bottom: 0.5rem; }
+.hm-title { font-family: var(--font-serif); font-size: 1.35rem; font-weight: 700; line-height: 1.4; margin-bottom: 0.7rem; color: var(--ink); }
+.hm-title em { font-style: normal; color: var(--mode); }
+.hm-desc { font-size: 0.92rem; color: var(--ink-muted); line-height: 1.75; flex: 1; margin-bottom: 1.2rem; }
+.hm-cta { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.9rem; font-weight: 600; color: var(--mode); }
+.hm-cta svg { width: 15px; height: 15px; transition: transform 0.2s var(--ease); }
+.hero-mode:hover .hm-cta svg { transform: translateX(3px); }
 @keyframes caret { 50% { opacity: 0; } }
-.term-foot { font-family: var(--font-mono); font-size: 0.72rem; color: var(--ink-subtle); margin-bottom: 0.85rem; }
-
-/* ============ Fleet 控制台：指挥室 ============ */
-.inbox { list-style: none; margin-bottom: 0.8rem; }
-.inbox li { display: flex; gap: 0.6rem; align-items: flex-start; background: #fff; border: 1px solid var(--hairline); border-radius: var(--r-sm); padding: 0.55rem 0.75rem; margin-bottom: 0.45rem; }
-.inbox-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 0.4rem; flex-shrink: 0; }
-.inbox-dot.amber { background: var(--amber); box-shadow: 0 0 0 3px var(--amber-glow); }
-.inbox-dot.red { background: var(--cinnabar); box-shadow: 0 0 0 3px var(--cinnabar-soft); }
-.inbox-dot.moss { background: var(--moss); box-shadow: 0 0 0 3px var(--moss-soft); }
-.inbox-body strong { display: block; font-size: 0.84rem; color: var(--ink); line-height: 1.5; }
-.inbox-sub { font-size: 0.74rem; color: var(--ink-subtle); }
-.inbox-summary { background: var(--amber-soft); border: 1px solid rgba(163,94,7,0.2); border-radius: var(--r-sm); padding: 0.6rem 0.8rem; font-size: 0.8rem; color: var(--amber-deep); font-weight: 600; margin-bottom: 0.85rem; }
-.inbox-summary span { display: block; font-weight: 500; font-size: 0.72rem; color: var(--ink-muted); margin-top: 0.15rem; }
 
 /* ============ Section 骨架 ============ */
 section { padding: 3.6rem 0; border-top: 1px solid var(--hairline); }
@@ -839,132 +746,47 @@ footer { border-top: 1px solid var(--hairline); background: var(--paper-deep); p
 
 <header class="hero" id="hero">
   <div class="container">
-    <div class="mode-switch rise rise-1" role="tablist" aria-label="知我的两种模式">
-      <button type="button" class="mode-tab" role="tab" id="mode-tab-knowledge" data-mode-tab="knowledge" aria-selected="true" aria-controls="mode-scene-knowledge" tabindex="0">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V4H6.5A2.5 2.5 0 0 0 4 6.5z"/></svg>
-        知识模式
-      </button>
-      <button type="button" class="mode-tab" role="tab" id="mode-tab-fleet" data-mode-tab="fleet" aria-selected="false" aria-controls="mode-scene-fleet" tabindex="-1">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m4 17 6-6-6-6"/><path d="M12 19h8"/></svg>
-        智能模式
-      </button>
+    <div class="hero-head">
+      <div class="hero-badge rise rise-1"><span class="dot"></span>公测期 · 2026-06-06 → 2027-07-06 完全免费</div>
+      <h1 class="hero-title rise rise-2" id="hero-title"><span class="nb">一个产品，</span><span class="nb">两种<em>身份</em>。</span></h1>
+      <p class="hero-tagline rise rise-3">本地优先的 AI 第二大脑 × agent 指挥位 —— <span class="nb">把零散笔记编译成可追溯的 Wiki，</span><span class="nb">也把活派给本机的真实 CLI。</span><strong>知识喂饱 agent，agent 反哺知识。</strong></p>
+      <div class="button-group rise rise-3">
+        <a class="btn btn-primary" href="#download" id="hero-download">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+          <span class="hero-download-label" id="hero-download-label">下载 0.13.4</span>
+        </a>
+        <a class="btn btn-secondary" href="#loop">看看它怎么工作
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+        </a>
+      </div>
+      <p class="platform-meta rise rise-4">
+        <strong>macOS · Windows</strong><span class="sep">·</span>本地 SQLite<span class="sep">·</span>数据留在本机<span class="sep">·</span><span class="nb">随时完整导出</span>
+      </p>
     </div>
 
-    <div class="hero-scene is-active" role="tabpanel" id="mode-scene-knowledge" data-mode-scene="knowledge" aria-labelledby="mode-tab-knowledge" tabindex="0">
-      <div class="hero-grid">
-        <div>
-          <div class="hero-badge rise rise-1"><span class="dot"></span>公测期 · 2026-06-06 → 2027-07-06 完全免费</div>
-          <h1 class="hero-title rise rise-2" id="hero-title"><span class="nb">写下此刻，</span><span class="nb">知识<em>会自己长出来</em>。</span></h1>
-          <p class="hero-tagline rise rise-3">本地优先的第二大脑 · 零散笔记编译成可追溯的 Wiki，<span class="nb">你和每一个 AI 都能随时调用。</span></p>
-          <div class="button-group rise rise-3">
-            <a class="btn btn-primary" href="#download" id="hero-download">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
-              <span class="hero-download-label" id="hero-download-label">下载 0.13.4</span>
-            </a>
-            <a class="btn btn-secondary" href="#loop">看看它怎么工作
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
-            </a>
-          </div>
-          <p class="platform-meta rise rise-4">
-            <strong>macOS · Windows</strong><span class="sep">·</span>本地 SQLite<span class="sep">·</span>数据留在本机<span class="sep">·</span><span class="nb">随时完整导出</span>
-          </p>
-        </div>
-
-        <div class="demo-card rise rise-3" aria-label="知我知识模式演示">
-          <div class="demo-tabs" role="tablist" aria-label="知识模式演示">
-            <button type="button" class="demo-tab" role="tab" id="demo-tab-write" data-demo-tab="write" aria-selected="true" aria-controls="demo-panel-write" tabindex="0">一段随手记</button>
-            <button type="button" class="demo-tab" role="tab" id="demo-tab-compile" data-demo-tab="compile" aria-selected="false" aria-controls="demo-panel-compile" tabindex="-1">AI 编译</button>
-            <button type="button" class="demo-tab" role="tab" id="demo-tab-ask" data-demo-tab="ask" aria-selected="false" aria-controls="demo-panel-ask" tabindex="-1">随时问</button>
-          </div>
-          <div class="demo-panel is-active" role="tabpanel" id="demo-panel-write" data-demo-panel="write" aria-labelledby="demo-tab-write" tabindex="0">
-            <p class="demo-note">今天和林工聊了向量检索的召回问题，他建议先做 rerank。</p>
-            <p class="demo-hint">随手一行草稿，不用整理格式，知我照单全收。</p>
-          </div>
-          <div class="demo-panel" role="tabpanel" id="demo-panel-compile" data-demo-panel="compile" aria-labelledby="demo-tab-compile" tabindex="0" hidden>
-            <ul class="demo-entities">
-              <li><span class="entity-kind">人物</span>林工 · 检索方向的同事</li>
-              <li><span class="entity-kind concept">概念</span>rerank · 召回后的重排序</li>
-              <li><span class="entity-kind concept">概念</span>向量检索 · 语义相似度召回</li>
-            </ul>
-            <p class="demo-hint">知我自动抽出实体与概念，编织成可追溯的 Wiki 条目 —— 每次写入都进 Review queue 等你确认。</p>
-          </div>
-          <div class="demo-panel" role="tabpanel" id="demo-panel-ask" data-demo-panel="ask" aria-labelledby="demo-tab-ask" tabindex="0" hidden>
-            <p class="demo-q">问：林工上次建议怎么改召回？</p>
-            <p class="demo-a">答：先做 rerank —— 在向量召回结果之上加一层重排序。<span class="src">来源 · 8 月 3 日笔记</span></p>
-            <p class="demo-hint">答案带来源，可一键跳回原始笔记核对。</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="hero-scene" role="tabpanel" id="mode-scene-fleet" data-mode-scene="fleet" aria-labelledby="mode-tab-fleet" tabindex="0" hidden>
-      <div class="hero-grid">
-        <div>
-          <div class="hero-badge"><span class="dot amber"></span>智能模式 · Agent Fleet · 调度本机真实 CLI</div>
-          <h1 class="hero-title"><span class="nb">你的知识，</span><span class="nb">一支<em>随时上阵的 AI 舰队</em>。</span></h1>
-          <p class="hero-tagline">知我切到智能模式，就是你的 agent 指挥位 —— 把活派给本机的 OpenCode / Codex <strong>真实 CLI 进程</strong>，盯盘、续聊、收结果，<span class="nb">产出编回知识库。</span></p>
-          <div class="button-group">
-            <a class="btn btn-primary" href="#download">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
-              下载 0.13.4
-            </a>
-            <a class="btn btn-secondary" href="#agent-fleet">看 Fleet 怎么工作
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
-            </a>
-          </div>
-          <p class="platform-meta">
-            <strong>opencode · codex</strong><span class="sep">·</span>复用 <code>~/.codex</code> 与 <code>~/.config/opencode</code><span class="sep">·</span><span class="nb">智能模式是唯一需要登录的区域</span>
-          </p>
-        </div>
-
-        <div class="demo-card" aria-label="Agent Fleet 工作台演示">
-          <div class="demo-tabs" role="tablist" aria-label="Agent Fleet 演示">
-            <button type="button" class="demo-tab" role="tab" id="fleet-tab-kanban" data-fleet-tab="kanban" aria-selected="true" aria-controls="fleet-panel-kanban" tabindex="0">任务看板</button>
-            <button type="button" class="demo-tab" role="tab" id="fleet-tab-session" data-fleet-tab="session" aria-selected="false" aria-controls="fleet-panel-session" tabindex="-1">会话转录</button>
-            <button type="button" class="demo-tab" role="tab" id="fleet-tab-inbox" data-fleet-tab="inbox" aria-selected="false" aria-controls="fleet-panel-inbox" tabindex="-1">指挥室</button>
-          </div>
-          <div class="demo-panel is-active" role="tabpanel" id="fleet-panel-kanban" data-fleet-panel="kanban" aria-labelledby="fleet-tab-kanban" tabindex="0">
-            <div class="kb-grid">
-              <div class="kb-col">
-                <div class="kb-col-head">待派 · 1</div>
-                <div class="kb-card"><div class="kb-card-title">周会纪要 → wiki 摘要</div><div class="kb-card-meta"><span class="kb-agent">codex</span><span class="kb-sched">明早 09:00</span></div></div>
-              </div>
-              <div class="kb-col">
-                <div class="kb-col-head">进行中 · 1</div>
-                <div class="kb-card active"><div class="kb-card-title">整理 rerank 指标表</div><div class="kb-card-meta"><span class="kb-agent">opencode</span><span class="kb-live">流式中</span></div></div>
-              </div>
-              <div class="kb-col">
-                <div class="kb-col-head">待确认 · 1</div>
-                <div class="kb-card"><div class="kb-card-title">招聘 JD 草稿</div><div class="kb-card-meta"><span class="kb-agent">codex</span></div></div>
-              </div>
-              <div class="kb-col">
-                <div class="kb-col-head">已完成 · 2</div>
-                <div class="kb-card done"><div class="kb-card-title">《向量检索》词条答疑</div></div>
-              </div>
-            </div>
-            <p class="demo-hint">四列看板 + 定时跨天派发；点卡片直达会话，会话里也能跳回看板。</p>
-          </div>
-          <div class="demo-panel" role="tabpanel" id="fleet-panel-session" data-fleet-panel="session" aria-labelledby="fleet-tab-session" tabindex="0" hidden>
-            <div class="term">
-              <div class="term-line"><span class="term-prompt">$</span>opencode "把 rerank 对比实验整理成指标表"</div>
-              <div class="term-line tool"><span class="tool-chip">读</span>wiki/向量检索.md · 2,140 tokens</div>
-              <div class="term-line tool"><span class="tool-chip write">写</span>raw/rerank-对比实验.md<span class="diff-chip">+12 −3</span></div>
-              <div class="term-line">指标表已生成，并在 [[向量检索]] 词条补了回链 —— 改动已进 Review queue<span class="caret"></span></div>
-            </div>
-            <div class="term-foot">12,480 tokens · ¥0.31 · opencode · 12:34</div>
-            <p class="demo-hint">真逐字流式转录，工具调用内联可见；斜杠命令、中断、续聊（真 resume）。</p>
-          </div>
-          <div class="demo-panel" role="tabpanel" id="fleet-panel-inbox" data-fleet-panel="inbox" aria-labelledby="fleet-tab-inbox" tabindex="0" hidden>
-            <ul class="inbox">
-              <li><span class="inbox-dot amber"></span><div class="inbox-body"><strong>「rerank 指标表」已完成</strong><span class="inbox-sub">待你确认编回知识库 · 10 分钟前</span></div></li>
-              <li><span class="inbox-dot red"></span><div class="inbox-body"><strong>「招聘 JD 草稿」等你回复</strong><span class="inbox-sub">codex 问了一个澄清问题 · 32 分钟前</span></div></li>
-              <li><span class="inbox-dot moss"></span><div class="inbox-body"><strong>定时任务已登记</strong><span class="inbox-sub">周会纪要摘要 · 明早 09:00 自动派发</span></div></li>
-            </ul>
-            <div class="inbox-summary">全局统揽 · 3 个会话活跃 · 今日 84,210 tokens / ¥1.86<span>可选 LLM 凝练成一段晨报</span></div>
-            <p class="demo-hint">需处理收件箱 + 全局统揽 —— 你始终是那个拍板的人。</p>
-          </div>
-        </div>
-      </div>
+    <div class="hero-modes rise rise-4">
+      <a class="hero-mode knowledge" href="#loop">
+        <span class="hm-icon cinnabar" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V4H6.5A2.5 2.5 0 0 0 4 6.5z"/></svg>
+        </span>
+        <span class="hm-kicker">知识模式</span>
+        <h2 class="hm-title">写下此刻，<em>知识会自己长出来</em></h2>
+        <p class="hm-desc">零散笔记 → AI 抽取实体与概念 → 编译成可追溯的 Wiki，写入先过 Review queue。你和每一个 AI 都能随时调用。</p>
+        <span class="hm-cta">看看它怎么工作
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+        </span>
+      </a>
+      <a class="hero-mode fleet" href="#agent-fleet">
+        <span class="hm-icon amber" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m4 17 6-6-6-6"/><path d="M12 19h8"/></svg>
+        </span>
+        <span class="hm-kicker">智能模式</span>
+        <h2 class="hm-title">你的知识，<em>一支随时上阵的 AI 舰队</em></h2>
+        <p class="hm-desc">切到 Agent Fleet，就是你的 agent 指挥位 —— 把活派给本机的 OpenCode / Codex 真实 CLI 进程，盯盘、续聊、收结果，产出编回知识库。</p>
+        <span class="hm-cta">看 Fleet 怎么工作
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+        </span>
+      </a>
     </div>
   </div>
 </header>
@@ -1613,6 +1435,10 @@ footer { border-top: 1px solid var(--hairline); background: var(--paper-deep); p
 (function () {
   'use strict';
 
+  // 发版配置：发新版时改 VERSION + RELEASE_DATE。VERSION 驱动 mac 版 + 全站文案；
+  // WIN_VERSION 单独控 Windows 安装包版本——通常与 VERSION 相同，仅当某版 Windows 包
+  // 滞后（如 CI 打包暂不可用、只发了 mac）时保持旧版，避免 win 下载指向不存在的文件而 404。
+  // 文件名内嵌版本；GitHub 源走 /latest/ 自动；R2 需以新文件名重传。
   var RELEASED = true;
   var VERSION = '0.13.4';
   var WIN_VERSION = '0.13.2';
@@ -1624,6 +1450,10 @@ footer { border-top: 1px solid var(--hairline); background: var(--paper-deep); p
     'win':       'KnowMe-Setup-' + WIN_VERSION + '.exe'
   };
 
+  // 下载源，按偏好排序（R2 自有源最优先）。三种 URL 形态：
+  //   type:'direct-file' (R2) —— base + 文件名，直接命中文件（不经 github）。
+  //   base:'' (GitHub 直连)    —— github releases/latest 直链。
+  //   其余（公益代理）          —— base + 完整 github 直链（前缀代理）。
   var SOURCES = [
     { id: 'r2',          label: '国内加速 · 官方源',   base: 'https://download.useknowme.com/', type: 'direct-file' },
     { id: 'direct',      label: 'GitHub 直连',        base: '' },
@@ -1632,7 +1462,7 @@ footer { border-top: 1px solid var(--hairline); background: var(--paper-deep); p
     { id: 'ghproxy-net', label: '镜像 · ghproxy.net', base: 'https://ghproxy.net/' },
     { id: 'ghfast',      label: '镜像 · ghfast.top',  base: 'https://ghfast.top/' }
   ];
-  var DEFAULT_SOURCE = SOURCES[0];
+  var DEFAULT_SOURCE = SOURCES[0]; // r2
 
   function githubLatestUrl(platform) {
     return 'https://github.com/' + REPO + '/releases/latest/download/' + FILES[platform];
@@ -1643,6 +1473,7 @@ footer { border-top: 1px solid var(--hairline); background: var(--paper-deep); p
     return (src.base || '') + githubLatestUrl(platform);
   }
 
+  // 同步返回粗判平台；Mac 架构默认 arm64，再由 refineMacArch() 异步校正。
   function detectPlatform() {
     var ua = navigator.userAgent;
     var p = navigator.platform || '';
@@ -1651,6 +1482,7 @@ footer { border-top: 1px solid var(--hairline); background: var(--paper-deep); p
     return 'mac-arm';
   }
 
+  // Chromium 上用 high-entropy UA 探测 CPU 架构，区分 Intel / Apple Silicon。
   function refineMacArch() {
     if (navigator.userAgentData && navigator.userAgentData.getHighEntropyValues) {
       return navigator.userAgentData.getHighEntropyValues(['architecture'])
@@ -1672,6 +1504,7 @@ footer { border-top: 1px solid var(--hairline); background: var(--paper-deep); p
   var introEl = document.getElementById('download-intro');
   if (!preEl || !liveEl) return;
 
+  // 页面上所有写版本号的文案统一由 VERSION/RELEASE_DATE 注入。HTML 字面值仅作 fallback。
   (function applyVersionStrings() {
     var heroDownload = document.getElementById('hero-download');
     if (heroDownload) {
@@ -1723,6 +1556,7 @@ footer { border-top: 1px solid var(--hairline); background: var(--paper-deep); p
   var platform = detectPlatform();
   var activeSource = DEFAULT_SOURCE;
 
+  // 架构决定文件名(platform)，下载源决定前缀(activeSource)，二者正交。
   function applyLinks() {
     primaryBtn.href = ghUrl(platform, activeSource);
     primaryText.textContent = labels[platform] || labels['mac-arm'];
@@ -1744,6 +1578,7 @@ footer { border-top: 1px solid var(--hairline); background: var(--paper-deep); p
     });
   }
 
+  // ---- 手动源切换器 ----
   var sourceWrap = document.getElementById('download-source');
   var sourceRow = document.getElementById('download-source-row');
   var pillById = {};
@@ -1773,99 +1608,17 @@ footer { border-top: 1px solid var(--hairline); background: var(--paper-deep); p
 (function () {
   'use strict';
 
-  // 通用 WAI-ARIA tablist：roving tabindex + 方向键/Home/End；onActivate 供模式切换挂载副作用
-  function initTabGroup(tabAttr, panelAttr, onActivate) {
-    var tabs = Array.prototype.slice.call(document.querySelectorAll('[' + tabAttr + ']'));
-    var panels = Array.prototype.slice.call(document.querySelectorAll('[' + panelAttr + ']'));
-    if (!tabs.length) return { activate: function () {} };
-
-    function activate(id) {
-      if (!id) return;
-      var matched = tabs.some(function (t) { return t.getAttribute(tabAttr) === id; });
-      if (!matched) return;
-      tabs.forEach(function (t) {
-        var selected = t.getAttribute(tabAttr) === id;
-        t.setAttribute('aria-selected', selected ? 'true' : 'false');
-        t.tabIndex = selected ? 0 : -1;
-      });
-      panels.forEach(function (p) {
-        var active = p.getAttribute(panelAttr) === id;
-        p.classList.remove('is-active');
-        if (active) {
-          p.hidden = false;
-          void p.offsetWidth;
-          p.classList.add('is-active');
-        } else {
-          p.hidden = true;
-        }
-      });
-      if (onActivate) onActivate(id);
-    }
-
-    tabs.forEach(function (tab, index) {
-      tab.addEventListener('click', function () { activate(tab.getAttribute(tabAttr)); });
-      tab.addEventListener('keydown', function (event) {
-        var count = tabs.length;
-        function focusAt(i) {
-          var next = ((i % count) + count) % count;
-          activate(tabs[next].getAttribute(tabAttr));
-          tabs[next].focus();
-        }
-        switch (event.key) {
-          case 'ArrowLeft':
-          case 'ArrowUp':
-            event.preventDefault();
-            focusAt(index - 1);
-            break;
-          case 'ArrowRight':
-          case 'ArrowDown':
-            event.preventDefault();
-            focusAt(index + 1);
-            break;
-          case 'Home':
-            event.preventDefault();
-            focusAt(0);
-            break;
-          case 'End':
-            event.preventDefault();
-            focusAt(count - 1);
-            break;
-          default:
-            break;
-        }
-      });
-    });
-
-    return { activate: activate };
+  // #fleet 旧深链兼容：hero 不再有模式切换，直接平滑滚动到 Agent Fleet 区块。
+  function scrollToFleet() {
+    if (location.hash !== '#fleet') return;
+    var target = document.getElementById('agent-fleet');
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
-
-  // 模式切换：body[data-mode] 驱动 hero 换肤；#fleet 作为智能模式的直达锚点
-  var modeGroup = initTabGroup('data-mode-tab', 'data-mode-scene', function (id) {
-    document.body.setAttribute('data-mode', id);
-    var suffix = id === 'fleet' ? '#fleet' : '';
-    history.replaceState(null, '', location.pathname + location.search + suffix);
-  });
-  initTabGroup('data-demo-tab', 'data-demo-panel');
-  initTabGroup('data-fleet-tab', 'data-fleet-panel');
-
-  // 双模式自动轮播：默认开启；手动切换 / #fleet 深链 / 减少动态偏好时停止或不启用
-  var modeTabs = Array.prototype.slice.call(document.querySelectorAll('[data-mode-tab]'));
-  var autoTimer = null;
-  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  function stopModeAuto() {
-    if (autoTimer) { clearInterval(autoTimer); autoTimer = null; }
-  }
-  modeTabs.forEach(function (tab) {
-    tab.addEventListener('click', stopModeAuto);
-    tab.addEventListener('keydown', stopModeAuto);
-  });
-  if (location.hash === '#fleet') {
-    modeGroup.activate('fleet');
-  } else if (!reduceMotion) {
-    autoTimer = setInterval(function () {
-      if (document.hidden) return;
-      modeGroup.activate(document.body.getAttribute('data-mode') === 'fleet' ? 'knowledge' : 'fleet');
-    }, 6000);
+  window.addEventListener('hashchange', scrollToFleet);
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', scrollToFleet);
+  } else {
+    scrollToFleet();
   }
 
   // 移动端抽屉导航
