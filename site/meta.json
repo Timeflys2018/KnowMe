@@ -1,22 +1,22 @@
 {
   "schemaVersion": 1,
-  "latestVersion": "0.13.2",
+  "latestVersion": "0.13.3",
   "proReleasedAt": "2027-07-07T00:00:00Z",
   "lifecycle": "active",
   "downloadUrl": "https://useknowme.com/#download",
   "releaseNotesUrl": "https://github.com/Timeflys2018/knowme/releases/latest",
   "announcements": [
     {
-      "id": "v0.13.2-update",
+      "id": "v0.13.3-update",
       "level": "info",
       "carrier": "banner",
-      "title": "知我 KnowMe 0.13.2 已发布",
-      "body": "修复智能体消息面板的一个显示问题：当一次回复分成多条消息（例如先给结论、再执行操作）时，第二条消息偶尔要等下一次提问才显示，现已即时呈现。",
+      "title": "知我 KnowMe 0.13.3 已发布",
+      "body": "本版（macOS）：修复智能体消息面板——一次回复分多条消息时第二条偶尔要等下次提问才显示，现即时呈现；修复多 bot 时飞书群入口（拉群/建群）不显示。Windows 版维持 0.13.2，Windows 用户无需更新。",
       "cta": {
         "label": "前往下载",
         "url": "https://useknowme.com/#download"
       },
-      "affectedBelow": "0.13.2"
+      "affectedBelow": "0.13.3"
     }
   ],
   "riskBlock": null
