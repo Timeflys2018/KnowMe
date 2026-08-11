@@ -159,7 +159,7 @@ nav .container { display: flex; align-items: center; justify-content: space-betw
 
 /* ============ Hero（上方共用主标题 + 下方知识/智能双列卡片） ============ */
 .hero { padding: 3rem 0 3.4rem; --accent: var(--cinnabar); --accent-deep: var(--cinnabar-deep); --accent-glow: rgba(134,48,38,0.45); }
-.hero-head { max-width: 680px; margin: 0 auto 2rem; text-align: center; }
+.hero-head { max-width: 720px; margin: 0 auto 2.4rem; text-align: center; }
 
 .hero-badge {
   display: inline-flex; align-items: center; gap: 0.55rem;
@@ -174,21 +174,23 @@ nav .container { display: flex; align-items: center; justify-content: space-betw
 
 h1.hero-title {
   font-family: var(--font-serif);
-  font-size: clamp(2.2rem, 4.6vw, 3.4rem);
-  font-weight: 700; letter-spacing: 0.01em; line-height: 1.3;
-  margin-bottom: 0.9rem; color: var(--ink);
-  text-wrap: balance;
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  font-weight: 800; letter-spacing: 0.01em; line-height: 1.2;
+  margin-bottom: 1rem; color: var(--ink);
+  text-wrap: balance; word-break: keep-all;
 }
-h1.hero-title em { font-style: normal; color: var(--accent); }
+h1.hero-title em { font-style: normal; color: var(--cinnabar); }
+h1.hero-title .amb { color: var(--amber); }
+h1.hero-title .times { color: var(--ink-subtle); font-weight: 400; margin: 0 0.35rem; }
 .hero-tagline {
   font-size: clamp(1rem, 1.5vw, 1.12rem);
-  color: var(--ink-muted); max-width: 560px; margin-inline: auto; line-height: 1.7;
-  margin-bottom: 1.7rem; word-break: keep-all;
+  color: var(--ink-muted); max-width: 580px; margin-inline: auto; line-height: 1.8;
+  margin-bottom: 0; word-break: keep-all;
 }
 .hero-tagline strong { color: var(--ink-soft); font-weight: 600; }
 
-.hero-head .button-group { justify-content: center; margin-bottom: 1rem; }
-.hero-head .platform-meta { justify-content: center; }
+.hero-foot .button-group { justify-content: center; margin-bottom: 0; }
+.hero-foot .platform-meta { justify-content: center; }
 .button-group { display: flex; gap: 0.8rem; flex-wrap: wrap; margin-bottom: 1.3rem; }
 .btn {
   display: inline-flex; align-items: center; gap: 0.5rem;
@@ -208,38 +210,48 @@ h1.hero-title em { font-style: normal; color: var(--accent); }
 .platform-meta .sep { color: var(--ink-subtle); }
 .platform-meta code { font-family: var(--font-mono); font-size: 0.8rem; background: var(--paper-deep); padding: 1px 6px; border-radius: 4px; }
 
-/* ============ 双列模式卡：知识 = 朱砂，智能 = 琥珀 ============ */
-.hero-modes { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; }
-@media (max-width: 760px) { .hero-modes { grid-template-columns: 1fr; } }
-.hero-mode {
-  --mode: var(--cinnabar); --mode-soft: var(--cinnabar-soft);
-  display: flex; flex-direction: column;
-  padding: 1.9rem 1.8rem;
-  background:
-    radial-gradient(120% 80% at 100% 0%, var(--mode-soft), transparent 55%),
-    var(--paper-elev);
-  border: 1px solid var(--hairline); border-top: 3px solid var(--mode);
-  border-radius: var(--r-lg);
-  box-shadow: var(--shadow-card);
-  text-decoration: none; color: inherit;
-  position: relative;
-  transition: transform 0.2s var(--ease), box-shadow 0.2s, border-color 0.15s;
+/* ============ 双引擎阶梯斜切：知识 = 朱砂，智能 = 琥珀（C5 咬合） ============ */
+.hero-stage { display: grid; grid-template-columns: 1fr 1fr; gap: 0; align-items: stretch; }
+.eng {
+  padding: 1.9rem 1.7rem; border-radius: var(--r-lg); box-shadow: var(--shadow-lift);
+  text-decoration: none; color: inherit; display: block;
+  transition: transform 0.2s var(--ease), box-shadow 0.2s;
 }
-.hero-mode.fleet { --mode: var(--amber); --mode-soft: var(--amber-soft); }
-.hero-mode:hover { transform: translateY(-3px); box-shadow: var(--shadow-lift); }
-.hero-mode:focus-visible { outline: 2px solid var(--mode); outline-offset: 3px; }
-.hm-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; }
-.hm-icon svg { width: 20px; height: 20px; }
-.hm-icon.cinnabar { background: var(--cinnabar-soft); color: var(--cinnabar); }
-.hm-icon.amber { background: var(--amber-soft); color: var(--amber-deep); }
-.hm-kicker { font-family: var(--font-serif); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.08em; color: var(--mode); margin-bottom: 0.5rem; }
-.hm-title { font-family: var(--font-serif); font-size: 1.35rem; font-weight: 700; line-height: 1.4; margin-bottom: 0.7rem; color: var(--ink); }
-.hm-title em { font-style: normal; color: var(--mode); }
-.hm-desc { font-size: 0.92rem; color: var(--ink-muted); line-height: 1.75; flex: 1; margin-bottom: 1.2rem; }
-.hm-cta { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.9rem; font-weight: 600; color: var(--mode); }
-.hm-cta svg { width: 15px; height: 15px; transition: transform 0.2s var(--ease); }
-.hero-mode:hover .hm-cta svg { transform: translateX(3px); }
-@keyframes caret { 50% { opacity: 0; } }
+.eng .kick { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; margin-bottom: 0.8rem; display: block; }
+.eng h2 { font-family: var(--font-serif); font-size: 1.35rem; font-weight: 700; margin-bottom: 0.7rem; line-height: 1.28; color: var(--ink); }
+.eng h2 em { font-style: normal; }
+.eng p { font-size: 0.92rem; line-height: 1.75; color: var(--ink-muted); }
+.eng.know {
+  background: linear-gradient(160deg, #f7ece9, var(--paper-card));
+  border: 1px solid rgba(161,59,50,0.22);
+  clip-path: polygon(0 0, 100% 0, 88% 100%, 0 100%);
+  padding-right: 3.4rem;
+  border-top-right-radius: 0; border-bottom-right-radius: 0;
+}
+.eng.know .kick, .eng.know h2 em { color: var(--cinnabar); }
+.eng.fleet {
+  background: linear-gradient(200deg, #f6ece0, var(--paper-card));
+  border: 1px solid rgba(163,94,7,0.24);
+  clip-path: polygon(12% 0, 100% 0, 100% 100%, 0 100%);
+  padding-left: 3.4rem; margin-left: -3.2%;
+  border-top-left-radius: 0; border-bottom-left-radius: 0;
+}
+.eng.fleet .kick, .eng.fleet h2 em { color: var(--amber); }
+.eng:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.eng.know:hover, .eng.fleet:hover { box-shadow: var(--shadow-window); }
+
+.hero-motto { text-align: center; margin-top: 2.2rem; font-family: var(--font-serif); font-size: clamp(1.05rem, 2.6vw, 1.5rem); color: var(--ink-soft); }
+.hero-motto .c1 { color: var(--cinnabar); }
+.hero-motto .c2 { color: var(--amber); }
+.hero-foot { display: flex; flex-direction: column; align-items: center; gap: 1rem; margin-top: 2rem; }
+
+@media (max-width: 760px) {
+  .hero-stage { grid-template-columns: 1fr; gap: 1.2rem; }
+  .eng.know, .eng.fleet {
+    clip-path: none; margin-left: 0; padding: 1.9rem 1.7rem;
+    border-radius: var(--r-lg);
+  }
+}
 
 /* ============ Section 骨架 ============ */
 section { padding: 3.6rem 0; border-top: 1px solid var(--hairline); }
@@ -748,9 +760,27 @@ footer { border-top: 1px solid var(--hairline); background: var(--paper-deep); p
   <div class="container">
     <div class="hero-head">
       <div class="hero-badge rise rise-1"><span class="dot"></span>公测期 · 2026-06-06 → 2027-07-06 完全免费</div>
-      <h1 class="hero-title rise rise-2" id="hero-title"><span class="nb">一个产品，</span><span class="nb">两种<em>身份</em>。</span></h1>
-      <p class="hero-tagline rise rise-3">本地优先的 AI 第二大脑 × agent 指挥位。<br>把零散笔记编译成可追溯的 Wiki，也把活派给本机的真实 CLI —— <strong>知识喂饱 agent，agent 反哺知识。</strong></p>
-      <div class="button-group rise rise-3">
+      <h1 class="hero-title rise rise-2" id="hero-title"><em>知识引擎</em> <span class="times" aria-hidden="true">×</span> <span class="amb">智能舰队</span></h1>
+      <p class="hero-tagline rise rise-3">知识引擎 —— 把笔记编译成活的 Wiki；<br>智能舰队 —— 管理并指挥本地的 agent。</p>
+    </div>
+
+    <div class="hero-stage rise rise-3">
+      <a class="eng know" href="#loop">
+        <span class="kick">知识模式 · Wiki</span>
+        <h2>写下此刻，<em>知识会自己长出来</em></h2>
+        <p>零散笔记 → 抽取实体与概念 → 编译成可追溯的 Wiki，写入先过 Review queue。</p>
+      </a>
+      <a class="eng fleet" href="#agent-fleet">
+        <span class="kick">智能模式 · Agent Fleet</span>
+        <h2>你的知识，<em>一支随时上阵的舰队</em></h2>
+        <p>把活派给本机的 OpenCode / Codex 真实 CLI —— 盯盘、续聊、收结果，产出编回知识库。</p>
+      </a>
+    </div>
+
+    <p class="hero-motto rise rise-4"><span class="c1">知识喂饱 agent</span>，<span class="c2">agent 反哺知识</span>。</p>
+
+    <div class="hero-foot rise rise-4">
+      <div class="button-group">
         <a class="btn btn-primary" href="#download" id="hero-download">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
           <span class="hero-download-label" id="hero-download-label">下载 0.13.4</span>
@@ -759,34 +789,9 @@ footer { border-top: 1px solid var(--hairline); background: var(--paper-deep); p
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
         </a>
       </div>
-      <p class="platform-meta rise rise-4">
+      <p class="platform-meta">
         <strong>macOS · Windows</strong><span class="sep">·</span>本地 SQLite<span class="sep">·</span>数据留在本机<span class="sep">·</span><span class="nb">随时完整导出</span>
       </p>
-    </div>
-
-    <div class="hero-modes rise rise-4">
-      <a class="hero-mode knowledge" href="#loop">
-        <span class="hm-icon cinnabar" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V4H6.5A2.5 2.5 0 0 0 4 6.5z"/></svg>
-        </span>
-        <span class="hm-kicker">知识模式</span>
-        <h2 class="hm-title">写下此刻，<em>知识会自己长出来</em></h2>
-        <p class="hm-desc">零散笔记 → AI 抽取实体与概念 → 编译成可追溯的 Wiki，写入先过 Review queue。你和每一个 AI 都能随时调用。</p>
-        <span class="hm-cta">看看它怎么工作
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
-        </span>
-      </a>
-      <a class="hero-mode fleet" href="#agent-fleet">
-        <span class="hm-icon amber" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m4 17 6-6-6-6"/><path d="M12 19h8"/></svg>
-        </span>
-        <span class="hm-kicker">智能模式</span>
-        <h2 class="hm-title">你的知识，<em>一支随时上阵的 AI 舰队</em></h2>
-        <p class="hm-desc">切到 Agent Fleet，就是你的 agent 指挥位 —— 把活派给本机的 OpenCode / Codex 真实 CLI 进程，盯盘、续聊、收结果，产出编回知识库。</p>
-        <span class="hm-cta">看 Fleet 怎么工作
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
-        </span>
-      </a>
     </div>
   </div>
 </header>

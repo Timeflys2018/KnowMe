@@ -92,30 +92,30 @@ for (const [name, viewport] of Object.entries(VIEWPORTS)) {
   test.describe(`landing @ ${name} ${viewport.width}x${viewport.height}`, () => {
     test.use({ viewport });
 
-    // ---- Design invariants (v3 「双定位」: unified hero + 知识/智能 双列卡片) ----
+    // ---- Design invariants (v3 「双定位」: 知识引擎 × 智能舰队 阶梯斜切 hero) ----
     test("renders the unified hero heading", async ({ page }) => {
       await page.goto(PAGE_URL);
       const title = page.locator("#hero-title");
       await expect(title).toHaveCount(1);
       await expect(title).toBeVisible();
-      await expect(title).toContainText("一个产品");
-      await expect(title).toContainText("两种");
-      // exactly one H1 on the page (no dual-H1 from the old two-scene hero)
+      await expect(title).toContainText("知识引擎");
+      await expect(title).toContainText("智能舰队");
+      // exactly one H1 on the page (the two engine panels use h2)
       await expect(page.locator("h1")).toHaveCount(1);
     });
 
-    test("hero shows both mode cards linking to their sections", async ({ page }) => {
+    test("hero shows both engine panels linking to their sections", async ({ page }) => {
       await page.goto(PAGE_URL);
-      const cards = page.locator(".hero-modes .hero-mode");
-      await expect(cards).toHaveCount(2);
-      const knowledge = page.locator(".hero-mode.knowledge");
-      const fleet = page.locator(".hero-mode.fleet");
+      const panels = page.locator(".hero-stage .eng");
+      await expect(panels).toHaveCount(2);
+      const knowledge = page.locator(".hero-stage .eng.know");
+      const fleet = page.locator(".hero-stage .eng.fleet");
       await expect(knowledge).toBeVisible();
       await expect(fleet).toBeVisible();
       await expect(knowledge).toHaveAttribute("href", "#loop");
       await expect(fleet).toHaveAttribute("href", "#agent-fleet");
-      await expect(knowledge.locator(".hm-kicker")).toHaveText("知识模式");
-      await expect(fleet.locator(".hm-kicker")).toHaveText("智能模式");
+      await expect(knowledge.locator(".kick")).toContainText("知识模式");
+      await expect(fleet.locator(".kick")).toContainText("智能模式");
       // no leftover switch/demo scaffolding from the old design
       await expect(page.locator("[data-mode-tab]")).toHaveCount(0);
       await expect(page.locator(".demo-card")).toHaveCount(0);
@@ -375,7 +375,7 @@ test.describe("faq deep-link @ desktop", () => {
 async function settle(page) {
   await page.evaluate(() => document.fonts.ready);
   await expect(page.locator("#hero-title")).toBeVisible();
-  await expect(page.locator(".hero-modes .hero-mode")).toHaveCount(2);
+  await expect(page.locator(".hero-stage .eng")).toHaveCount(2);
   await page.evaluate(async () => {
     const hero = document.getElementById("hero");
     if (!hero || typeof hero.getAnimations !== "function") return;
