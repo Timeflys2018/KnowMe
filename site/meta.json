@@ -1,22 +1,22 @@
 {
   "schemaVersion": 1,
-  "latestVersion": "0.14.0",
+  "latestVersion": "0.14.1",
   "proReleasedAt": "2027-07-07T00:00:00Z",
   "lifecycle": "active",
   "downloadUrl": "https://useknowme.com/#download",
   "releaseNotesUrl": "https://github.com/Timeflys2018/knowme/releases/latest",
   "announcements": [
     {
-      "id": "v0.14.0-update",
+      "id": "v0.14.1-update",
       "level": "info",
       "carrier": "banner",
-      "title": "知我 KnowMe 0.14.0 已发布",
-      "body": "本版（macOS）：代码文件现在可直接编辑——.py/.ts/.json/.xml/.rs/.go 等代码文件在编辑器内修改、语法高亮、⌘S 即存回磁盘，不再是只读视图；非 UTF-8 / 图片 / 二进制文件仍保持只读；代码文件不参与知识库摄取，也不再显示导出/重摄取按钮。Windows 版本维持 0.13.2。",
+      "title": "知我 KnowMe 0.14.1 已发布",
+      "body": "本版（macOS）：修复 .sh/.bash/.zsh/.env/.rb/.lua/.pl/.r/.kt/.swift/.diff 等代码文件在编辑器内无语法高亮的问题——现在与只读视图的语言集合对齐，shell、Ruby、Lua、Perl、R、Kotlin、Swift、diff 均有高亮。Windows 版本维持 0.13.2。",
       "cta": {
         "label": "前往下载",
         "url": "https://useknowme.com/#download"
       },
-      "affectedBelow": "0.14.0"
+      "affectedBelow": "0.14.1"
     }
   ],
   "riskBlock": null
