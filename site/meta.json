@@ -1,22 +1,22 @@
 {
   "schemaVersion": 1,
-  "latestVersion": "0.13.4",
+  "latestVersion": "0.14.0",
   "proReleasedAt": "2027-07-07T00:00:00Z",
   "lifecycle": "active",
   "downloadUrl": "https://useknowme.com/#download",
   "releaseNotesUrl": "https://github.com/Timeflys2018/knowme/releases/latest",
   "announcements": [
     {
-      "id": "v0.13.4-update",
+      "id": "v0.14.0-update",
       "level": "info",
       "carrier": "banner",
-      "title": "知我 KnowMe 0.13.4 已发布",
-      "body": "本版（macOS）：修复飞书群——群成员 @机器人 后被误列入「新访客」待审列表的问题（群成员即授权，不再产生多余授权提醒）。Windows 版维持 0.13.2，Windows 用户无需更新。",
+      "title": "知我 KnowMe 0.14.0 已发布",
+      "body": "本版（macOS）：代码文件现在可直接编辑——.py/.ts/.json/.xml/.rs/.go 等代码文件在编辑器内修改、语法高亮、⌘S 即存回磁盘，不再是只读视图；非 UTF-8 / 图片 / 二进制文件仍保持只读；代码文件不参与知识库摄取，也不再显示导出/重摄取按钮。Windows 版本维持 0.13.2。",
       "cta": {
         "label": "前往下载",
         "url": "https://useknowme.com/#download"
       },
-      "affectedBelow": "0.13.4"
+      "affectedBelow": "0.14.0"
     }
   ],
   "riskBlock": null
