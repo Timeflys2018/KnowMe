@@ -218,27 +218,30 @@ h1.hero-title .times { color: var(--ink-subtle); font-weight: 400; margin: 0 0.3
   transition: transform 0.2s var(--ease), box-shadow 0.2s;
 }
 .eng .kick { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 700; margin-bottom: 0.8rem; display: block; }
-.eng h2 { font-family: var(--font-serif); font-size: 1.35rem; font-weight: 700; margin-bottom: 0.7rem; line-height: 1.28; color: var(--ink); }
+.eng h2 { font-family: var(--font-serif); font-size: 1.35rem; font-weight: 700; margin-bottom: 0.7rem; line-height: 1.28; color: #f3ead9; }
 .eng h2 em { font-style: normal; }
-.eng p { font-size: 0.92rem; line-height: 1.75; color: var(--ink-muted); }
+.eng p { font-size: 0.92rem; line-height: 1.75; color: #b5ac9c; }
+/* 双暖墨色背景：两块深墨底 + 浅字，左朱砂高亮 / 右琥珀高亮（对称） */
 .eng.know {
-  background: linear-gradient(160deg, #f7ece9, var(--paper-card));
-  border: 1px solid rgba(161,59,50,0.22);
+  background: linear-gradient(150deg, #332c25, #26211c);
+  border: 1px solid #000; box-shadow: 0 16px 40px -12px rgba(0,0,0,0.5);
   clip-path: polygon(0 0, 100% 0, 88% 100%, 0 100%);
   padding-right: 3.4rem;
   border-top-right-radius: 0; border-bottom-right-radius: 0;
 }
-.eng.know .kick, .eng.know h2 em { color: var(--cinnabar); }
+.eng.know .kick { color: #d9776b; }
+.eng.know h2 em { color: #e59386; }
 .eng.fleet {
-  background: linear-gradient(200deg, #f6ece0, var(--paper-card));
-  border: 1px solid rgba(163,94,7,0.24);
+  background: linear-gradient(210deg, #332c25, #26211c);
+  border: 1px solid #000; box-shadow: 0 16px 40px -12px rgba(0,0,0,0.5);
   clip-path: polygon(12% 0, 100% 0, 100% 100%, 0 100%);
   padding-left: 3.4rem; margin-left: -3.2%;
   border-top-left-radius: 0; border-bottom-left-radius: 0;
 }
-.eng.fleet .kick, .eng.fleet h2 em { color: var(--amber); }
+.eng.fleet .kick { color: #e0a05a; }
+.eng.fleet h2 em { color: #e6b877; }
 .eng:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
-.eng.know:hover, .eng.fleet:hover { box-shadow: var(--shadow-window); }
+.eng.know:hover, .eng.fleet:hover { box-shadow: 0 22px 52px -14px rgba(0,0,0,0.58); }
 
 .hero-motto { text-align: center; margin-top: 2.2rem; font-family: var(--font-serif); font-size: clamp(1.05rem, 2.6vw, 1.5rem); color: var(--ink-soft); }
 .hero-motto .c1 { color: var(--cinnabar); }
