@@ -2,12 +2,13 @@
    知我 KnowMe landing page — production browser QA harness.
 
    Verifies the production landing page at site/index.html:
-   the v2 "纸墨书斋" design (hero tri-state demo, workflow, disclosures,
-   mobile nav, FAQ), the REAL multi-source download wiring (R2 default,
-   source switcher, per-platform hrefs), single-sourced version display,
-   the collapsible download band, head/asset/link integrity, and an
-   element-level horizontal-overflow audit. Captures desktop/mobile
-   screenshots for default and compile demo states.
+   the v3 "双定位" design (mode-switch hero: 知识模式 tri-state demo /
+   智能模式 Fleet console; 双引擎闭环 #loop; Agent Fleet #agent-fleet;
+   feature disclosures, mobile nav, FAQ), the REAL multi-source download
+   wiring (R2 default, source switcher, per-platform hrefs), single-sourced
+   version display, the collapsible download band, head/asset/link
+   integrity, and an element-level horizontal-overflow audit. Captures
+   desktop/mobile screenshots for default and compile demo states.
 
    Run (from a checkout that has @playwright/test installed, e.g. the
    sibling zhiwo repo):
@@ -31,11 +32,18 @@ const VERSION = (() => {
   if (!m) throw new Error("Could not find VERSION constant in index.html");
   return m[1];
 })();
+// Windows package version is intentionally decoupled from VERSION: some releases
+// ship macOS-only, keeping the Windows installer on an older version so its
+// download link never 404s. The win filename tracks WIN_VERSION, not VERSION.
+const WIN_VERSION = (() => {
+  const m = PAGE_SRC.match(/var\s+WIN_VERSION\s*=\s*['"]([^'"]+)['"]/);
+  return m ? m[1] : VERSION;
+})();
 
 const FILES = {
   "mac-arm": `KnowMe-${VERSION}-arm64.dmg`,
   "mac-intel": `KnowMe-${VERSION}.dmg`,
-  win: `KnowMe-Setup-${VERSION}.exe`,
+  win: `KnowMe-Setup-${WIN_VERSION}.exe`,
 };
 const R2_BASE = "https://download.useknowme.com/";
 const GH_LATEST = `https://github.com/Timeflys2018/KnowMe/releases/latest/download/`;
@@ -84,18 +92,44 @@ for (const [name, viewport] of Object.entries(VIEWPORTS)) {
   test.describe(`landing @ ${name} ${viewport.width}x${viewport.height}`, () => {
     test.use({ viewport });
 
-    // ---- Design invariants (v2 「纸墨书斋」) ----
-    test("renders hero heading and default demo tab", async ({ page }) => {
+    // ---- Design invariants (v3 「双定位」) ----
+    test("renders hero heading and default demo tab (knowledge mode)", async ({ page }) => {
       await page.goto(PAGE_URL);
-      await expect(page.locator("#hero-title")).toBeVisible();
-      await expect(page.locator("#hero-title")).toContainText("写下此刻");
-      await expect(page.locator("#hero-title")).toContainText("会自己长出来");
+      await expect(page.locator("#hero-title").first()).toBeVisible();
+      await expect(page.locator("#hero-title").first()).toContainText("写下此刻");
+      await expect(page.locator("#hero-title").first()).toContainText("会自己长出来");
+      // knowledge mode active by default
+      const mode = page.locator('[data-mode-tab][aria-selected="true"]');
+      await expect(mode).toHaveCount(1);
+      await expect(mode).toHaveAttribute("data-mode-tab", "knowledge");
+      // knowledge-scene tri-state demo defaults to "write"
       const selected = page.locator('[data-demo-tab][aria-selected="true"]');
       await expect(selected).toHaveCount(1);
       await expect(selected).toHaveAttribute("data-demo-tab", "write");
       await expect(page.locator("#demo-panel-write")).toBeVisible();
       await expect(page.locator("#demo-panel-compile")).toBeHidden();
       await expect(page.locator("#demo-panel-ask")).toBeHidden();
+    });
+
+    test("mode switch reveals the Fleet scene and reskins hero", async ({ page }) => {
+      await page.goto(PAGE_URL);
+      await page.locator("#mode-tab-fleet").click();
+      await expect(page.locator("body")).toHaveAttribute("data-mode", "fleet");
+      const mode = page.locator('[data-mode-tab][aria-selected="true"]');
+      await expect(mode).toHaveCount(1);
+      await expect(mode).toHaveAttribute("data-mode-tab", "fleet");
+      await expect(page.locator("#mode-scene-fleet")).toBeVisible();
+      await expect(page.locator("#mode-scene-knowledge")).toBeHidden();
+      // fleet console defaults to the kanban tab
+      const fleetSel = page.locator('[data-fleet-tab][aria-selected="true"]');
+      await expect(fleetSel).toHaveCount(1);
+      await expect(fleetSel).toHaveAttribute("data-fleet-tab", "kanban");
+    });
+
+    test("#fleet deep-link opens directly in智能模式", async ({ page }) => {
+      await page.goto(PAGE_URL + "#fleet");
+      await expect(page.locator("body")).toHaveAttribute("data-mode", "fleet");
+      await expect(page.locator("#mode-scene-fleet")).toBeVisible();
     });
 
     test("switches demo state on click with single selection", async ({ page }) => {
@@ -128,14 +162,22 @@ for (const [name, viewport] of Object.entries(VIEWPORTS)) {
       );
     });
 
-    test("workflow shows the four exact step labels", async ({ page }) => {
+    test("双引擎闭环 shows the five exact step labels", async ({ page }) => {
       await page.goto(PAGE_URL);
-      const labels = page.locator("#workflow .workflow-step h3");
-      await expect(labels).toHaveCount(4);
+      const labels = page.locator("#loop .loop-flow .loop-node h3");
+      await expect(labels).toHaveCount(5);
       await expect(labels.nth(0)).toHaveText("随手记录");
-      await expect(labels.nth(1)).toHaveText("自动编译");
-      await expect(labels.nth(2)).toHaveText("随时提问");
-      await expect(labels.nth(3)).toHaveText("连接每个 AI");
+      await expect(labels.nth(1)).toHaveText("AI 编译 Wiki");
+      await expect(labels.nth(2)).toHaveText("Agent 经 MCP 读写");
+      await expect(labels.nth(3)).toHaveText("Fleet 派活执行");
+      await expect(labels.nth(4)).toHaveText("产出编回知识库");
+    });
+
+    test("Agent Fleet section renders its capability cards", async ({ page }) => {
+      await page.goto(PAGE_URL);
+      const section = page.locator("#agent-fleet");
+      await expect(section).toHaveCount(1);
+      await expect(section.locator(".fleet-cap")).toHaveCount(4);
     });
 
     test("more-capabilities disclosure is collapsed by default and toggles", async ({ page }) => {
@@ -226,7 +268,8 @@ for (const [name, viewport] of Object.entries(VIEWPORTS)) {
         "#download-strip-title": (t) => t.includes(VERSION),
         "#pricing-period-version": (t) => t.includes(VERSION),
         "#pricing-cta-version": (t) => t.includes(VERSION),
-        "#install-win-filename": (t) => t.includes(VERSION),
+        // Windows installer filename tracks WIN_VERSION (decoupled from VERSION).
+        "#install-win-filename": (t) => t.includes(WIN_VERSION),
         "#download-primary-meta": (t) => t.includes(VERSION),
       };
       for (const [sel, ok] of Object.entries(checks)) {
@@ -234,7 +277,7 @@ for (const [name, viewport] of Object.entries(VIEWPORTS)) {
         if ((await el.count()) === 0) continue;
         // textContent (not innerText) so elements inside collapsed <details> still read.
         const t = ((await el.first().textContent()) || "").trim();
-        expect(ok(t), `${sel} = "${t}" (expected to contain ${VERSION})`).toBe(true);
+        expect(ok(t), `${sel} = "${t}" (expected to satisfy version check)`).toBe(true);
       }
       // no stale version anywhere in the DOM text
       const stale = await page.evaluate(() => document.body.textContent.includes("0.10.1"));
@@ -302,7 +345,9 @@ test.describe("collapse band @ desktop 1440x900", () => {
     await expect(section).toHaveClass(/is-open/);
     await expect(strip).toBeHidden();
     await expect(btn).toBeVisible();
-    expect(await bodyHeight()).toBeGreaterThan(100);
+    // grid-template-rows 0fr→1fr transition (~0.55s); poll until the band has
+    // settled past its collapsed height instead of sampling a mid-transition frame.
+    await expect.poll(bodyHeight).toBeGreaterThan(100);
 
     await page.locator("[data-download-collapse]").click();
     await expect(section).not.toHaveClass(/is-open/);
@@ -328,7 +373,7 @@ test.describe("mobile-only behavior @ 390x844", () => {
     await toggle.click();
     await expect(toggle).toHaveAttribute("aria-expanded", "true");
     await expect(drawer).toBeVisible();
-    await drawer.locator('a[href="#workflow"]').click();
+    await drawer.locator('a[href="#loop"]').click();
     await expect(toggle).toHaveAttribute("aria-expanded", "false");
     await expect(drawer).toBeHidden();
   });

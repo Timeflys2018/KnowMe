@@ -7,6 +7,11 @@ node_modules/
 **/.vitepress/cache/
 dist/
 
+# Playwright test artifacts (landing-page QA harness output)
+test-results/
+**/test-results/
+playwright-report/
+
 # Environment / Secrets
 .env
 .env.local

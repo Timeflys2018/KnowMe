@@ -1613,10 +1613,6 @@ footer { border-top: 1px solid var(--hairline); background: var(--paper-deep); p
 (function () {
   'use strict';
 
-  // 发版配置：发新版时改 VERSION + RELEASE_DATE。VERSION 驱动 mac 版 + 全站文案；
-  // WIN_VERSION 单独控 Windows 安装包版本——通常与 VERSION 相同，仅当某版 Windows 包
-  // 滞后（如 CI 打包暂不可用、只发了 mac）时保持旧版，避免 win 下载指向不存在的文件而 404。
-  // 文件名内嵌版本；GitHub 源走 /latest/ 自动；R2 需以新文件名重传。
   var RELEASED = true;
   var VERSION = '0.13.4';
   var WIN_VERSION = '0.13.2';
@@ -1628,10 +1624,6 @@ footer { border-top: 1px solid var(--hairline); background: var(--paper-deep); p
     'win':       'KnowMe-Setup-' + WIN_VERSION + '.exe'
   };
 
-  // 下载源，按偏好排序（R2 自有源最优先）。三种 URL 形态：
-  //   type:'direct-file' (R2) —— base + 文件名，直接命中文件（不经 github）。
-  //   base:'' (GitHub 直连)    —— github releases/latest 直链。
-  //   其余（公益代理）          —— base + 完整 github 直链（前缀代理）。
   var SOURCES = [
     { id: 'r2',          label: '国内加速 · 官方源',   base: 'https://download.useknowme.com/', type: 'direct-file' },
     { id: 'direct',      label: 'GitHub 直连',        base: '' },
@@ -1640,7 +1632,7 @@ footer { border-top: 1px solid var(--hairline); background: var(--paper-deep); p
     { id: 'ghproxy-net', label: '镜像 · ghproxy.net', base: 'https://ghproxy.net/' },
     { id: 'ghfast',      label: '镜像 · ghfast.top',  base: 'https://ghfast.top/' }
   ];
-  var DEFAULT_SOURCE = SOURCES[0]; // r2
+  var DEFAULT_SOURCE = SOURCES[0];
 
   function githubLatestUrl(platform) {
     return 'https://github.com/' + REPO + '/releases/latest/download/' + FILES[platform];
@@ -1651,7 +1643,6 @@ footer { border-top: 1px solid var(--hairline); background: var(--paper-deep); p
     return (src.base || '') + githubLatestUrl(platform);
   }
 
-  // 同步返回粗判平台；Mac 架构默认 arm64，再由 refineMacArch() 异步校正。
   function detectPlatform() {
     var ua = navigator.userAgent;
     var p = navigator.platform || '';
@@ -1660,7 +1651,6 @@ footer { border-top: 1px solid var(--hairline); background: var(--paper-deep); p
     return 'mac-arm';
   }
 
-  // Chromium 上用 high-entropy UA 探测 CPU 架构，区分 Intel / Apple Silicon。
   function refineMacArch() {
     if (navigator.userAgentData && navigator.userAgentData.getHighEntropyValues) {
       return navigator.userAgentData.getHighEntropyValues(['architecture'])
@@ -1682,7 +1672,6 @@ footer { border-top: 1px solid var(--hairline); background: var(--paper-deep); p
   var introEl = document.getElementById('download-intro');
   if (!preEl || !liveEl) return;
 
-  // 页面上所有写版本号的文案统一由 VERSION/RELEASE_DATE 注入。HTML 字面值仅作 fallback。
   (function applyVersionStrings() {
     var heroDownload = document.getElementById('hero-download');
     if (heroDownload) {
@@ -1734,7 +1723,6 @@ footer { border-top: 1px solid var(--hairline); background: var(--paper-deep); p
   var platform = detectPlatform();
   var activeSource = DEFAULT_SOURCE;
 
-  // 架构决定文件名(platform)，下载源决定前缀(activeSource)，二者正交。
   function applyLinks() {
     primaryBtn.href = ghUrl(platform, activeSource);
     primaryText.textContent = labels[platform] || labels['mac-arm'];
@@ -1756,7 +1744,6 @@ footer { border-top: 1px solid var(--hairline); background: var(--paper-deep); p
     });
   }
 
-  // ---- 手动源切换器 ----
   var sourceWrap = document.getElementById('download-source');
   var sourceRow = document.getElementById('download-source-row');
   var pillById = {};
