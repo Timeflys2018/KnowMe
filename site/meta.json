@@ -1,22 +1,22 @@
 {
   "schemaVersion": 1,
-  "latestVersion": "0.14.2",
+  "latestVersion": "0.14.3",
   "proReleasedAt": "2027-07-07T00:00:00Z",
   "lifecycle": "active",
   "downloadUrl": "https://useknowme.com/#download",
   "releaseNotesUrl": "https://github.com/Timeflys2018/knowme/releases/latest",
   "announcements": [
     {
-      "id": "v0.14.2-update",
+      "id": "v0.14.3-update",
       "level": "info",
       "carrier": "banner",
-      "title": "知我 KnowMe 0.14.2 已发布",
-      "body": "本版（macOS）：智能模式「运行环境」新增「重新识别」按钮——安装好 opencode / codex 后无需重启知我即可重新探测识别；若仍识别不到会提示检查 PATH 环境变量（常见于 GUI 启动未继承终端 PATH）。Windows 版本维持 0.13.2。",
+      "title": "知我 KnowMe 0.14.3 已发布",
+      "body": "本版（macOS）：修复智能模式「运行环境」的两处小问题——安装 codex / opencode 后的提示改为引导你点「重新识别」（不再提示重启知我，与新按钮一致）；「仍未识别」的 PATH 排查提示现按 CLI 显示对应示例目录（codex 显示 ~/.codex/bin，不再误显 opencode 路径）。Windows 版本维持 0.13.2。",
       "cta": {
         "label": "前往下载",
         "url": "https://useknowme.com/#download"
       },
-      "affectedBelow": "0.14.2"
+      "affectedBelow": "0.14.3"
     }
   ],
   "riskBlock": null
