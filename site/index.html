@@ -110,7 +110,12 @@ body {
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .rise { animation: none; }
+  .hero__ink, canvas.hero__water { display: none; }
   * { animation-duration: 0.001s !important; animation-iteration-count: 1 !important; transition-duration: 0.001s !important; }
+}
+/* 触屏无悬停轨迹可划：不建遮罩，保持干净纸面 hero（JS 侧另有 hover:hover gate） */
+@media (hover: none) {
+  .hero__ink, canvas.hero__water { display: none; }
 }
 
 /* ============ Nav ============ */
@@ -235,7 +240,9 @@ h1.hero-title .times { color: var(--ink-subtle); font-weight: 400; margin: 0 0.3
   background: linear-gradient(210deg, #332c25, #26211c);
   border: 1px solid #000; box-shadow: 0 16px 40px -12px rgba(0,0,0,0.5);
   clip-path: polygon(12% 0, 100% 0, 100% 100%, 0 100%);
-  padding-left: 3.4rem; margin-left: -3.2%;
+  /* 左斜边顶部切去卡宽 12%（最宽时 ≈67px > 旧 3.4rem≈54px 导致文字贴边）；
+     padding 用 calc 跟随斜切比例，任意宽度净空恒定 */
+  padding-left: calc(12% + 0.9rem); margin-left: -3.2%;
   border-top-left-radius: 0; border-bottom-left-radius: 0;
 }
 .eng.fleet .kick { color: #e0a05a; }
@@ -247,6 +254,26 @@ h1.hero-title .times { color: var(--ink-subtle); font-weight: 400; margin: 0 0.3
 .hero-motto .c1 { color: var(--cinnabar); }
 .hero-motto .c2 { color: var(--amber); }
 .hero-foot { display: flex; flex-direction: column; align-items: center; gap: 1rem; margin-top: 2rem; }
+
+/* ============ 水纹显影（mimo 式遮罩抠洞） ============
+   三层：z0 .hero__ink 纸下水墨 → z1 canvas.hero__water 纸色遮罩（鼠标轨迹抠洞显影）→ z2 内容。
+   遮罩色 = 平纸 --paper：body 的两缕径向淡染中心在页面上方，到 hero 区域已衰减为 0，平纸即无缝。
+   仅 hover:hover 且非 reduced-motion 时由 JS 点亮（.is-live）；否则 ink/画布隐藏，页面与原来无异。 */
+.hero { position: relative; }
+.hero__ink {
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  opacity: 0; transition: opacity 0.6s var(--ease);
+  /* 暖纸底 + 朱砂晕（知识）+ 琥珀晕（舰队）+ 上方一缕苔痕，水彩低反差；
+     色晕锚在 hero 中段偏下（鼠标常走的卡片两翼高度），不是页脚角落 */
+  background:
+    radial-gradient(58% 52% at 20% 64%, rgba(161, 59, 50, 0.36) 0%, rgba(161, 59, 50, 0.14) 42%, rgba(161, 59, 50, 0) 72%),
+    radial-gradient(60% 54% at 82% 60%, rgba(163, 94, 7, 0.38) 0%, rgba(163, 94, 7, 0.15) 44%, rgba(163, 94, 7, 0) 74%),
+    radial-gradient(46% 40% at 52% 8%, rgba(46, 90, 71, 0.16) 0%, rgba(46, 90, 71, 0) 66%),
+    linear-gradient(158deg, #e9e2d2 0%, #ded5c0 100%);
+}
+.hero.is-live .hero__ink { opacity: 1; }
+canvas.hero__water { position: absolute; inset: 0; z-index: 1; pointer-events: none; display: block; }
+.hero .container { position: relative; z-index: 2; }
 
 @media (max-width: 760px) {
   .hero-stage { grid-template-columns: 1fr; gap: 1.2rem; }
@@ -760,6 +787,8 @@ footer { border-top: 1px solid var(--hairline); background: var(--paper-deep); p
 </nav>
 
 <header class="hero" id="hero">
+  <div class="hero__ink" aria-hidden="true"></div>
+  <canvas class="hero__water" aria-hidden="true"></canvas>
   <div class="container">
     <div class="hero-head">
       <div class="hero-badge rise rise-1"><span class="dot"></span>公测期 · 2026-06-06 → 2027-07-06 完全免费</div>
@@ -1684,6 +1713,147 @@ footer { border-top: 1px solid var(--hairline); background: var(--paper-deep); p
   } else {
     expandFaqAnchor();
   }
+})();
+
+/* ============================================================
+   水纹显影引擎（hero）：纸色遮罩 + destination-out 墨点抠洞，透出纸下水墨。
+   鼠标轨迹每 12px 落一枚墨戳；每戳 8→145px easeOutCubic 扩散、680ms 淡出愈合；
+   rAF 只在有活戳时运行。Gate：仅 hover:hover 且非 reduced-motion 且 2d 可用；
+   否则 ink/画布隐藏，hero 与原来完全一致。
+   ============================================================ */
+(function () {
+  'use strict';
+  var hero = document.getElementById('hero');
+  if (!hero) return;
+  var ink = hero.querySelector('.hero__ink');
+  var canvas = hero.querySelector('canvas.hero__water');
+  if (!ink || !canvas) return;
+
+  var MASK = 'rgb(240, 237, 229)'; // --paper
+  var STAMP_STEP = 12;   // 墨戳沿轨迹的间距 px
+  var MAX_STAMPS = 160;  // 同屏活戳上限
+  var LIFETIME = 680;    // ms：扩散 + 淡出时长
+  var R_START = 8;
+  var R_END = 145;       // 每戳最大半径（含随机抖动）
+  var DPR = Math.min(window.devicePixelRatio || 1, 2);
+
+  var canRun = window.matchMedia('(hover: hover)').matches
+    && !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var ctx = canvas.getContext && canvas.getContext('2d');
+  if (!canRun || !ctx) {
+    ink.style.display = 'none';
+    canvas.style.display = 'none';
+    return;
+  }
+  hero.classList.add('is-live');
+
+  var stamps = [];
+  var rafId = null;
+  var cssW = 0, cssH = 0;
+
+  function paintMask() {
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.fillStyle = MASK;
+    ctx.fillRect(0, 0, cssW, cssH);
+  }
+
+  function resize() {
+    var rect = hero.getBoundingClientRect();
+    cssW = Math.max(1, Math.round(rect.width));
+    cssH = Math.max(1, Math.round(rect.height));
+    canvas.width = Math.round(cssW * DPR);
+    canvas.height = Math.round(cssH * DPR);
+    // canvas 是替换元素，inset:0 不会自动拉伸——锁定 CSS 尺寸避免指针/笔刷按 DPR 错位
+    canvas.style.width = cssW + 'px';
+    canvas.style.height = cssH + 'px';
+    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+    paintMask();
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+
+  // 抠出一枚抖动墨圈：destination-out 下 alpha 越高洞越透；三层正弦叠频模拟水墨毛边
+  function carveInk(x, y, r, alpha, seed) {
+    var grad = ctx.createRadialGradient(x, y, 0, x, y, r);
+    grad.addColorStop(0, 'rgba(0, 0, 0, ' + (0.95 * alpha).toFixed(3) + ')');
+    grad.addColorStop(0.55, 'rgba(0, 0, 0, ' + (0.88 * alpha).toFixed(3) + ')');
+    grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    var SEG = 32;
+    for (var i = 0; i <= SEG; i++) {
+      var a = (i / SEG) * Math.PI * 2;
+      var wob = 0.78
+        + 0.14 * Math.sin(3 * a + seed)
+        + 0.08 * Math.sin(7 * a + 2.1 * seed)
+        + 0.05 * Math.sin(13 * a + 0.7 * seed);
+      var rr = r * wob;
+      var px = x + Math.cos(a) * rr;
+      var py = y + Math.sin(a) * rr;
+      if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  function render() {
+    var now = performance.now();
+    paintMask();
+    ctx.globalCompositeOperation = 'destination-out';
+    for (var i = stamps.length - 1; i >= 0; i--) {
+      var s = stamps[i];
+      var t = (now - s.born) / LIFETIME;
+      if (t >= 1) { stamps.splice(i, 1); continue; }
+      var r = R_START + (s.rmax - R_START) * easeOutCubic(t);
+      carveInk(s.x, s.y, r, 1 - t * t, s.seed);
+    }
+    ctx.globalCompositeOperation = 'source-over';
+    if (stamps.length) {
+      rafId = requestAnimationFrame(render);
+    } else {
+      rafId = null;
+      paintMask(); // 全部愈合，恢复满遮罩
+    }
+  }
+
+  function addStamp(x, y) {
+    stamps.push({
+      x: x, y: y,
+      born: performance.now(),
+      seed: Math.random() * Math.PI * 2,
+      rmax: R_END * (1 + (Math.random() - 0.5) * 0.9) // ≈ ×(1±0.45)，笔触感
+    });
+    if (stamps.length > MAX_STAMPS) stamps.shift();
+    if (!rafId) rafId = requestAnimationFrame(render);
+  }
+
+  var lastX = null, lastY = null;
+  function stampAlong(x, y) {
+    if (lastX === null) { addStamp(x, y); lastX = x; lastY = y; return; }
+    var dx = x - lastX, dy = y - lastY;
+    var dist = Math.hypot(dx, dy);
+    if (dist < STAMP_STEP) return;
+    var steps = Math.floor(dist / STAMP_STEP);
+    for (var i = 1; i <= steps; i++) {
+      var f = (i * STAMP_STEP) / dist;
+      addStamp(lastX + dx * f, lastY + dy * f);
+    }
+    lastX = x; lastY = y;
+  }
+
+  hero.addEventListener('mouseenter', function (e) {
+    var rect = hero.getBoundingClientRect();
+    lastX = e.clientX - rect.left;
+    lastY = e.clientY - rect.top;
+    stampAlong(lastX, lastY);
+  });
+  hero.addEventListener('mousemove', function (e) {
+    var rect = hero.getBoundingClientRect();
+    stampAlong(e.clientX - rect.left, e.clientY - rect.top);
+  });
+  hero.addEventListener('mouseleave', function () { lastX = null; lastY = null; });
 })();
 </script>
 </body>
