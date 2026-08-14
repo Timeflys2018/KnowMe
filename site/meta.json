@@ -1,22 +1,22 @@
 {
   "schemaVersion": 1,
-  "latestVersion": "0.14.4",
+  "latestVersion": "0.14.5",
   "proReleasedAt": "2027-07-07T00:00:00Z",
   "lifecycle": "active",
   "downloadUrl": "https://useknowme.com/#download",
   "releaseNotesUrl": "https://github.com/Timeflys2018/knowme/releases/latest",
   "announcements": [
     {
-      "id": "v0.14.4-update",
+      "id": "v0.14.5-update",
       "level": "info",
       "carrier": "banner",
-      "title": "知我 KnowMe 0.14.4 已发布",
-      "body": "本版（macOS）：智能模式「运行环境」卡片视觉重设计——更紧凑的卡片布局、Cx/Oc 标识、克制的状态提示，PATH 排查提示默认折叠更清爽；并修复一处小问题：点单个运行时的「重新识别」不再连带重扫另一个（现每个运行时独立重新识别）。Windows 版本维持 0.13.2。",
+      "title": "知我 KnowMe 0.14.5 已发布",
+      "body": "本版为稳定性与内部维护更新：优化应用启动速度（主窗口不再等待后台服务握手）、清理若干内部技术债，无新增功能。macOS 版本升级至 0.14.5；Windows 版本维持 0.13.2 不变。",
       "cta": {
         "label": "前往下载",
         "url": "https://useknowme.com/#download"
       },
-      "affectedBelow": "0.14.4"
+      "affectedBelow": "0.14.5"
     }
   ],
   "riskBlock": null
