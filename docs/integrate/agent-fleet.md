@@ -52,7 +52,7 @@ Agent Fleet 是**已 ship 的真实工作台**，由真实的 `codex app-server`
 - **macOS / Linux**：`curl -fsSL https://opencode.ai/install | bash`（opencode）或 codex 官方脚本。
 - **Windows**：`powershell -ExecutionPolicy Bypass -Command "npm install -g opencode-ai"`（codex 同理用 `@openai/codex`）。需先装 Node.js（无则 `winget install OpenJS.NodeJS`）；国内网络慢可加 `--registry=https://registry.npmmirror.com`。
 
-安装完成后**重启知我**即可识别新装的 CLI。（安装命令交由你自己的终端执行——这样 shell 权限、执行策略、编码、PATH 都由系统原生处理，比应用后台代跑更可靠。）
+安装完成后，点卡片上的**「重新识别」**即可（v0.14.2+，无需重启知我）；若仍识别不到，会提示检查 `PATH` 环境变量——常见于从图标启动时未继承终端的完整 `PATH`（把安装目录写进 shell 配置后重启知我，或从终端启动知我即可）。（安装命令交由你自己的终端执行——这样 shell 权限、执行策略、编码、PATH 都由系统原生处理，比应用后台代跑更可靠。）
 :::
 
 ## 通讯录：agent 模板 + 行动履历
