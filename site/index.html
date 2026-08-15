@@ -263,17 +263,48 @@ h1.hero-title .times { color: var(--ink-subtle); font-weight: 400; margin: 0 0.3
 .hero__ink {
   position: absolute; inset: 0; z-index: 0; pointer-events: none;
   opacity: 0; transition: opacity 0.6s var(--ease);
-  /* 暖纸底 + 朱砂晕（知识）+ 琥珀晕（舰队）+ 上方一缕苔痕，水彩低反差；
-     色晕锚在 hero 中段偏下（鼠标常走的卡片两翼高度），不是页脚角落 */
+  /* 暖纸底 + 柔化朱砂/琥珀晕（诗行为主角，色晕退到 ~60%）+ 上方一缕苔痕；
+     色晕锚在 hero 中段偏下（鼠标常走的卡片两翼高度） */
   background:
-    radial-gradient(58% 52% at 20% 64%, rgba(161, 59, 50, 0.36) 0%, rgba(161, 59, 50, 0.14) 42%, rgba(161, 59, 50, 0) 72%),
-    radial-gradient(60% 54% at 82% 60%, rgba(163, 94, 7, 0.38) 0%, rgba(163, 94, 7, 0.15) 44%, rgba(163, 94, 7, 0) 74%),
-    radial-gradient(46% 40% at 52% 8%, rgba(46, 90, 71, 0.16) 0%, rgba(46, 90, 71, 0) 66%),
+    radial-gradient(58% 54% at 20% 68%, rgba(161, 59, 50, 0.20) 0%, rgba(161, 59, 50, 0.08) 44%, rgba(161, 59, 50, 0) 72%),
+    radial-gradient(60% 54% at 82% 64%, rgba(163, 94, 7, 0.22) 0%, rgba(163, 94, 7, 0.09) 46%, rgba(163, 94, 7, 0) 74%),
+    radial-gradient(44% 38% at 50% 6%, rgba(46, 90, 71, 0.10) 0%, rgba(46, 90, 71, 0) 66%),
     linear-gradient(158deg, #e9e2d2 0%, #ded5c0 100%);
 }
 .hero.is-live .hero__ink { opacity: 1; }
 canvas.hero__water { position: absolute; inset: 0; z-index: 1; pointer-events: none; display: block; }
 .hero .container { position: relative; z-index: 2; }
+
+/* 满屏诗行场 ·《记承天寺夜游》：竖排右起、顶对齐一条起笔线，列底随句长自然参差；
+   卷尾左端小字落款。容器横向 flex + row-reverse → 源序首列落最右（右起读序）；
+   vertical-rl 只加在每列上（否则 flex 主轴被转成纵向、列全挤到中线）。 */
+.hero__ink .poem {
+  position: absolute; inset: 0; pointer-events: none;
+  display: flex; flex-direction: row-reverse; align-items: flex-start;
+  justify-content: space-evenly;
+  padding: 7% 1.5% 0;
+  font-family: 'Xingkai SC','STXingkai','Kaiti SC','STKaiti','KaiTi', var(--font-serif);
+  color: var(--ink); opacity: 0.22;
+  user-select: none;
+}
+.hero__ink .poem .p-col {
+  writing-mode: vertical-rl; text-orientation: upright;
+  /* 最长列 10 字：42px×1.15+0.24em ≈ 58px/字 → 580px < 可用 685px（737×93%） */
+  font-size: clamp(28px, 3.2vw, 42px);
+  letter-spacing: 0.24em; line-height: 1.15;
+  white-space: nowrap;
+}
+.hero__ink .poem .p-sign {
+  writing-mode: vertical-rl; text-orientation: upright;
+  margin-top: 2em; /* 落款比起笔略低：画押惯例 */
+  font-size: clamp(13px, 1.5vw, 18px);
+  letter-spacing: 0.18em; line-height: 1.2;
+  white-space: nowrap; opacity: 0.8;
+}
+/* 窄屏：17 列 nowrap 排不下会撑出横向滚动条 —— 藏起诗行场，仅留墨韵底 */
+@media (max-width: 760px) {
+  .hero__ink .poem { display: none; }
+}
 
 @media (max-width: 760px) {
   .hero-stage { grid-template-columns: 1fr; gap: 1.2rem; }
@@ -787,7 +818,27 @@ footer { border-top: 1px solid var(--hairline); background: var(--paper-deep); p
 </nav>
 
 <header class="hero" id="hero">
-  <div class="hero__ink" aria-hidden="true"></div>
+  <div class="hero__ink" aria-hidden="true">
+    <div class="poem" aria-hidden="true">
+      <span class="p-col">元丰六年十月十二日夜</span>
+      <span class="p-col">解衣欲睡</span>
+      <span class="p-col">月色入户</span>
+      <span class="p-col">欣然起行</span>
+      <span class="p-col">念无与为乐者</span>
+      <span class="p-col">遂至承天寺</span>
+      <span class="p-col">寻张怀民</span>
+      <span class="p-col">怀民亦未寝</span>
+      <span class="p-col">相与步于中庭</span>
+      <span class="p-col">庭下如积水空明</span>
+      <span class="p-col">水中藻荇交横</span>
+      <span class="p-col">盖竹柏影也</span>
+      <span class="p-col">何夜无月</span>
+      <span class="p-col">何处无竹柏</span>
+      <span class="p-col">但少闲人</span>
+      <span class="p-col">如吾两人者耳</span>
+      <span class="p-sign">苏轼记承天寺夜游</span>
+    </div>
+  </div>
   <canvas class="hero__water" aria-hidden="true"></canvas>
   <div class="container">
     <div class="hero-head">
