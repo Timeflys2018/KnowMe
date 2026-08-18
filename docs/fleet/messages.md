@@ -84,8 +84,13 @@ opencode 本地会话直读 opencode 自己的 session（像 opencode TUI 那样
 「彻底删除」会级联删除整个会话及全部对话历史（不可撤销）。若只想让某会话不再算作任务但**保留对话**，用[任务看板](/fleet/board)里的「降为普通会话」。
 :::
 
+## 专注模式：翻 AI 的工作文件
+
+会话头部的**立方体图标**（会话有 cwd 时出现）开启[专注模式](/fleet/focus-mode)：左栏从会话列表切成该 agent 工作目录的文件树，点开文件仍待在智能壳里，一边看它跑一边翻/改它的工作文件。
+
 ## 接下来
 
+- [专注模式：翻 AI 的工作文件](/fleet/focus-mode)：左栏切 cwd 文件树，跟着 agent 看/改工作文件
 - [任务看板](/fleet/board)：把会话组织成可派发、可定时的任务
 - [指挥室](/fleet/command-center)：收件箱签收待办 + 全局统揽
 - [Agent Fleet 总览](/integrate/agent-fleet)
