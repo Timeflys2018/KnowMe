@@ -1,22 +1,22 @@
 {
   "schemaVersion": 1,
-  "latestVersion": "0.14.9",
+  "latestVersion": "0.14.10",
   "proReleasedAt": "2027-07-07T00:00:00Z",
   "lifecycle": "active",
   "downloadUrl": "https://useknowme.com/#download",
   "releaseNotesUrl": "https://github.com/Timeflys2018/knowme/releases/latest",
   "announcements": [
     {
-      "id": "v0.14.9-update",
+      "id": "v0.14.10-update",
       "level": "info",
       "carrier": "banner",
-      "title": "知我 KnowMe 0.14.9 已发布",
-      "body": "指挥室更稳：收养的 opencode 会话续聊时保留原模型不再回退账号默认；终态消息不再冻结会话列表与跨视图运行态；Agent 面板打开文件后侧栏子标签（协作 / 通讯录）恢复可点。",
+      "title": "知我 KnowMe 0.14.10 已发布",
+      "body": "细节打磨：opencode 流式响应不再冒出第二个头像；折叠含选中文件的文件夹时，文件夹行保留选中高亮，不再因选中文件行卸载而丢失。",
       "cta": {
         "label": "前往下载",
         "url": "https://useknowme.com/#download"
       },
-      "affectedBelow": "0.14.9"
+      "affectedBelow": "0.14.10"
     }
   ],
   "riskBlock": null
