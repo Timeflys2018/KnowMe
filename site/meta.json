@@ -1,22 +1,22 @@
 {
   "schemaVersion": 1,
-  "latestVersion": "0.14.11",
+  "latestVersion": "0.14.12",
   "proReleasedAt": "2027-07-07T00:00:00Z",
   "lifecycle": "active",
   "downloadUrl": "https://useknowme.com/#download",
   "releaseNotesUrl": "https://github.com/Timeflys2018/knowme/releases/latest",
   "announcements": [
     {
-      "id": "v0.14.11-update",
+      "id": "v0.14.12-update",
       "level": "info",
       "carrier": "banner",
-      "title": "知我 KnowMe 0.14.11 已发布",
-      "body": "专注模式更趁手：文件树像 VS Code 一样显示 git 状态（改动/新增/未跟踪文件带 M/A/U 标识，收起目录带聚合小圆点，侧栏底部显示当前分支，切分支/改文件实时更新）；消息里的 file:// 链接可直接点击打开。另修复：流式回复时上滑看历史不再被拽回底部、首次点开专注模式文件不再闪烁。",
+      "title": "知我 KnowMe 0.14.12 已发布",
+      "body": "安装修复：mac 安装包已 ad-hoc 签名，不再触发「已损坏，建议移到废纸篓」死胡同。首次打开如提示「无法检查是否包含恶意软件」：macOS 15 及更高点「完成」→ 系统设置 → 隐私与安全性 → 仍要打开；macOS 14 及更早右键 → 打开。每个安装仅需一次。",
       "cta": {
         "label": "前往下载",
         "url": "https://useknowme.com/#download"
       },
-      "affectedBelow": "0.14.11"
+      "affectedBelow": "0.14.12"
     }
   ],
   "riskBlock": null
