@@ -8,7 +8,9 @@
 
 1. 从 [Releases](https://github.com/Timeflys2018/KnowMe/releases/latest) 下载 `KnowMe-<version>-mac-arm64.dmg`(Apple Silicon)或 `KnowMe-<version>-mac-x64.dmg`(Intel)。
 2. 双击 `.dmg`,把 KnowMe 拖进 Applications。
-3. 首次启动若提示"未识别的开发者",在 `系统设置 → 隐私与安全性` 里点"仍要打开",或对 App `右键 → 打开` 一次即可。
+3. 首次启动若提示「无法检查它是否包含恶意软件」(未公证签名,属正常):
+   - **macOS 15 Sequoia 及更高**:弹窗点「完成」→ `系统设置 → 隐私与安全性` → 滚到底点「仍要打开」→ 输密码确认。每个安装仅需一次。
+   - **macOS 14 Sonoma 及更早**:对 App `右键 → 打开` 一次即可。
 
 <!-- SCREENSHOT[quickstart-dmg.png]: macOS DMG 安装界面，KnowMe 图标拖进 Applications -->
 
