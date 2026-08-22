@@ -1,6 +1,6 @@
 # Agent Fleet 智能舰队
 
-Agent Fleet 是知我的**智能工作台** —— 在一个入口下调度本地的 codex 与 opencode，把你的 AI agent 编成一支舰队：派活、盯盘、续聊、沉淀，结果直接编回你的知识库。
+Agent Fleet 是知我的**智能工作台** —— 在一个入口下调度本地的 codex、opencode 与 dsh，把你的 AI agent 编成一支舰队：派活、盯盘、续聊、沉淀，结果直接编回你的知识库。
 
 MCP 让外部 agent **读**知我；Agent Fleet 反过来，让知我成为**指挥位**：你在这里下达目标，由真实的 codex / opencode 进程执行，全程实时流式，产出可一键编入 vault。
 
@@ -28,7 +28,6 @@ Agent Fleet 是**已 ship 的真实工作台**，由真实的 `codex app-server`
 | **任务** | 任务看板（待派发 / 进行中 / 待审核 / 已完成）+ 派发时机三选 + 任务抽屉用量面板 | [任务看板](/fleet/board) |
 | **指挥室** | 需处理收件箱（就地签收待办）+ 全局统揽 + 可选 LLM 凝练 | [指挥室](/fleet/command-center) |
 | **定时** | 到点自动派发的 autopilot 子系统 | [定时任务](/fleet/autopilots) |
-| **小队**（开发中） | agent 编组 + 群聊式聚合时间线（暂置灰下线） | [小队](/fleet/squad) |
 | **通讯录** | agent 模板（挂载 MCP / Skills）+ 行动履历动态墙 | 本页下方 |
 | **配置** | 运行时 / 模型 / 记忆治理配置卡片 | [配置中心](/settings) |
 
@@ -40,6 +39,7 @@ Agent Fleet 是**已 ship 的真实工作台**，由真实的 `codex app-server`
 |---|---|---|---|
 | **opencode · 本地** | opencode 自己的 session | ✓ 全部 | 复用常驻单 `opencode serve`，镜像 opencode TUI；斜杠命令、模型/agent 选择器、MCP 状态、编排面板全可用 |
 | **codex · 本地** | `~/.codex` rollout | — | 读 codex 自己的会话历史；codex 用自己的 role/model 源 |
+| **dsh · 本地** | dsh session 事件流 | ✓ | 经 bridge 插件驱动（免重启切模型 / 审批 / 问询）；模型路由读 `~/.dsh/settings.yaml`。接入见 [接入 dsh 运行时](/fleet/dsh-runtime) |
 | **托管（managed）** | task_events 镜像 | — | 隔离运行时 + 冻结配置（云端 Pro 形态的地基） |
 
 ::: tip 本地 = 终端等价
@@ -53,6 +53,10 @@ Agent Fleet 是**已 ship 的真实工作台**，由真实的 `codex app-server`
 - **Windows**：`powershell -ExecutionPolicy Bypass -Command "npm install -g opencode-ai"`（codex 同理用 `@openai/codex`）。需先装 Node.js（无则 `winget install OpenJS.NodeJS`）；国内网络慢可加 `--registry=https://registry.npmmirror.com`。
 
 安装完成后，点卡片上的**「重新识别」**即可（v0.14.2+，无需重启知我）；若仍识别不到，会提示检查 `PATH` 环境变量——常见于从图标启动时未继承终端的完整 `PATH`（把安装目录写进 shell 配置后重启知我，或从终端启动知我即可）。（安装命令交由你自己的终端执行——这样 shell 权限、执行策略、编码、PATH 都由系统原生处理，比应用后台代跑更可靠。）
+:::
+
+::: tip 想接入 dsh 运行时？
+Fleet 还支持第三个运行时 **dsh**（DeepSeek Harness）：`npm install -g @deepseek-ai/dsh@0.1.0-rc.8` 后，在配置页的 dsh 卡片**一键安装 bridge 插件**即可 —— 模型与 key 用任意 provider（DeepSeek 官方、OpenAI / Anthropic 兼容端点均可）。完整步骤见 [接入 dsh 运行时](/fleet/dsh-runtime)。
 :::
 
 ## 通讯录：agent 模板 + 行动履历
@@ -79,7 +83,7 @@ agent 的 tier（read-only → approval → yolo）向上提升会让它从只�
 
 - **待审核审批门控**：看板「待审核」列已呈现，但「通过 / 拒绝」的审批状态机尚未接后端。
 - **看板筛选器**：筛选按钮为占位（即将上线）。
-- **小队**：小队 tab 当前**暂置灰下线（开发中）**，尚未对用户开放（[详情](/fleet/squad)）。
+- **小队**：小队 tab 当前**暂置灰下线**，尚未对用户开放，具体计划未定。
 - **自主编排 / 队长自动派发**：无 agent 间自动 handoff、无 SquadSupervisor。多 agent 自动编排属未来 Pro 云端能力。
 - **云端编排 / 后台 Dream-cycle / 团队共享空间**：2027 Pro / Team 形态，见 [定价](https://useknowme.com/#pricing)。
 
