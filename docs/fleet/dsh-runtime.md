@@ -7,7 +7,7 @@ dsh（DeepSeek Harness）是一个开源命令行 agent 运行时。Agent Fleet 
 | 组件 | 是什么 | 谁来装 |
 |---|---|---|
 | **dsh CLI** | 运行时本体（官方 npm 包 `@deepseek-ai/dsh`） | 你，一条 npm 命令 |
-| **bridge 插件**（`@knowme/dsh-bridge`） | 知我的私有驱动层：把「免重启切模型 / 审批应答 / 问询应答」补进 dsh 的 stdio SDK 面 | **知我一键装**（或手动一条命令） |
+| **bridge 插件**（`knowme-dsh-bridge`） | 知我的私有驱动层：把「免重启切模型 / 审批应答 / 问询应答」补进 dsh 的 stdio SDK 面 | **知我一键装**（或手动一条命令） |
 
 ::: tip 为什么需要 bridge
 dsh 官方 stdio 接口只开放 5 个方法（initialize / session/prompt / shutdown 等），运行时本身支持的**中途切模型、审批应答**没有暴露到 stdio。bridge 是一个运行在 dsh 进程内的 cordis 插件，把这几个交互控制方法补在同一条通道上 —— 知我作为进程外的调度方才能真正「驱动」dsh，而不是每次改配置都要重启。bridge 开源：[Timeflys2018/knowme-dsh-bridge](https://github.com/Timeflys2018/knowme-dsh-bridge)。
@@ -95,7 +95,7 @@ chmod 600 ~/.dsh/.credentials.yaml
 <summary>手动安装（不想用按钮 / 按钮不可用）</summary>
 
 ```sh
-dsh plugin --profile knowme-sdk add @knowme/dsh-bridge@0.1.0-rc.8
+dsh plugin --profile knowme-sdk add knowme-dsh-bridge@0.1.0-rc.8
 ```
 
 验证组合（能看到 knowme-bridge 行即成功）：
@@ -103,7 +103,7 @@ dsh plugin --profile knowme-sdk add @knowme/dsh-bridge@0.1.0-rc.8
 ```sh
 dsh --profile knowme-sdk --dump-config | grep -A1 knowme-bridge
 # - id: knowme-bridge
-#   name: '@knowme/dsh-bridge'
+#   name: 'knowme-dsh-bridge'
 ```
 
 </details>
