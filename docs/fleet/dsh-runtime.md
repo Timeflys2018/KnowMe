@@ -94,9 +94,25 @@ chmod 600 ~/.dsh/.credentials.yaml
 <details>
 <summary>手动安装（不想用按钮 / 按钮不可用）</summary>
 
+bridge 依赖一组 dsh 运行时包作为 peer 依赖，而 dsh profile 的 pnpm 不自动安装 peer——手动安装时要带上它们（一条命令，复制即用）：
+
 ```sh
-dsh plugin --profile knowme-sdk add knowme-dsh-bridge@0.1.0-rc.8
+dsh plugin --profile knowme-sdk add \
+  knowme-dsh-bridge@0.1.0-rc.8 \
+  @deepseek-ai/cordis@4.0.1 \
+  @deepseek-ai/dsh-agent@0.1.0-rc.8 \
+  @deepseek-ai/dsh-agent-presets@0.1.0-rc.8 \
+  @deepseek-ai/dsh-llm@0.1.0-rc.8 \
+  @deepseek-ai/dsh-permission-presets@0.1.0-rc.8 \
+  @deepseek-ai/dsh-sdk-jsonrpc-server@0.1.0-rc.8 \
+  @deepseek-ai/dsh-sdk-protocol@0.1.0-rc.8 \
+  @deepseek-ai/dsh-session@0.1.0-rc.8 \
+  @deepseek-ai/dsh-session-stats@0.1.0-rc.8 \
+  @deepseek-ai/dsh-user-approval@0.1.0-rc.8 \
+  @deepseek-ai/dsh-user-questions@0.1.0-rc.8
 ```
+
+（「一键安装」按钮已内置这条完整命令，日常用按钮即可。）
 
 验证组合（能看到 knowme-bridge 行即成功）：
 
