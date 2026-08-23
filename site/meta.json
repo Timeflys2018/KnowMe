@@ -1,22 +1,22 @@
 {
   "schemaVersion": 1,
-  "latestVersion": "0.15.0",
+  "latestVersion": "0.15.1",
   "proReleasedAt": "2027-07-07T00:00:00Z",
   "lifecycle": "active",
   "downloadUrl": "https://useknowme.com/#download",
   "releaseNotesUrl": "https://github.com/Timeflys2018/knowme/releases/latest",
   "announcements": [
     {
-      "id": "v0.15.0-update",
+      "id": "v0.15.1-update",
       "level": "info",
       "carrier": "banner",
-      "title": "知我 KnowMe 0.15.0 已发布",
-      "body": "0.15.0：新增 dsh（DeepSeek Harness）第三个 agent 运行内核（含一键安装引导）、新建会话弹窗（先选内核/模型/权限/目录）、dsh 权限预设与斜杠命令、遥测侧栏重设计。修复启动迁移误删对话历史、权限卡复活、流式转录闪烁与跨会话中断泄漏。本版先发 macOS；Windows 暂为 0.13.2（CI 额度恢复后跟进）。",
+      "title": "知我 KnowMe 0.15.1 已发布",
+      "body": "0.15.1：dsh 运行时配套升级——bridge 锚线升至 0.1.1-rc.2，dsh 卡片新增「升级 bridge」一键按钮，并修复新版 dsh 凭据文件布局下「未配置凭据」的误报。使用 dsh 的用户升级后请在配置页 dsh 卡片点「升级 bridge」。本版仅 macOS；Windows 仍为 0.13.2。",
       "cta": {
         "label": "前往下载",
         "url": "https://useknowme.com/#download"
       },
-      "affectedBelow": "0.15.0"
+      "affectedBelow": "0.15.1"
     }
   ],
   "riskBlock": null
