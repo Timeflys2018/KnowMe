@@ -24,7 +24,7 @@ dsh 官方 stdio 接口只开放 5 个方法（initialize / session/prompt / shu
 npm 安装（全平台同一命令；版本先钉在知我验证过的 rc 线上）：
 
 ```sh
-npm install -g @deepseek-ai/dsh@0.1.0-rc.8
+npm install -g @deepseek-ai/dsh@0.1.1-rc.2
 ```
 
 国内网络慢可加 `--registry=https://registry.npmmirror.com`。
@@ -32,7 +32,7 @@ npm install -g @deepseek-ai/dsh@0.1.0-rc.8
 装完验证：
 
 ```sh
-dsh --version    # 0.1.0-rc.8
+dsh --version    # 0.1.1-rc.2
 ```
 
 ## 第二步：配置模型与 Key
@@ -98,18 +98,18 @@ bridge 依赖一组 dsh 运行时包作为 peer 依赖，而 dsh profile 的 pnp
 
 ```sh
 dsh plugin --profile knowme-sdk add \
-  knowme-dsh-bridge@0.1.0-rc.8 \
+  knowme-dsh-bridge@0.1.1-rc.2 \
   @deepseek-ai/cordis@4.0.1 \
-  @deepseek-ai/dsh-agent@0.1.0-rc.8 \
-  @deepseek-ai/dsh-agent-presets@0.1.0-rc.8 \
-  @deepseek-ai/dsh-llm@0.1.0-rc.8 \
-  @deepseek-ai/dsh-permission-presets@0.1.0-rc.8 \
-  @deepseek-ai/dsh-sdk-jsonrpc-server@0.1.0-rc.8 \
-  @deepseek-ai/dsh-sdk-protocol@0.1.0-rc.8 \
-  @deepseek-ai/dsh-session@0.1.0-rc.8 \
-  @deepseek-ai/dsh-session-stats@0.1.0-rc.8 \
-  @deepseek-ai/dsh-user-approval@0.1.0-rc.8 \
-  @deepseek-ai/dsh-user-questions@0.1.0-rc.8
+  @deepseek-ai/dsh-agent@0.1.1-rc.2 \
+  @deepseek-ai/dsh-agent-presets@0.1.1-rc.2 \
+  @deepseek-ai/dsh-llm@0.1.1-rc.2 \
+  @deepseek-ai/dsh-permission-presets@0.1.1-rc.2 \
+  @deepseek-ai/dsh-sdk-jsonrpc-server@0.1.1-rc.2 \
+  @deepseek-ai/dsh-sdk-protocol@0.1.1-rc.2 \
+  @deepseek-ai/dsh-session@0.1.1-rc.2 \
+  @deepseek-ai/dsh-session-stats@0.1.1-rc.2 \
+  @deepseek-ai/dsh-user-approval@0.1.1-rc.2 \
+  @deepseek-ai/dsh-user-questions@0.1.1-rc.2
 ```
 
 （「一键安装」按钮已内置这条完整命令，日常用按钮即可。）
@@ -148,7 +148,7 @@ dsh --profile knowme-sdk --dump-config | grep -A1 knowme-bridge
 | 想加 / 改插件行 | 编辑 `~/.dsh/profiles/knowme-sdk/cordis.patch.yml`（用户 patch 层，热重载） |
 
 ::: warning 版本锚定
-dsh 处于 developer preview（rc 线），API 变动频繁。知我针对 `0.1.0-rc.8` 验证了整条链路 —— 若自行升到更新的 rc 出现异常，先回锚定版本对照排查。
+dsh 处于 developer preview（rc 线），API 变动频繁。知我针对 `0.1.1-rc.2` 验证了整条链路 —— 若自行升到更新的 rc 出现异常，先回锚定版本对照排查。
 :::
 
 ## 接下来

@@ -56,7 +56,7 @@ Agent Fleet 是**已 ship 的真实工作台**，由真实的 `codex app-server`
 :::
 
 ::: tip 想接入 dsh 运行时？
-Fleet 还支持第三个运行时 **dsh**（DeepSeek Harness）：`npm install -g @deepseek-ai/dsh@0.1.0-rc.8` 后，在配置页的 dsh 卡片**一键安装 bridge 插件**即可 —— 模型与 key 用任意 provider（DeepSeek 官方、OpenAI / Anthropic 兼容端点均可）。完整步骤见 [接入 dsh 运行时](/fleet/dsh-runtime)。
+Fleet 还支持第三个运行时 **dsh**（DeepSeek Harness）：`npm install -g @deepseek-ai/dsh@0.1.1-rc.2` 后，在配置页的 dsh 卡片**一键安装 bridge 插件**即可 —— 模型与 key 用任意 provider（DeepSeek 官方、OpenAI / Anthropic 兼容端点均可）。完整步骤见 [接入 dsh 运行时](/fleet/dsh-runtime)。
 :::
 
 ## 通讯录：agent 模板 + 行动履历
