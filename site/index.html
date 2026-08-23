@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>知我 KnowMe — 你的知识，你的 AI 舰队</title>
-<meta name="description" content="本地优先的 AI 第二大脑 × agent 指挥位。知我把零散笔记编译成可追溯的 Wiki，并调度你本机的 OpenCode / Codex 真实 CLI 干活——知识喂饱 agent，agent 反哺知识。">
-<meta name="keywords" content="知识管理,AI 笔记,Obsidian 替代,本地优先,MCP,Claude Code,OpenCode,Codex,Agent Fleet,知识图谱,Wiki 编译,AI 第二大脑">
+<meta name="description" content="本地优先的 AI 第二大脑 × agent 指挥位。知我把零散笔记编译成可追溯的 Wiki，并调度你本机的 OpenCode / Codex / dsh 真实 CLI 干活——知识喂饱 agent，agent 反哺知识。">
+<meta name="keywords" content="知识管理,AI 笔记,Obsidian 替代,本地优先,MCP,Claude Code,OpenCode,Codex,dsh,DeepSeek,Agent Fleet,知识图谱,Wiki 编译,AI 第二大脑">
 <meta property="og:title" content="知我 KnowMe — 你的知识，你的 AI 舰队">
 <meta property="og:description" content="本地优先的 AI 第二大脑 × agent 指挥位。MCP 原生 · LLM 编译 Wiki · Agent Fleet 调度本机真实 CLI。">
 <meta property="og:type" content="website">
@@ -856,7 +856,7 @@ footer { border-top: 1px solid var(--hairline); background: var(--paper-deep); p
       <a class="eng fleet" href="#agent-fleet">
         <span class="kick">智能模式 · Agent Fleet</span>
         <h2>你的知识，<em>一支随时上阵的舰队</em></h2>
-        <p>把活派给本机的 OpenCode / Codex 真实 CLI —— 盯盘、续聊、收结果，产出编回知识库。</p>
+        <p>把活派给本机的 OpenCode / Codex / dsh 真实 CLI —— 盯盘、续聊、收结果，产出编回知识库。</p>
       </a>
     </div>
 
@@ -886,7 +886,7 @@ footer { border-top: 1px solid var(--hairline); background: var(--paper-deep); p
       <h2 class="section-title">知识引擎 × <em class="amber">agent 指挥位</em>，<br>共用同一份记忆</h2>
       <p class="section-intro">
         知我不假装 agent —— 它把你的笔记编译成可追溯的 Wiki，把这份记忆通过 MCP 开放给每一个 AI；
-        切到智能模式，它反过来成为指挥位，调度你本机的 OpenCode / Codex 真实 CLI 进程干活。
+        切到智能模式，它反过来成为指挥位，调度你本机的 OpenCode / Codex / dsh 真实 CLI 进程干活。
         <strong>知识喂饱 agent，agent 反哺知识</strong> —— 这是同一个闭环的两半。
       </p>
     </div>
@@ -941,7 +941,7 @@ footer { border-top: 1px solid var(--hairline); background: var(--paper-deep); p
         <span class="ld-tag">对内调度</span>
         <div>
           <h4>知我作为指挥位调度 agent</h4>
-          <p>Agent Fleet 启动你本机已安装的 OpenCode / Codex 真实进程，复用 <strong>~/.codex 与 ~/.config/opencode</strong> 配置。这是产品里的「智能模式」，也是<strong>唯一需要登录的区域</strong>。</p>
+          <p>Agent Fleet 启动你本机已安装的 OpenCode / Codex / dsh 真实进程，复用 <strong>~/.codex、~/.config/opencode 与 ~/.dsh</strong> 配置（dsh 支持应用内一键安装）。这是产品里的「智能模式」，也是<strong>唯一需要登录的区域</strong>。</p>
         </div>
       </div>
     </div>
@@ -954,7 +954,7 @@ footer { border-top: 1px solid var(--hairline); background: var(--paper-deep); p
       <div class="section-no amber">二 · 智能模式</div>
       <h2 class="section-title">Agent Fleet —— <em class="amber">已 ship 的真实工作台</em>，<br>不是演示外壳</h2>
       <p class="section-intro">
-        在一个入口下调度本地 opencode / codex：派活、盯盘、续聊。
+        在一个入口下调度本地 opencode / codex / dsh：派活、盯盘、续聊。
         真逐字流式转录、斜杠命令、四列任务看板、定时跨天派发、指挥室收件箱 ——
         看板与会话双向跳转，任务抽屉自带 token / 花费面板，<strong>产出一键编回知识库</strong>。
       </p>
@@ -1112,7 +1112,7 @@ footer { border-top: 1px solid var(--hairline); background: var(--paper-deep); p
       <div class="hero-feat amber">
         <div class="hf-no">02</div>
         <h3>Agent Fleet 智能舰队</h3>
-        <p>在一个入口下调度本地 opencode / codex —— 派活、盯盘、续聊。<strong>真逐字流式转录、斜杠命令、任务看板（四列 + 定时跨天派发）、指挥室（需处理收件箱 + 全局统揽 + 可选 LLM 凝练）</strong>，看板↔会话双向跳转、任务抽屉带 token/花费面板，产出一键编回知识库。</p>
+        <p>在一个入口下调度本地 opencode / codex / dsh —— 派活、盯盘、续聊。<strong>真逐字流式转录、斜杠命令、任务看板（四列 + 定时跨天派发）、指挥室（需处理收件箱 + 全局统揽 + 可选 LLM 凝练）</strong>，看板↔会话双向跳转、任务抽屉带 token/花费面板，产出一键编回知识库。</p>
         <span class="feat-tag amber">agent 指挥位 · 本地已 ship · 云端编排后续推出</span>
       </div>
       <div class="hero-feat">
@@ -1165,7 +1165,7 @@ footer { border-top: 1px solid var(--hairline); background: var(--paper-deep); p
         <div class="rf-no">08</div>
         <div>
           <h4>分屏多面板 + 多窗口 · 一边写，一边看 AI 跑</h4>
-          <p>窗口可<strong>向右分屏</strong>成并排的多个面板，每个面板都是一套<strong>完整独立的工作区</strong> —— 自己的标签页、文件树、AI 右栏。<strong>左边写调研笔记，右边开智能标签把任务派给本地 Claude Code / opencode，一屏之内看它逐字跑。</strong>每个面板状态各自记忆，关闭分栏一键还原。还能 <strong>File → New Window（⌘N）另开独立窗口</strong>，把不同笔记<strong>分布到多台显示器</strong>，各窗口独立标签页与布局、共享同一知识库。</p>
+          <p>窗口可<strong>向右分屏</strong>成并排的多个面板，每个面板都是一套<strong>完整独立的工作区</strong> —— 自己的标签页、文件树、AI 右栏。<strong>左边写调研笔记，右边开智能标签把任务派给本地 opencode / codex / dsh，一屏之内看它逐字跑。</strong>每个面板状态各自记忆，关闭分栏一键还原。还能 <strong>File → New Window（⌘N）另开独立窗口</strong>，把不同笔记<strong>分布到多台显示器</strong>，各窗口独立标签页与布局、共享同一知识库。</p>
           <span class="feat-tag">已 ship · 向右分屏 + 多窗口 · 面板/窗口=完整工作区</span>
         </div>
       </div>
@@ -1211,7 +1211,7 @@ footer { border-top: 1px solid var(--hairline); background: var(--paper-deep); p
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>双向链接 · 知识图谱 · LLM 编译 Wiki · <strong>Review queue 人工把关</strong></span></li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>多通道导出（微信公众号 / 小红书规划中）</span></li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><strong>本地 MCP / localhost API</strong> · 接入 Claude Code / Cursor</span></li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Agent Fleet 本地工作台</strong>：调度本地 opencode / codex · 流式转录 · 看板 · 定时派发 · 指挥室（本地全功能免费）</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><strong>Agent Fleet 本地工作台</strong>：调度本地 opencode / codex / dsh · 流式转录 · 看板 · 定时派发 · 指挥室（本地全功能免费）</span></li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>OpenAI / Anthropic / Gemini / Ollama / LM Studio <strong>自备 key</strong> · 预设一键接入 · 内置免费模型（实验性）</span></li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>本地 SQLite · 数据导出永久可用</span></li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><strong>本地知识图谱</strong> · <strong>全局时间线</strong>（分支树 + 放射心智图）</span></li>
