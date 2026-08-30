@@ -1,22 +1,22 @@
 {
   "schemaVersion": 1,
-  "latestVersion": "0.15.1",
+  "latestVersion": "0.16.0",
   "proReleasedAt": "2027-07-07T00:00:00Z",
   "lifecycle": "active",
   "downloadUrl": "https://useknowme.com/#download",
   "releaseNotesUrl": "https://github.com/Timeflys2018/knowme/releases/latest",
   "announcements": [
     {
-      "id": "v0.15.1-update",
+      "id": "v0.16.0-update",
       "level": "info",
       "carrier": "banner",
-      "title": "知我 KnowMe 0.15.1 已发布",
-      "body": "0.15.1：dsh 运行时配套升级——bridge 锚线升至 0.1.1-rc.2，dsh 卡片新增「升级 bridge」一键按钮，并修复新版 dsh 凭据文件布局下「未配置凭据」的误报。使用 dsh 的用户升级后请在配置页 dsh 卡片点「升级 bridge」。本版仅 macOS；Windows 仍为 0.13.2。",
+      "title": "知我 KnowMe 0.16.0 已发布",
+      "body": "0.16.0：任务中心大版本——全新任务 tab（日历视图、智能清单、行内编辑）、全局快速捕获 + 收集箱（# @ ! ^ ~ 触发字符候选）、AI 整理升级（聚类归并、后台运行、可组合筛选）、定时任务并入任务 tab；HTML 预览支持选中评论与分屏编辑；长会话渲染与文件扫描大幅提速，密钥存储防丢失加固。本版仅 macOS；Windows 仍为 0.13.2。",
       "cta": {
         "label": "前往下载",
         "url": "https://useknowme.com/#download"
       },
-      "affectedBelow": "0.15.1"
+      "affectedBelow": "0.16.0"
     }
   ],
   "riskBlock": null
