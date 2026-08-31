@@ -154,5 +154,5 @@ dsh 处于 developer preview（rc 线），API 变动频繁。知我针对 `0.1.
 ## 接下来
 
 - [Agent Fleet 总览](/integrate/agent-fleet)
-- [消息与深聊](/fleet/messages) · [任务看板](/fleet/board)
+- [消息与深聊](/fleet/messages) · [任务](/fleet/board)
 - bridge 实现：[Timeflys2018/knowme-dsh-bridge](https://github.com/Timeflys2018/knowme-dsh-bridge)（MIT）

@@ -60,7 +60,7 @@ opencode 本地会话直读 opencode 自己的 session（像 opencode TUI 那样
 
 - **新建**：点右上「+」→ 选一个 agent（可选覆盖工作目录）→ 进入新会话草稿。首次发送才真正创建会话。
 - **续聊**：点左列任一在线/离线会话 → 恢复它的完整历史继续对话（真 resume，进程可复活）。
-- **`/task` 建任务**：在输入框发 `/task <描述>` 直接建一个显式任务并跳转到它的新会话（同时进[任务看板](/fleet/board)）。
+- **`/task` 建任务**：在输入框发 `/task <描述>` 直接建一个显式任务并跳转到它的新会话（同时进[任务](/fleet/board)收集箱）。
 
 ## 模型与 agent 切换
 
@@ -81,7 +81,7 @@ opencode 本地会话直读 opencode 自己的 session（像 opencode TUI 那样
 > **分享 / 取消分享**改由输入框斜杠命令 `/share` · `/unshare` 承接，不再进右键菜单；批量分享仍保留。
 
 ::: warning 删除 vs 降级
-「彻底删除」会级联删除整个会话及全部对话历史（不可撤销）。若只想让某会话不再算作任务但**保留对话**，用[任务看板](/fleet/board)里的「降为普通会话」。
+「彻底删除」会级联删除整个会话及全部对话历史（不可撤销）。若只想让某会话不再算作任务但**保留对话**，用[任务](/fleet/board)里的「降为普通会话」。
 :::
 
 ## 专注模式：翻 AI 的工作文件
@@ -91,6 +91,6 @@ opencode 本地会话直读 opencode 自己的 session（像 opencode TUI 那样
 ## 接下来
 
 - [专注模式：翻 AI 的工作文件](/fleet/focus-mode)：左栏切 cwd 文件树，跟着 agent 看/改工作文件
-- [任务看板](/fleet/board)：把会话组织成可派发、可定时的任务
+- [任务](/fleet/board)：收集、整理、派发与定时
 - [指挥室](/fleet/command-center)：收件箱签收待办 + 全局统揽
 - [Agent Fleet 总览](/integrate/agent-fleet)

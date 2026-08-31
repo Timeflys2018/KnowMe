@@ -25,9 +25,8 @@ Agent Fleet 是**已 ship 的真实工作台**，由真实的 `codex app-server`
 | Tab | 做什么 | 详见 |
 |---|---|---|
 | **消息** | session-first 会话列表 + 单窗深聊，逐字流式，斜杠命令，续聊 | [消息](/fleet/messages) |
-| **任务** | 任务看板（待派发 / 进行中 / 待审核 / 已完成）+ 派发时机三选 + 任务抽屉用量面板 | [任务看板](/fleet/board) |
+| **任务** | 收集箱 + 全局快捷捕获 + AI 整理（聚合归并）+ 列表/看板/日历/回顾四视图 + 统一定时 | [任务](/fleet/board) |
 | **指挥室** | 需处理收件箱（就地签收待办）+ 全局统揽 + 可选 LLM 凝练 | [指挥室](/fleet/command-center) |
-| **定时** | 到点自动派发的 autopilot 子系统 | [定时任务](/fleet/autopilots) |
 | **通讯录** | agent 模板（挂载 MCP / Skills）+ 行动履历动态墙 | 本页下方 |
 | **配置** | 运行时 / 模型 / 记忆治理配置卡片 | [配置中心](/settings) |
 
@@ -90,6 +89,6 @@ agent 的 tier（read-only → approval → yolo）向上提升会让它从只�
 ## 接下来
 
 - [消息](/fleet/messages)：session-first 深聊 + 斜杠命令 + 续聊
-- [任务看板](/fleet/board)：派发时机 + 用量面板 + 双向跳转
+- [任务](/fleet/board)：收集箱 + AI 整理 + 四视图 + 统一定时
 - [指挥室](/fleet/command-center) · [定时任务](/fleet/autopilots)
 - 反过来让外部 agent 读知我：[MCP 接入](/integrate/mcp)

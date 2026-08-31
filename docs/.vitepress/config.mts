@@ -71,7 +71,7 @@ export default defineConfig({
           { text: '接入 dsh 运行时', link: '/fleet/dsh-runtime' },
           { text: '消息与深聊', link: '/fleet/messages' },
           { text: '专注模式：翻 AI 的工作文件', link: '/fleet/focus-mode' },
-          { text: '任务看板', link: '/fleet/board' },
+          { text: '任务：收集、整理与定时', link: '/fleet/board' },
           { text: '指挥室', link: '/fleet/command-center' },
           { text: '定时任务', link: '/fleet/autopilots' },
         ],
