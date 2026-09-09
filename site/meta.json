@@ -1,22 +1,22 @@
 {
   "schemaVersion": 1,
-  "latestVersion": "0.16.2",
+  "latestVersion": "0.17.0",
   "proReleasedAt": "2027-07-07T00:00:00Z",
   "lifecycle": "active",
   "downloadUrl": "https://useknowme.com/#download",
   "releaseNotesUrl": "https://github.com/Timeflys2018/knowme/releases/latest",
   "announcements": [
     {
-      "id": "v0.16.2-update",
+      "id": "v0.17.0-update",
       "level": "info",
       "carrier": "banner",
-      "title": "知我 KnowMe 0.16.2 已发布",
-      "body": "任务看板用「分组」控件替代原筛选,可按状态/清单/执行者自由分组查看;修复并发派发同一会话时消息流可能被后一次派发悄悄顶掉的可靠性问题。日常打磨与稳定性改进。",
+      "title": "知我 KnowMe 0.17.0 已发布",
+      "body": "全新统一导航条：原「知识/智能」双模式合并为一条可自定义的常驻栏，可拖拽编辑常用入口，每个标签页记住各自的滚动位置。任务管理大幅增强：用「分面叠加筛选」（智能清单 × 清单 × 标签自由组合）取代原来的互斥切换，支持按属性分组、分组头折叠；新增回收站——删除的任务先入回收站、保留 30 天、可一键恢复；已完成清单支持按条件清除。另有任务详情可折叠、标签云优化、空日记不落盘等打磨。",
       "cta": {
         "label": "前往下载",
         "url": "https://useknowme.com/#download"
       },
-      "affectedBelow": "0.16.2"
+      "affectedBelow": "0.17.0"
     }
   ],
   "riskBlock": null
