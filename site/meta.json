@@ -1,22 +1,22 @@
 {
   "schemaVersion": 1,
-  "latestVersion": "0.17.1",
+  "latestVersion": "0.17.2",
   "proReleasedAt": "2027-07-07T00:00:00Z",
   "lifecycle": "active",
   "downloadUrl": "https://useknowme.com/#download",
   "releaseNotesUrl": "https://github.com/Timeflys2018/knowme/releases/latest",
   "announcements": [
     {
-      "id": "v0.17.1-update",
+      "id": "v0.17.2-update",
       "level": "info",
       "carrier": "banner",
-      "title": "知我 KnowMe 0.17.1 已发布",
-      "body": "消息/任务详情新增「关联文档」：可把磁盘文件 / Wiki 页 / 链接挂到任务，从文档反查关联的任务与来源会话，一键跳转；关系区收进折叠面板更克制。修复会话详情里误显示「未命名任务」。",
+      "title": "知我 KnowMe 0.17.2 已发布",
+      "body": "文档与任务的关联更顺手了：现在从文档头就能看到「关联任务 / 关联消息」，点一下即可跳转打开对应文档、文件或链接；关联入口也换成更清爽的药丸式控件。修复了外挂目录 md 文档在文档侧读不出已关联任务的问题。",
       "cta": {
         "label": "前往下载",
         "url": "https://useknowme.com/#download"
       },
-      "affectedBelow": "0.17.1"
+      "affectedBelow": "0.17.2"
     }
   ],
   "riskBlock": null
