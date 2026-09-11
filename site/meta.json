@@ -1,22 +1,22 @@
 {
   "schemaVersion": 1,
-  "latestVersion": "0.17.3",
+  "latestVersion": "0.17.4",
   "proReleasedAt": "2027-07-07T00:00:00Z",
   "lifecycle": "active",
   "downloadUrl": "https://useknowme.com/#download",
   "releaseNotesUrl": "https://github.com/Timeflys2018/knowme/releases/latest",
   "announcements": [
     {
-      "id": "v0.17.3-update",
+      "id": "v0.17.4-update",
       "level": "info",
       "carrier": "banner",
-      "title": "知我 KnowMe 0.17.3 已发布",
-      "body": "HTML 预览评论现支持双向跳转：点正文编号角标可激活右侧评论、点右侧评论卡片会滚动到 HTML 预览对应文字并高亮闪烁，与 Markdown 一致。任务与会话可手动关联，会话详情面板重做为三分组更清晰。多项 fleet 稳定性与交互修复（长任务不再被误杀、任务标签页切换不丢状态、徽标即时刷新等）。",
+      "title": "知我 KnowMe 0.17.4 已发布",
+      "body": "修复切换任务条目时，右侧详情面板「关联文档 / 会话」区块会闪烁一下的问题——现在切换任务时面板原地平滑更新，不再空白重绘。",
       "cta": {
         "label": "前往下载",
         "url": "https://useknowme.com/#download"
       },
-      "affectedBelow": "0.17.3"
+      "affectedBelow": "0.17.4"
     }
   ],
   "riskBlock": null
