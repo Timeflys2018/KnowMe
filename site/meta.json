@@ -1,22 +1,22 @@
 {
   "schemaVersion": 1,
-  "latestVersion": "0.17.2",
+  "latestVersion": "0.17.3",
   "proReleasedAt": "2027-07-07T00:00:00Z",
   "lifecycle": "active",
   "downloadUrl": "https://useknowme.com/#download",
   "releaseNotesUrl": "https://github.com/Timeflys2018/knowme/releases/latest",
   "announcements": [
     {
-      "id": "v0.17.2-update",
+      "id": "v0.17.3-update",
       "level": "info",
       "carrier": "banner",
-      "title": "知我 KnowMe 0.17.2 已发布",
-      "body": "文档与任务的关联更顺手了：现在从文档头就能看到「关联任务 / 关联消息」，点一下即可跳转打开对应文档、文件或链接；关联入口也换成更清爽的药丸式控件。修复了外挂目录 md 文档在文档侧读不出已关联任务的问题。",
+      "title": "知我 KnowMe 0.17.3 已发布",
+      "body": "HTML 预览评论现支持双向跳转：点正文编号角标可激活右侧评论、点右侧评论卡片会滚动到 HTML 预览对应文字并高亮闪烁，与 Markdown 一致。任务与会话可手动关联，会话详情面板重做为三分组更清晰。多项 fleet 稳定性与交互修复（长任务不再被误杀、任务标签页切换不丢状态、徽标即时刷新等）。",
       "cta": {
         "label": "前往下载",
         "url": "https://useknowme.com/#download"
       },
-      "affectedBelow": "0.17.2"
+      "affectedBelow": "0.17.3"
     }
   ],
   "riskBlock": null
