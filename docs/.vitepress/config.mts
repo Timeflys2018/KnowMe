@@ -55,6 +55,7 @@ export default defineConfig({
           { text: '知识引擎', link: '/core/knowledge-engine' },
           { text: '知识图谱', link: '/core/graph' },
           { text: '全局时间线', link: '/core/timeline' },
+          { text: '知识空间共享与同步', link: '/core/sync-sharing' },
         ],
       },
       {
