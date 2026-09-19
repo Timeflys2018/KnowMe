@@ -11,11 +11,12 @@
       "level": "info",
       "carrier": "banner",
       "title": "知我 KnowMe 0.18.1 已发布",
-      "body": "新增：统一活动状态尾轨与忽略 ingest 图标，原始树视图的选中和活动状态更清晰；同时稳定描述编辑器卸载提交行为。",
+      "body": "新增：文档支持拖拽复制、移动与打开；统一活动状态尾轨与忽略 ingest 图标，原始树视图的选中和活动状态更清晰；同时稳定描述编辑器卸载提交行为。",
       "cta": {
         "label": "前往下载",
-      "url": "https://useknowme.com/#download"
-    }
+        "url": "https://useknowme.com/#download"
+      },
+      "affectedBelow": "0.18.1"
     }
   ],
   "riskBlock": null
