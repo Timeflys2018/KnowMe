@@ -79,7 +79,7 @@ function checkAnnouncement(a, i) {
     fail(path, 'must be an object')
     return
   }
-  const allowed = new Set(['id', 'level', 'carrier', 'title', 'body', 'cta', 'startsAt', 'expiresAt'])
+  const allowed = new Set(['id', 'level', 'carrier', 'title', 'body', 'cta', 'startsAt', 'expiresAt', 'affectedBelow'])
   for (const key of Object.keys(a)) if (!allowed.has(key)) fail(`${path}.${key}`, 'unknown key')
 
   checkString(`${path}.id`, a.id, 100)
@@ -90,6 +90,7 @@ function checkAnnouncement(a, i) {
   checkCta(`${path}.cta`, a.cta)
   if (a.startsAt !== undefined) checkIsoDateOrNull(`${path}.startsAt`, a.startsAt)
   if (a.expiresAt !== undefined) checkIsoDateOrNull(`${path}.expiresAt`, a.expiresAt)
+  if (a.affectedBelow !== undefined && !semverRe.test(a.affectedBelow)) fail(`${path}.affectedBelow`, 'must be semver')
 }
 
 function checkRiskBlock(value) {
