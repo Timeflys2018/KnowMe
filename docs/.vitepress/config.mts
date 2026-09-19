@@ -39,6 +39,7 @@ export default defineConfig({
           { text: '快速上手', link: '/start/quickstart' },
           { text: '账号与登录', link: '/start/account' },
           { text: '配置 LLM', link: '/start/llm-setup' },
+          { text: 'Git 同步环境准备（GitHub）', link: '/start/git-sharing-setup' },
         ],
       },
       {
