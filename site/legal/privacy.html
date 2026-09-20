@@ -154,7 +154,7 @@
 <hr />
 <h2 id="2">2. 我们收集什么数据</h2>
 <h3 id="21">2.1 核心原则</h3>
-<p>KnowMe 是 <strong>本地优先</strong> 应用。<strong>默认情况下，我们不收集任何个人数据</strong>。</p>
+<p>KnowMe 是 <strong>本地优先</strong> 应用。默认开启的匿名安装统计只用于了解版本活跃度；除此之外，我们不收集个人数据。</p>
 <h3 id="22">2.2 我们<strong>不</strong>收集</h3>
 <ul>
 <li>❌ 你的笔记内容</li>
@@ -188,6 +188,12 @@
 <td>App 版本号、操作系统类型</td>
 <td>推送更新通知</td>
 <td>不存储，仅一次性查询</td>
+</tr>
+<tr>
+<td>匿名安装统计（默认开启）</td>
+<td>随机稳定 UUIDv4、App 版本号、UTC 活跃日 / 接收时间</td>
+<td>统计版本活跃度、改进发布质量</td>
+<td>Cloudflare D1；不含账号、笔记、文件路径或 stacktrace</td>
 </tr>
 <tr>
 <td>你提交 bug 报告</td>
