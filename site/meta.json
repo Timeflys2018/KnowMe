@@ -1,22 +1,22 @@
 {
   "schemaVersion": 1,
-  "latestVersion": "0.20.1",
+  "latestVersion": "0.20.2",
   "proReleasedAt": "2027-07-07T00:00:00Z",
   "lifecycle": "active",
   "downloadUrl": "https://useknowme.com/#download",
   "releaseNotesUrl": "https://github.com/Timeflys2018/knowme/releases/latest",
   "announcements": [
     {
-      "id": "v0.20.1-update",
+      "id": "v0.20.2-update",
       "level": "info",
       "carrier": "banner",
-      "title": "知我 KnowMe 0.20.1 已发布",
-      "body": "共享清单未读提示：团队清单里队友新增或修改的任务，会在侧栏清单和任务列表上以圆点/加重图标提示未读，点开清单即自动清除；未读状态仅存本机、不写入共享文件、不跨设备同步。另修复静态 HTML 预览打开即可标记已读。",
+      "title": "知我 KnowMe 0.20.2 已发布",
+      "body": "本次为质量与稳定性优化版本:安装包体积进一步精简(arm64 显著减小),多项后台性能优化(启动/文件监听/列表渲染更快),以及一批内部重构与打包改进。无新增对外功能,建议所有用户升级以获得更小体积和更流畅体验。",
       "cta": {
         "label": "前往下载",
         "url": "https://useknowme.com/#download"
       },
-      "affectedBelow": "0.20.1"
+      "affectedBelow": "0.20.2"
     }
   ],
   "riskBlock": null
