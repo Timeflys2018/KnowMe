@@ -25,6 +25,31 @@
       ],
       "deprecation": null,
       "killSwitch": false
+    },
+    {
+      "id": "office-viewer",
+      "displayName": "Office 文档",
+      "kind": "js-bundle",
+      "apiVersion": {
+        "major": 1,
+        "minor": 0
+      },
+      "capabilities": [
+        "document:read"
+      ],
+      "sizeBytes": 204030,
+      "latest": "1.0.0",
+      "versions": [
+        {
+          "version": "1.0.0",
+          "artifactUrl": "https://download.useknowme.com/plugins/office-viewer/1.0.0/bundle.mjs",
+          "sha256": "e8821abb3d72d10d7daada5941a8e9ec1062c402c8081efa5557e860a7e3b9eb",
+          "signature": "zD5NcqnUfPv42nZYph2I+vn7Ty4mcV+dPrpzcgbTKcHjK4M6dcSpRv3CUVW1hmGddm7MKglU3r7ElCfxsMusDg==",
+          "minAppVersion": "0.20.0"
+        }
+      ],
+      "deprecation": null,
+      "killSwitch": false
     }
   ]
 }
