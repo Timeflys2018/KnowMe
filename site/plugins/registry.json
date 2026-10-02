@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "plugins": [
+    {
+      "id": "word-docx",
+      "displayName": "Word 文档导出",
+      "kind": "js-bundle",
+      "apiVersion": {
+        "major": 1,
+        "minor": 0
+      },
+      "capabilities": [
+        "document:export"
+      ],
+      "sizeBytes": 384873,
+      "latest": "1.0.0",
+      "versions": [
+        {
+          "version": "1.0.0",
+          "artifactUrl": "https://download.useknowme.com/plugins/word-docx/1.0.0/bundle.mjs",
+          "sha256": "e58d01a6d0295f0f1990e627580addaaa48b382901c5cd41ab6a4b2a2a3e38d1",
+          "signature": "91uGV+dL7q5VWUXdd/C7dzlN9q3tVYXAbfWZOC1zIUZCIOpSfFX9pycGqe5dppyynmvRxvYw2RdwOfyzhTcABw==",
+          "minAppVersion": "0.20.0"
+        }
+      ],
+      "deprecation": null,
+      "killSwitch": false
+    }
+  ]
+}

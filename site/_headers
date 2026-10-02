@@ -25,3 +25,13 @@
   Cache-Control: public, max-age=300, must-revalidate
   X-Content-Type-Options: nosniff
   Access-Control-Allow-Origin: *
+
+# Plugin registry consumed by the desktop on-demand install pipeline (EXP-6).
+# Same shape as meta.json: the app fetches it cross-origin via net.fetch, so it
+# needs CORS + an explicit JSON content-type. Short cache so kill-switch /
+# version / deprecation changes propagate within minutes.
+/plugins/registry.json
+  Content-Type: application/json; charset=utf-8
+  Cache-Control: public, max-age=300, must-revalidate
+  X-Content-Type-Options: nosniff
+  Access-Control-Allow-Origin: *
