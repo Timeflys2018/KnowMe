@@ -3,7 +3,7 @@
   "plugins": [
     {
       "id": "word-docx",
-      "displayName": "Word 文档导出",
+      "displayName": "导出 Word 文档",
       "kind": "js-bundle",
       "apiVersion": {
         "major": 1,
@@ -28,7 +28,7 @@
     },
     {
       "id": "office-viewer",
-      "displayName": "Office 文档",
+      "displayName": "Word 文档预览",
       "kind": "js-bundle",
       "apiVersion": {
         "major": 1,
