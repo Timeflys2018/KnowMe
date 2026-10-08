@@ -1,22 +1,22 @@
 {
   "schemaVersion": 1,
-  "latestVersion": "0.20.8",
+  "latestVersion": "0.20.9",
   "proReleasedAt": "2027-07-07T00:00:00Z",
   "lifecycle": "active",
   "downloadUrl": "https://useknowme.com/#download",
   "releaseNotesUrl": "https://github.com/Timeflys2018/knowme/releases/latest",
   "announcements": [
     {
-      "id": "v0.20.8-update",
+      "id": "v0.20.9-update",
       "level": "info",
       "carrier": "banner",
-      "title": "知我 KnowMe 0.20.8 已发布",
-      "body": "飞书文档导出：首次配置更顺手——只需填 App ID / App Secret 并保存，当场即可扫码授权（文档归你本人），无需先填协作者邮箱、也不用关掉重开。想用应用身份 + 协作者邮箱导出的，走「其他方式」依旧可用。",
+      "title": "知我 KnowMe 0.20.9 已发布",
+      "body": "修复：从旧版本升级后，任务同步页报「no such table: fleet_lists」导致任务/清单无法加载的问题。现在遇到此情况会提示重置任务数据即可恢复，笔记与知识库不受影响。",
       "cta": {
         "label": "前往下载",
         "url": "https://useknowme.com/#download"
       },
-      "affectedBelow": "0.20.8"
+      "affectedBelow": "0.20.9"
     }
   ],
   "riskBlock": null
