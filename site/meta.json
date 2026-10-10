@@ -1,22 +1,22 @@
 {
   "schemaVersion": 1,
-  "latestVersion": "0.20.9",
+  "latestVersion": "0.20.10",
   "proReleasedAt": "2027-07-07T00:00:00Z",
   "lifecycle": "active",
   "downloadUrl": "https://useknowme.com/#download",
   "releaseNotesUrl": "https://github.com/Timeflys2018/knowme/releases/latest",
   "announcements": [
     {
-      "id": "v0.20.9-update",
+      "id": "v0.20.10-update",
       "level": "info",
       "carrier": "banner",
-      "title": "知我 KnowMe 0.20.9 已发布",
-      "body": "修复：从旧版本升级后，任务同步页报「no such table: fleet_lists」导致任务/清单无法加载的问题。现在遇到此情况会提示重置任务数据即可恢复，笔记与知识库不受影响。",
+      "title": "知我 KnowMe 0.20.10 已发布",
+      "body": "飞书通道交互升级：在飞书里直接 /new /status /help 指令控制会话；配置卡悬浮菜单一键切 agent / 模型；fleet 任务流式卡顶部实时状态行 +「收到 → 首字」emoji reaction，不再空窗。编辑器新增 Cmd+P 打印聚焦文档（所见即所得）。同步：文档含 git 冲突标记时从源头拦截不再写入，万一卡住可一键「放弃本地，拉取远端」自助恢复。",
       "cta": {
         "label": "前往下载",
         "url": "https://useknowme.com/#download"
       },
-      "affectedBelow": "0.20.9"
+      "affectedBelow": "0.20.10"
     }
   ],
   "riskBlock": null
