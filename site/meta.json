@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "latestVersion": "0.20.14",
+  "latestVersion": "0.20.15",
   "proReleasedAt": "2027-07-07T00:00:00Z",
   "lifecycle": "active",
   "downloadUrl": "https://useknowme.com/#download",
   "releaseNotesUrl": "https://github.com/Timeflys2018/knowme/releases/latest",
   "announcements": [
     {
-      "id": "v0.20.14-update",
+      "id": "v0.20.15-update",
       "level": "info",
       "carrier": "banner",
-      "title": "知我 KnowMe 0.20.14 已发布",
-      "body": "新增「飞书文件（原样）」导出：HTML 文件可一键原样上传到你的飞书，保留完整样式与排版，文件归你本人所有；同时修复了同步目录内切换文件时的界面闪烁。",
+      "title": "知我 KnowMe 0.20.15 已发布",
+      "body": "本版清理 Agent Fleet 的默认 provider 配置，opencode/codex/dsh 改用你本机已有的配置或各自自带的默认模型，新用户开箱即用无需额外设置。修复若干稳定性问题。如已更新请忽略。",
       "cta": {
         "label": "前往下载",
         "url": "https://useknowme.com/#download"
