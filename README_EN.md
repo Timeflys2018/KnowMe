@@ -1,7 +1,7 @@
 # KnowMe / 知我 — Knowledge Engine × Agent Fleet
 
 > 💗 You can voluntarily support the developer during the public beta. Sponsorship is a one-way thank-you — it unlocks no features and carries no Pro entitlement.
-> The Early-bird Pro 3-year plan (first 100 · price TBD) will be announced as a separate purchase channel.
+> The Early-bird Pro 3-year plan (price TBD) will be announced as a separate purchase channel.
 
 > A local-first AI second brain that knows you.
 > Everything you've written, thought, and read — still here.
@@ -98,7 +98,7 @@ Full docs at [docs.useknowme.com](https://docs.useknowme.com) or in-repo under [
 | **Personal** | **¥0 · free forever** | Full local capability: three-mode editor, dual-format, LLM-compiled Wiki + Review queue, graph / timeline, local MCP / API, **full local Agent Fleet workbench**, BYOK (OpenAI / Anthropic / Gemini / Ollama / LM Studio), permanent data export. |
 | **Pro** | **¥? / yr** (from 2027-07-07) | Everything in Personal + hosted extras: E2EE cloud sync, managed AI quota, cloud indexing / embeddings, remote API / webhooks, **cloud Agent Fleet orchestration**, advanced export (PDF / EPUB / Notion), custom Wiki Types. |
 | **Team** | **¥? / seat / yr** (5-seat min · after 2027-12) | Everything in Pro + shared knowledge spaces, collaboration & permissions, team Schema governance, very large graphs, SSO, centralized billing, audit logs. |
-| **Early-bird Pro 3-year** | Price TBD · first 100 | One-time payment during beta for **3 years of local Pro** — all updates free in those 3 years, early-bird price locked forever; cloud services (sync / cloud AI / remote API) billed separately by subscription. |
+| **Early-bird Pro 3-year** | Price TBD | One-time payment during beta for **3 years of local Pro** — all updates free in those 3 years, early-bird price locked forever; cloud services (sync / cloud AI / remote API) billed separately by subscription. |
 
 **Promises**: local core free forever · your data is always yours (local SQLite, no cloud lock-in) · any major change announced 90 days in advance · sponsorship unlocks nothing · even if the project ends, a final stable offline build will be published.
 
