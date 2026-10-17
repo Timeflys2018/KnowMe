@@ -1,22 +1,22 @@
 {
   "schemaVersion": 1,
-  "latestVersion": "0.20.16",
+  "latestVersion": "0.20.17",
   "proReleasedAt": "2027-07-07T00:00:00Z",
   "lifecycle": "active",
   "downloadUrl": "https://useknowme.com/#download",
   "releaseNotesUrl": "https://github.com/Timeflys2018/knowme/releases/latest",
   "announcements": [
     {
-      "id": "v0.20.16-update",
+      "id": "v0.20.17-update",
       "level": "info",
       "carrier": "banner",
-      "title": "知我 KnowMe 0.20.16 已发布",
-      "body": "本版为 HTML 预览加入 cmd+F 页面内查找（浮动查找条，可拖动，支持中文输入法），并修复搜索体验若干问题。Markdown 查找不受影响。如已更新请忽略。",
+      "title": "知我 KnowMe 0.20.17 已发布",
+      "body": "本版上线「主线任务 / 子任务」：可把多个任务归并成一条主线、或把大任务拆成子任务，列表内嵌套展示，主线行以进度条显示子任务完成情况（点进度条可完成/确认/重开），新建主线自动继承子任务最高优先级。看板与日历按叶子任务呈现，标签筛选支持主线/子任务联动。如已更新请忽略。",
       "cta": {
         "label": "前往下载",
         "url": "https://useknowme.com/#download"
       },
-      "affectedBelow": "0.20.14"
+      "affectedBelow": "0.20.17"
     }
   ],
   "riskBlock": null
