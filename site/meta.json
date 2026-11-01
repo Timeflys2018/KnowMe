@@ -1,22 +1,22 @@
 {
   "schemaVersion": 1,
-  "latestVersion": "0.21.0",
+  "latestVersion": "0.21.1",
   "proReleasedAt": "2027-07-07T00:00:00Z",
   "lifecycle": "active",
   "downloadUrl": "https://useknowme.com/#download",
   "releaseNotesUrl": "https://github.com/Timeflys2018/knowme/releases/latest",
   "announcements": [
     {
-      "id": "v0.21.0-update",
+      "id": "v0.21.1-update",
       "level": "info",
       "carrier": "banner",
-      "title": "知我 KnowMe 0.21.0 已发布",
-      "body": "本次为安全更新：升级内置 Electron 运行时，修复 Brotli 解压相关的远程代码执行风险（CVE-2026-111497），建议尽快更新。同时修复了若干任务清单的稳定性问题。",
+      "title": "知我 KnowMe 0.21.1 已发布",
+      "body": "桌宠快问升级：可切换 知我 / OpenCode / dsh 对话，新增「记」模式，一句话直写今日日记；重开面板保留上一轮，点「新会话」才清除。桌宠现在会一直显示思考、执行、待审批，结果保留到你点击它。同时加固了安装包安全。",
       "cta": {
         "label": "前往下载",
         "url": "https://useknowme.com/#download"
       },
-      "affectedBelow": "0.21.0"
+      "affectedBelow": "0.21.1"
     }
   ],
   "riskBlock": null
