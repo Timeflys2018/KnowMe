@@ -1,22 +1,22 @@
 {
   "schemaVersion": 1,
-  "latestVersion": "0.21.1",
+  "latestVersion": "0.21.2",
   "proReleasedAt": "2027-07-07T00:00:00Z",
   "lifecycle": "active",
   "downloadUrl": "https://useknowme.com/#download",
   "releaseNotesUrl": "https://github.com/Timeflys2018/knowme/releases/latest",
   "announcements": [
     {
-      "id": "v0.21.1-update",
+      "id": "v0.21.2-update",
       "level": "info",
       "carrier": "banner",
-      "title": "知我 KnowMe 0.21.1 已发布",
-      "body": "桌宠快问升级：可切换 知我 / OpenCode / dsh 对话，新增「记」模式，一句话直写今日日记；重开面板保留上一轮，点「新会话」才清除。桌宠现在会一直显示思考、执行、待审批，结果保留到你点击它。同时加固了安装包安全。",
+      "title": "知我 KnowMe 0.21.2 已发布",
+      "body": "桌宠更好用了：OpenCode / dsh 改用你在通讯录里配置的 agent，「新会话」可以选 agent、模型和目录；快记除了今日日记，还能写到某个目录或某篇笔记；右键桌宠有常用操作和设置。",
       "cta": {
         "label": "前往下载",
         "url": "https://useknowme.com/#download"
       },
-      "affectedBelow": "0.21.1"
+      "affectedBelow": "0.21.2"
     }
   ],
   "riskBlock": null
