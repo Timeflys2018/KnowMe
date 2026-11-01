@@ -64,6 +64,7 @@ export default defineConfig({
         items: [
           { text: 'AI 协作', link: '/ai/collaboration' },
           { text: 'Chat 对话', link: '/ai/chat' },
+          { text: '桌宠', link: '/ai/desktop-pet' },
         ],
       },
       {
