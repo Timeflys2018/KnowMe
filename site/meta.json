@@ -1,22 +1,22 @@
 {
   "schemaVersion": 1,
-  "latestVersion": "0.21.4",
+  "latestVersion": "0.21.5",
   "proReleasedAt": "2027-07-07T00:00:00Z",
   "lifecycle": "active",
   "downloadUrl": "https://useknowme.com/#download",
   "releaseNotesUrl": "https://github.com/Timeflys2018/knowme/releases/latest",
   "announcements": [
     {
-      "id": "v0.21.4-update",
+      "id": "v0.21.5-update",
       "level": "info",
       "carrier": "banner",
-      "title": "知我 KnowMe 0.21.4 已发布",
-      "body": "Windows：左上角头像不再遮挡「知识」图标；未安装的 Codex/OpenCode/dsh 正确显示未安装；新增托盘图标与统一退出入口；关闭主窗口后双击桌宠可重新打开。OpenCode 新增「卸载并清除」（含配置和数据），运行环境默认装到本地目录或与知我同盘并可更改。另修复快捷键捕获框闪烁、右键菜单副标题截断。",
+      "title": "知我 KnowMe 0.21.5 已发布",
+      "body": "0.21.5：更新了官方插件的签名密钥，Word 导出和 Office 预览需要升级到本版才能继续使用；键盘操作时焦点框更清晰，鼠标点击不再出现多余焦点框；Agent 舰队「运行环境」检测中显示加载状态，检测失败可一键重试。",
       "cta": {
         "label": "前往下载",
         "url": "https://useknowme.com/#download"
       },
-      "affectedBelow": "0.21.4"
+      "affectedBelow": "0.21.5"
     }
   ],
   "riskBlock": null
