@@ -19,7 +19,7 @@
           "version": "1.0.0",
           "artifactUrl": "https://download.useknowme.com/plugins/word-docx/1.0.0/bundle.mjs",
           "sha256": "e58d01a6d0295f0f1990e627580addaaa48b382901c5cd41ab6a4b2a2a3e38d1",
-          "signature": "91uGV+dL7q5VWUXdd/C7dzlN9q3tVYXAbfWZOC1zIUZCIOpSfFX9pycGqe5dppyynmvRxvYw2RdwOfyzhTcABw==",
+          "signature": "yX5aXHUqcCNdzoZo5CIcv453InFhPEDHvADSyFDM/ImG2/xeTt3t4ucOrSU4+2IVbVYngSGjLBDPkCaZPI45Bg==",
           "minAppVersion": "0.20.0"
         }
       ],
@@ -44,7 +44,7 @@
           "version": "1.0.0",
           "artifactUrl": "https://download.useknowme.com/plugins/office-viewer/1.0.0/bundle.mjs",
           "sha256": "e8821abb3d72d10d7daada5941a8e9ec1062c402c8081efa5557e860a7e3b9eb",
-          "signature": "zD5NcqnUfPv42nZYph2I+vn7Ty4mcV+dPrpzcgbTKcHjK4M6dcSpRv3CUVW1hmGddm7MKglU3r7ElCfxsMusDg==",
+          "signature": "mY3lh7WFgDf0lmxTwJfGAqvI7MyzPVCATTurKYkbg8LFoqfMbChvD5nhUNcfCd1jGWk+yK9b/AKOzdmJTDW8Ag==",
           "minAppVersion": "0.20.0"
         }
       ],
