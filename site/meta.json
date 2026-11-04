@@ -1,22 +1,22 @@
 {
   "schemaVersion": 1,
-  "latestVersion": "0.21.3",
+  "latestVersion": "0.21.4",
   "proReleasedAt": "2027-07-07T00:00:00Z",
   "lifecycle": "active",
   "downloadUrl": "https://useknowme.com/#download",
   "releaseNotesUrl": "https://github.com/Timeflys2018/knowme/releases/latest",
   "announcements": [
     {
-      "id": "v0.21.3-update",
+      "id": "v0.21.4-update",
       "level": "info",
       "carrier": "banner",
-      "title": "知我 KnowMe 0.21.3 已发布",
-      "body": "Windows 版支持自动更新：新版本在后台下载并校验签名，退出时安装，也可在消息中心点「重启更新」。消息中心新增「新版本」提示。助手会话列表改为按最后活跃时间排序；Codex 可重试错误不再被误判为会话中断；修复快问快记面板闪烁、设置页晃动。",
+      "title": "知我 KnowMe 0.21.4 已发布",
+      "body": "Windows：左上角头像不再遮挡「知识」图标；未安装的 Codex/OpenCode/dsh 正确显示未安装；新增托盘图标与统一退出入口；关闭主窗口后双击桌宠可重新打开。OpenCode 新增「卸载并清除」（含配置和数据），运行环境默认装到本地目录或与知我同盘并可更改。另修复快捷键捕获框闪烁、右键菜单副标题截断。",
       "cta": {
         "label": "前往下载",
         "url": "https://useknowme.com/#download"
       },
-      "affectedBelow": "0.21.3"
+      "affectedBelow": "0.21.4"
     }
   ],
   "riskBlock": null
