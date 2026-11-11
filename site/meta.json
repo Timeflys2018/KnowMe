@@ -1,22 +1,22 @@
 {
   "schemaVersion": 1,
-  "latestVersion": "0.21.7",
+  "latestVersion": "0.21.8",
   "proReleasedAt": "2027-07-07T00:00:00Z",
   "lifecycle": "active",
   "downloadUrl": "https://useknowme.com/#download",
   "releaseNotesUrl": "https://github.com/Timeflys2018/knowme/releases/latest",
   "announcements": [
     {
-      "id": "v0.21.7-update",
+      "id": "v0.21.8-update",
       "level": "info",
       "carrier": "banner",
-      "title": "知我 KnowMe 0.21.7 已发布",
-      "body": "消息输入框现在可以直接粘贴或圈选插入图片，发送前以 [Image N] 占位符显示；右侧 Agents 列表把三个 agent 统一成一张表，运行中的置顶、状态切换不再闪烁；右键「回退到此处」现在会把提示词还回输入框，模型列表顶部直接显示最近用过的模型。另修复了几处卡住的问题：长草稿发送后不再停在回复上方、opencode 中途退出的回合不再永远显示「响应中」、codex 没装在 PATH 里时不会再让 KnowMe 直接退出。",
+      "title": "知我 KnowMe 0.21.8 已发布",
+      "body": "飞书机器人的「会话」卡现在直接列出你在电脑上用 opencode 起的会话（按工作目录分组），在手机上点一下就能接着聊——哪怕那个会话从没进过知我的任务列表。卡片也重新排版：顶部蓝色「会话」标题，上半区切助手/模型、开新会话，下半区按目录筛选、搜索、切换历史会话，更清爽。",
       "cta": {
         "label": "前往下载",
         "url": "https://useknowme.com/#download"
       },
-      "affectedBelow": "0.21.7"
+      "affectedBelow": "0.21.8"
     }
   ],
   "riskBlock": null
