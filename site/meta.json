@@ -1,22 +1,22 @@
 {
   "schemaVersion": 1,
-  "latestVersion": "0.21.8",
+  "latestVersion": "0.21.9",
   "proReleasedAt": "2027-07-07T00:00:00Z",
   "lifecycle": "active",
   "downloadUrl": "https://useknowme.com/#download",
   "releaseNotesUrl": "https://github.com/Timeflys2018/knowme/releases/latest",
   "announcements": [
     {
-      "id": "v0.21.8-update",
+      "id": "v0.21.9-update",
       "level": "info",
       "carrier": "banner",
-      "title": "知我 KnowMe 0.21.8 已发布",
-      "body": "飞书机器人的「会话」卡现在直接列出你在电脑上用 opencode 起的会话（按工作目录分组），在手机上点一下就能接着聊——哪怕那个会话从没进过知我的任务列表。卡片也重新排版：顶部蓝色「会话」标题，上半区切助手/模型、开新会话，下半区按目录筛选、搜索、切换历史会话，更清爽。",
+      "title": "知我 KnowMe 0.21.9 已发布",
+      "body": "修复知识模式左侧文档树悬停全名「时有时无」的问题：原生提示在文件树频繁重排时会失灵，现改为稳定的浮层气泡，悬停即显示完整文档名。",
       "cta": {
         "label": "前往下载",
         "url": "https://useknowme.com/#download"
       },
-      "affectedBelow": "0.21.8"
+      "affectedBelow": "0.21.9"
     }
   ],
   "riskBlock": null
