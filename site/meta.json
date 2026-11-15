@@ -1,22 +1,22 @@
 {
   "schemaVersion": 1,
-  "latestVersion": "0.21.9",
+  "latestVersion": "0.22.0",
   "proReleasedAt": "2027-07-07T00:00:00Z",
   "lifecycle": "active",
   "downloadUrl": "https://useknowme.com/#download",
   "releaseNotesUrl": "https://github.com/Timeflys2018/knowme/releases/latest",
   "announcements": [
     {
-      "id": "v0.21.9-update",
+      "id": "v0.22.0-update",
       "level": "info",
       "carrier": "banner",
-      "title": "知我 KnowMe 0.21.9 已发布",
-      "body": "修复知识模式左侧文档树悬停全名「时有时无」的问题：原生提示在文件树频繁重排时会失灵，现改为稳定的浮层气泡，悬停即显示完整文档名。",
+      "title": "知我 KnowMe 0.22.0 已发布",
+      "body": "定时任务大升级：规则可选择「新建会话」或「接续已有会话」，触发时会话忙就自动排队；编辑器新增模型与目录选择，并提供运行历史与「立即执行」。派发目标的 Agent / 模型 / 目录 / 会话选择统一为浮层式行，长列表不再挤占表单。另修复知识页超过 50 页时静默丢页、会话与评论时间跨零点不刷新等问题。",
       "cta": {
         "label": "前往下载",
         "url": "https://useknowme.com/#download"
       },
-      "affectedBelow": "0.21.9"
+      "affectedBelow": "0.22.0"
     }
   ],
   "riskBlock": null
