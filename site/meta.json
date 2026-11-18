@@ -1,22 +1,22 @@
 {
   "schemaVersion": 1,
-  "latestVersion": "0.22.2",
+  "latestVersion": "0.22.3",
   "proReleasedAt": "2027-07-07T00:00:00Z",
   "lifecycle": "active",
   "downloadUrl": "https://useknowme.com/#download",
   "releaseNotesUrl": "https://github.com/Timeflys2018/knowme/releases/latest",
   "announcements": [
     {
-      "id": "v0.22.2-update",
+      "id": "v0.22.3-update",
       "level": "info",
       "carrier": "banner",
-      "title": "知我 KnowMe 0.22.2 已发布",
-      "body": "飞书「会话」卡更清晰也更准确：Agent、模型、目录、搜索各占一行，手机上不再挤成一团；卡片和 /status 显示的就是下一条消息真正会用的模型，切换到某个会话后显示的是该会话自己的模型，续聊也按它跑。定时规则改为只保留运行记录（按最近 N 次保留），运行失败时生成一条事件任务提醒处理。",
+      "title": "知我 KnowMe 0.22.3 已发布",
+      "body": "飞书导出：授权过期时提示「授权已过期，请重新授权」并直接回到扫码页；导出飞书文件仅保留本人授权方式。使用说明新增「助理」「桌宠」「定时任务」三章，并修正同步与备份说明。",
       "cta": {
         "label": "前往下载",
         "url": "https://useknowme.com/#download"
       },
-      "affectedBelow": "0.22.2"
+      "affectedBelow": "0.22.3"
     }
   ],
   "riskBlock": null
