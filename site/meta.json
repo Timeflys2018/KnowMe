@@ -1,22 +1,22 @@
 {
   "schemaVersion": 1,
-  "latestVersion": "0.22.6",
+  "latestVersion": "0.22.7",
   "proReleasedAt": "2027-07-07T00:00:00Z",
   "lifecycle": "active",
   "downloadUrl": "https://useknowme.com/#download",
   "releaseNotesUrl": "https://github.com/Timeflys2018/knowme/releases/latest",
   "announcements": [
     {
-      "id": "v0.22.6-update",
+      "id": "v0.22.7-update",
       "level": "info",
       "carrier": "banner",
-      "title": "知我 KnowMe 0.22.6 已发布",
-      "body": "opencode 长会话打开更快：先显示最近的消息，往上滚动自动加载更早的部分，刷新只传变化的内容；发送后自己的消息立刻出现。插件自动续跑的回合也能中途插话；本地 opencode 委派等你审批时，知我右栏会显示「待审批」。",
+      "title": "知我 KnowMe 0.22.7 已发布",
+      "body": "新建 Agent 一律用本地环境，直接用你本机 CLI 的配置与权限运行；知我委派默认也走本地，审批卡会标注「本地全权限」。移除 OpenCode 限时免费模型，未配置模型时统一引导去配置。页面宽度统一为阅读 / 宽内容 / 列表 / 工作区四档，随窗口自适应，宽屏不再大片留白。会话筛选的 Agent / 来源 / 工作目录悬停即展开；飞书会话卡目录最多列 10 个，不再显示 worktree 和临时目录。",
       "cta": {
         "label": "前往下载",
         "url": "https://useknowme.com/#download"
       },
-      "affectedBelow": "0.22.6"
+      "affectedBelow": "0.22.7"
     }
   ],
   "riskBlock": null
