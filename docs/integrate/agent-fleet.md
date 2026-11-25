@@ -39,7 +39,7 @@ Agent Fleet 是**已 ship 的真实工作台**，由真实的 `codex app-server`
 | **opencode · 本地** | opencode 自己的 session | ✓ 全部 | 复用常驻单 `opencode serve`，镜像 opencode TUI；斜杠命令、模型/agent 选择器、MCP 状态、编排面板全可用 |
 | **codex · 本地** | `~/.codex` rollout | — | 读 codex 自己的会话历史；codex 用自己的 role/model 源 |
 | **dsh · 本地** | dsh session 事件流 | ✓ | 经 bridge 插件驱动（免重启切模型 / 审批 / 问询）；模型路由读 `~/.dsh/settings.yaml`。接入见 [接入 dsh 运行时](/fleet/dsh-runtime) |
-| **托管（managed）** | task_events 镜像 | — | 隔离运行时 + 冻结配置（云端 Pro 形态的地基） |
+| **托管（managed）** | task_events 镜像 | — | 隔离运行时 + 冻结配置。仅早期创建的 agent 仍在用；0.22.7 起新建 agent 一律本地，编辑页可单向改为本地 |
 
 ::: tip 本地 = 终端等价
 本地模式直接复用你真实的 `~/.codex` / `~/.config/opencode`，环境变量透传（除 `KNOWME_`/`ELECTRON_` 等内部前缀）—— 在 Fleet 里跑，和你在终端里跑同一个 CLI 效果一致。
@@ -64,8 +64,8 @@ Fleet 还支持第三个运行时 **dsh**（DeepSeek Harness）：`npm install -
 
 agent 详情页的「动态」是它的**行动履历墙** —— 由真实终态任务（成功 / 失败 / 中止）投影而来，让你派活前判断这个 agent 靠不靠谱。
 
-::: warning tier 权限门控
-agent 的 tier（read-only → approval → yolo）向上提升会让它从只读变成可执行命令，向上提升有二次确认闸，避免误点授开危险权限。
+::: warning 权限
+本地 agent 用你本机 CLI 自身的权限配置运行（与你在终端里运行它相同），知我不再套用权限档；需要收紧时请在 CLI 的配置里调整。早期创建的托管 agent 仍按 tier（read-only → approval → yolo）门控，向上提升有二次确认闸。
 :::
 
 ## 它和 MCP 的区别
