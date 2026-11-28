@@ -1,22 +1,22 @@
 {
   "schemaVersion": 1,
-  "latestVersion": "0.22.8",
+  "latestVersion": "0.22.9",
   "proReleasedAt": "2027-07-07T00:00:00Z",
   "lifecycle": "active",
   "downloadUrl": "https://useknowme.com/#download",
   "releaseNotesUrl": "https://github.com/Timeflys2018/knowme/releases/latest",
   "announcements": [
     {
-      "id": "v0.22.8-update",
+      "id": "v0.22.9-update",
       "level": "info",
       "carrier": "banner",
-      "title": "知我 KnowMe 0.22.8 已发布",
-      "body": "新建会话默认沿用当前会话：点「+」打开时，Agent、模型和工作目录直接带上你正在用的那个会话，不用每次重选。快速捕获框宽度随所在屏幕自适应，换到别的显示器唤起也大小合适，记住的位置超出屏幕时会自动拉回。",
+      "title": "知我 KnowMe 0.22.9 已发布",
+      "body": "工具调用卡片更好读了：标题从一串 JSON 变成一眼能看懂的摘要（直接显示运行的命令、读写的文件），完成后用绿色耗时标记成功、出错时显示明确的失败原因；展开后命令、代码差异、搜索结果都分门别类排好。另外修复了对话进行中途发送的指令偶尔重复发送的问题。",
       "cta": {
         "label": "前往下载",
         "url": "https://useknowme.com/#download"
       },
-      "affectedBelow": "0.22.8"
+      "affectedBelow": "0.22.9"
     }
   ],
   "riskBlock": null
